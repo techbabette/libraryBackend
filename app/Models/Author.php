@@ -13,4 +13,8 @@ class Author extends Model
         'name',
         'last_name',
     ];
+
+    public function getFullName(){
+        return "{$this->name} {$this->last_name}";
+    }
 }
