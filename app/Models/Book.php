@@ -20,6 +20,7 @@ class Book extends Model
       'author_id',
       'name',
       'description',
-      'number_available'
+      'number_available',
+      'img'
     ];
 }

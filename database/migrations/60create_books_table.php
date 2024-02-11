@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId("category_id")->constrained();
             $table->foreignId("author_id")->constrained();
             $table->string("name", 30);
+            $table->string('img', 50);
             $table->text("description");
             $table->unsignedInteger("number_available");
             $table->timestamps();
