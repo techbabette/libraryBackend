@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId("book_id")->constrained();
             $table->foreignId("user_id")->constrained();
-            $table->date("start");
-            $table->date("end");
+            $table->date("start")->default(now())->nullable();
+            $table->date("end")->default(now()->addDays(20))->nullable();
             $table->date("returned")->nullable();
             $table->boolean("extended")->default(0)->nullable();
             $table->timestamps();

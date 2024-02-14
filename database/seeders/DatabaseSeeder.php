@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AuthorSeeder::class,
             BookSeeder::class,
             UserSeeder::class,
-            FavoriteSeeder::class
+            FavoriteSeeder::class,
+            LoanSeeder::class
         ]);
     }
 }
