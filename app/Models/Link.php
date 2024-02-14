@@ -13,6 +13,8 @@ class Link extends Model
       'access_level_id',
       'text',
       'to',
-      'icon'
+      'icon',
+      'position',
+      'weight'
     ];
 }

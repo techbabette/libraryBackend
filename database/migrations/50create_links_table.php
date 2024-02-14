@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('access_level_id')->constrained();
             $table->string("text", 20);
             $table->string("to", 50);
-            $table->string('icon', 15)->nullable();
+            $table->string('icon', 25)->nullable();
+            $table->string("position", 10);
+            $table->integer("weight")->unsigned();
             $table->timestamps();
         });
     }
