@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
     {
         $baseUsers = [
             [
+                'role_id' => '2',
                 'name' => 'First',
                 'last_name' => 'Last',
                 'email' => 'email@gmail.com',
