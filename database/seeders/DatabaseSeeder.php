@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AccessLevelSeeder::class,
             LinkSeeder::class,
-            CategorySeeder::class
+            CategorySeeder::class,
+            AuthorSeeder::class
         ]);
     }
 }
