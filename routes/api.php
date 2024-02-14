@@ -28,11 +28,10 @@ Route::get("/author", [AuthorController::class, "index"]);
 
 Route::get("/book", [BookController::class, "index"]);
 
+Route::post('/book', [BookController::class, "store"]);
+
  Route::group([
-
-     'middleware' => 'api',
      'prefix' => 'auth'
-
  ], function ($router) {
      Route::post('login', [AuthController::class, "login"])->name('login');
      Route::post('logout', [AuthController::class, "logout"]);
