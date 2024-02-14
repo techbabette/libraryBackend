@@ -13,7 +13,7 @@ class AccessLevelSeeder extends Seeder
      */
     public function run(): void
     {
-        $baseAccessLevels = [["name" => "logged out", 'access_level' => -1], ['name' => 'standard', 'access_level' => 0], ['name' => 'admin', 'access_level' => 1]];
+        $baseAccessLevels = [["name" => "logged out", 'access_level' => -1], ['name' => 'everyone', 'access_level' => 0], ['name' => 'standard', 'access_level' => 1], ['name' => 'admin', 'access_level' => 2]];
         foreach($baseAccessLevels as $accessLevel){
             AccessLevel::create($accessLevel);
         }
