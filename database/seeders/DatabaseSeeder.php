@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AccessLevelSeeder::class,
-            LinkSeeder::class
+            LinkSeeder::class,
+            CategorySeeder::class
         ]);
     }
 }
