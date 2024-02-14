@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AccessLevelSeeder::class,
             LinkSeeder::class,
+            RoleSeeder::class,
             CategorySeeder::class,
             AuthorSeeder::class
         ]);
