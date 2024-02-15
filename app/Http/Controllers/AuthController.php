@@ -27,6 +27,20 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        $user = auth()->user();
+
+        if(!$user->email_verified_at){
+            return response()->json(['error' => 'Email not verified'], 401);
+        }
+
+        $accessLevelObject = $user->role->access_level;
+
+        $accessLevel = $accessLevelObject->access_level;
+
+        if($accessLevel < 0){
+            return response()->json(['error' => 'User blocked'], 403);
+        }
+
         return $this->respondWithToken($token);
     }
 

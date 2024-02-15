@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
                 'last_name' => 'Last',
                 'email' => 'email@gmail.com',
                 'password' => 'password',
-                'address' => 'My address 123'
+                'address' => 'My address 123',
+                'email_verified_at' => now()
             ]
         ];
 

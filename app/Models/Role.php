@@ -12,4 +12,8 @@ class Role extends Model
         'access_level_id',
         'name',
     ];
+
+    public function access_level() {
+        return $this->belongsTo(AccessLevel::class);
+    }
 }
