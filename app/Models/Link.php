@@ -17,4 +17,8 @@ class Link extends Model
       'position',
       'weight'
     ];
+
+    public function access_level(){
+        return $this->belongsTo(AccessLevel::class);
+    }
 }

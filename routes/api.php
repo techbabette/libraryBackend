@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LinkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,12 @@ Route::get("/author", [AuthorController::class, "index"]);
 Route::get("/book", [BookController::class, "index"]);
 
 Route::post('/book', [BookController::class, "store"])->name('StoreBook');
+
+Route::group([
+    'prefix' => 'link'
+], function ($router){
+   Route::get('/', [LinkController::class, 'index']);
+});
 
  Route::group([
      'prefix' => 'auth'

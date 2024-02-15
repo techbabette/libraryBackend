@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -60,12 +61,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->role->belongsTo(AccessLevel::class);
     }
 
-//    public function links(){
-//        return
-//    }
+    public function linksForUser(){
+        $userAccessLevel = $this->access_level->access_level;
+        $links = Link::whereHas('access_level', function ($query) use ($userAccessLevel) {
+            $query->where('access_level', '<=', $userAccessLevel);
+            $query->where('access_level', '<>', -1);
+        })->get();
+        return $links;
+    }
 
     public function getJWTCustomClaims()
     {
-        return ['name' => $this->name];
+        return ['name' => $this->name, 'links' => $this->linksForUser()];
     }
 }
