@@ -2,5 +2,8 @@
     "StoreBook": {
         "access_level": 2,
         "text": "Created a new book"
+    },
+    "login": {
+        "text": "Logged in"
     }
 }
