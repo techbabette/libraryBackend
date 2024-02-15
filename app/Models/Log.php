@@ -11,7 +11,6 @@ class Log extends Model
 
     protected $fillable = [
       'issuer',
-      'action',
-      'successful'
+      'action'
     ];
 }

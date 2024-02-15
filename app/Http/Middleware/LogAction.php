@@ -32,21 +32,12 @@ class LogAction
 
         $action = $routesAndActions[$requestedRoute]['text'];
         $actionIssuer = "Anonymous";
-        $actionSuccessful = true;
-
-        $actionLevelNeeded = $routesAndActions[$requestedRoute]['access_level'];
-        $userLevel = -1;
 
         if(auth()->user()){
-            $userLevel = auth()->user()->access_level->access_level;
             $actionIssuer = auth()->user()->email;
         }
 
-        if($actionLevelNeeded){
-            $actionSuccessful = $actionLevelNeeded <= $userLevel;
-        }
-
-        Log::create(["issuer" => $actionIssuer, "action" => $action, "successful" => $actionSuccessful]);
+        Log::create(["issuer" => $actionIssuer, "action" => $action]);
 
         return $response;
     }

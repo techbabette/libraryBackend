@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('issuer', 255);
             $table->string('action', 255);
-            $table->boolean('successful');
             $table->timestamps();
         });
     }
