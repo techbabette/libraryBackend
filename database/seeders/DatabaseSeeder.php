@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             FavoriteSeeder::class,
             LoanSeeder::class,
-            MessageTypeSeeder::class
+            MessageTypeSeeder::class,
+            MessageSeeder::class
         ]);
     }
 }
