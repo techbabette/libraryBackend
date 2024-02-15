@@ -63,10 +63,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function linksForUser(){
         $userAccessLevel = $this->access_level->access_level;
-        $links = Link::whereHas('access_level', function ($query) use ($userAccessLevel) {
-            $query->where('access_level', '<=', $userAccessLevel);
-            $query->where('access_level', '<>', -1);
-        })->get();
+        $links = Link::getLinksForAccessLevel($userAccessLevel);
         return $links;
     }
 

@@ -10,15 +10,12 @@ class LinkController extends Controller
 {
     public function index()
     {
-        $links = [];
-        if (!auth()->user()) {
-            $links = Link::whereHas('access_level', function ($query) {
-                $query->where('access_level', '<=', 0);
-            })->get();
-            return response($links);
+        $userAccessLevel = -1;
+        if(auth()->user()){
+            $userAccessLevel = auth()->user()->access_level->access_level;
         }
 
-        $links = auth()->user()->linksForUser();
+        $links = Link::getLinksForAccessLevel($userAccessLevel);
 
         return response($links);
     }

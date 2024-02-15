@@ -21,4 +21,18 @@ class Link extends Model
     public function access_level(){
         return $this->belongsTo(AccessLevel::class);
     }
+
+    public static function getLinksForAccessLevel(int $accessLevel){
+        $links = Link::whereHas('access_level', function ($query) use ($accessLevel) {
+            if($accessLevel > 0){
+                $query->where('access_level', '<=', $accessLevel);
+                $query->where('access_level', '<>', -1);
+            }
+            else{
+                $query->where('access_level', '<=', 2);
+            }
+        })->get();
+
+        return $links;
+    }
 }
