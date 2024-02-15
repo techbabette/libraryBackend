@@ -28,7 +28,7 @@ Route::get("/author", [AuthorController::class, "index"]);
 
 Route::get("/book", [BookController::class, "index"]);
 
-Route::post('/book', [BookController::class, "store"]);
+Route::post('/book', [BookController::class, "store"])->name('StoreBook');
 
  Route::group([
      'prefix' => 'auth'
