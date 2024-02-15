@@ -44,7 +44,9 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $credentials = $request->all(['name', 'email', 'password']);
+        $credentials = $request->all(['name', 'last_name', 'address', 'email', 'password']);
+
+        $credentials['role_id'] = 2;
 
         $query = new User();
 
