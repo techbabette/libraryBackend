@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticateRequest
@@ -15,10 +16,14 @@ class AuthenticateRequest
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $routeMap = ["StoreBook" => 2];
+        $routeMap = File::json(storage_path('/json/routeMap.json'));
         $requestedRoute = $request->route()->getName();
 
         if(!array_key_exists($requestedRoute, $routeMap)){
+            return $next($request);
+        }
+
+        if(!array_key_exists('access_level', $routeMap[$requestedRoute])){
             return $next($request);
         }
 
@@ -28,7 +33,7 @@ class AuthenticateRequest
             $userAccessLevel = $userLoggedIn->access_level->access_level;
         }
 
-        if($routeMap[$requestedRoute] > $userAccessLevel){
+        if($routeMap[$requestedRoute]['access_level'] > $userAccessLevel){
             return response()->json(['error' => 'Action not allowed'], 403);
         }
 
