@@ -25,7 +25,7 @@ class AuthenticateRequest
         $userAccessLevel = -1;
         $userLoggedIn = auth()->user();
         if($userLoggedIn){
-            $userAccessLevel = $userLoggedIn->role->access_level->access_level;
+            $userAccessLevel = $userLoggedIn->access_level->access_level;
         }
 
         if($routeMap[$requestedRoute] > $userAccessLevel){

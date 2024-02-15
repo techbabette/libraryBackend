@@ -33,9 +33,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Email not verified'], 401);
         }
 
-        $accessLevelObject = $user->role->access_level;
-
-        $accessLevel = $accessLevelObject->access_level;
+        $accessLevel = $user->access_level->access_level;
 
         if($accessLevel < 0){
             return response()->json(['error' => 'User blocked'], 403);

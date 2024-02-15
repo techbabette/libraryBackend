@@ -56,6 +56,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Role::class);
     }
 
+    public function access_level(){
+        return $this->role->belongsTo(AccessLevel::class);
+    }
+
+//    public function links(){
+//        return
+//    }
+
     public function getJWTCustomClaims()
     {
         return ['name' => $this->name];
