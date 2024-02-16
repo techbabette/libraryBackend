@@ -19,4 +19,8 @@ class LinkController extends Controller
 
         return response($links);
     }
+
+    public function store(){
+
+    }
 }
