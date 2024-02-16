@@ -7,6 +7,18 @@
         "access_level": 2,
         "text": "Created a new link"
     },
+    "StoreCategory": {
+        "access_level": 2,
+        "text": "Created a new category"
+    },
+    "StoreAuthor": {
+        "access_level": 2,
+        "text": "Created a new author"
+    },
+    "StoreMessageType": {
+        "access_level": 2,
+        "text": "Created a new message type"
+    },
     "login": {
         "text": "Logged in"
     },
