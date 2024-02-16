@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\VerifyEmailRequest;
 use App\Models\EmailVerificationToken;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function register(Request $request)
+    public function register(RegisterUserRequest $request)
     {
         $credentials = $request->all(['name', 'last_name', 'address', 'email', 'password']);
 
