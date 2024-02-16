@@ -19,6 +19,10 @@ class LogAction
     {
         $response =  $next($request);
 
+        if(!$response->isSuccessful()){
+            return $response;
+        };
+
         $routesAndActions = File::json(storage_path('/json/routeMap.json'));
         $requestedRoute = $request->route()->getName();
 
