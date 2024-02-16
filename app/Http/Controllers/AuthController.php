@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AssumeUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\VerifyEmailRequest;
 use App\Models\EmailVerificationToken;
@@ -37,7 +38,7 @@ class AuthController extends Controller
 
     public function register(RegisterUserRequest $request)
     {
-        $credentials = $request->all(['name', 'last_name', 'address', 'email', 'password']);
+        $credentials = $request->validated(['name', 'last_name', 'address', 'email', 'password']);
 
         $defaultRoleId = 2;
 
@@ -72,6 +73,14 @@ class AuthController extends Controller
         $token = auth()->login($user);
 
         return response()->json(['message' => 'Successfully activated account', 'body' => $token], 201);
+    }
+
+    public function assumeUser(AssumeUserRequest $request){
+        $idRequested = $request->route('id');
+
+        $token = auth()->tokenById($idRequested);
+
+        return response()->json(['message' => 'Successfully assumed user', 'body' => $token], 201);
     }
 
     public function me()

@@ -57,4 +57,6 @@ Route::group([
     Route::post('/category', [CategoryController::class, "store"])->name("StoreCategory");
     Route::post('/author', [AuthorController::class, "store"])->name("StoreAuthor");
     Route::post('/messagetype', [MessageTypeController::class, "store"])->name("StoreMessageType");
+
+    Route::get('/user/assume/{id}', [AuthController::class, 'assumeUser'])->name("AssumeUser");
 });

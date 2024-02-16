@@ -19,6 +19,10 @@
         "access_level": 2,
         "text": "Created a new message type"
     },
+    "AssumeUser": {
+        "access_level": 2,
+        "text": "Assumed user"
+    },
     "login": {
         "text": "Logged in"
     },
