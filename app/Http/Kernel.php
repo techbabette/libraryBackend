@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\AuthenticateRequest;
 use App\Http\Middleware\LogAction;
+use App\Http\Middleware\WrapRequest;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             AuthenticateRequest::class,
+            WrapRequest::class,
             LogAction::class
         ],
     ];
