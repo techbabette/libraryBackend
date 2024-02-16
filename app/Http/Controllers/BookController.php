@@ -24,6 +24,6 @@ class BookController extends Controller
 
         Book::create($requestData);
 
-        return "Successfully created book";
+        return response()->json(['message' => 'Successfully created new book'], 201);
     }
 }
