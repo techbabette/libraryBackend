@@ -8,5 +8,8 @@
     },
     "register": {
         "text": "Registered"
+    },
+    "verifyEmail" : {
+        "text": "Verified their email"
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VerifyEmailRequest;
+use App\Models\EmailVerificationToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -9,16 +11,6 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'me']]);
-    }
-
     public function login()
     {
         $credentials = request(['email', 'password']);
@@ -46,13 +38,39 @@ class AuthController extends Controller
     {
         $credentials = $request->all(['name', 'last_name', 'address', 'email', 'password']);
 
-        $credentials['role_id'] = 2;
+        $defaultRoleId = 2;
 
-        $query = new User();
+        $credentials['role_id'] = $defaultRoleId;
 
-        $query::create($credentials);
+        $newUserId = User::create($credentials)->id;
 
-        return response()->json(['message' => 'Success'], 201);
+        $activationToken = md5(uniqid(rand())).md5(time()).md5(uniqid(rand()));
+
+        EmailVerificationToken::create(["user_id" => $newUserId, "role_id" => $defaultRoleId, "token" => $activationToken]);
+
+        //In the future, send email here
+
+        return response()->json(['message' => 'We sent you a verification email'], 201);
+    }
+
+    public function verifyEmail(VerifyEmailRequest $request){
+        $routeToken = $request->route('token');
+        $tokenObject = EmailVerificationToken::where('token', '=', $routeToken)->first();
+
+        $userToActivateId = $tokenObject->user->id;
+        $newUserRole = $tokenObject->role->id;
+        $timeOfActivation = now();
+
+        $user = User::find($userToActivateId);
+        $user->role_id = $newUserRole;
+        $user->email_verified_at = $timeOfActivation;
+        $user->save();
+
+        $tokenObject->delete();
+
+        $token = auth()->login($user);
+
+        return response()->json(['message' => 'Successfully activated account', 'body' => $token], 201);
     }
 
     public function me()
