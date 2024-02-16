@@ -17,49 +17,49 @@ class LinkSeeder extends Seeder
             [
                 "text" => "City Library",
                 "to" => "Home",
-                "position" => "header",
+                "link_position_id" => 2,
                 "weight" => 100,
                 "access_level_id" => 2
             ],
             [
                 "text" => "Home",
                 "to" => "Home",
-                "position" => "navbar",
+                "link_position_id" => 1,
                 "weight" => 100,
                 "access_level_id" => 2
             ],
             [
                 "text" => "Books",
                 "to" => "Books",
-                "position" => "navbar",
+                "link_position_id" => 1,
                 "weight" => 90,
                 "access_level_id" => 2
             ],
             [
                 "text" => "Your books",
                 "to" => "Your books",
-                "position" => "navbar",
+                "link_position_id" => 1,
                 "weight" => 89,
                 "access_level_id" => 2
             ],
             [
                 "text" => "Login",
                 "to" => "Login",
-                "position" => "navbar",
+                "link_position_id" => 1,
                 "weight" => 80,
                 "access_level_id" => 1
             ],
             [
                 "text" => "Register",
                 "to" => "Register",
-                "position" => "navbar",
+                "link_position_id" => 1,
                 "weight" => 79,
                 "access_level_id" => 1
             ],
             [
                 "text" => "Author",
                 "to" => "Author",
-                "position" => "navbar",
+                "link_position_id" => 1,
                 "weight" => 0,
                 "access_level_id" => 2
             ],
@@ -67,7 +67,7 @@ class LinkSeeder extends Seeder
                 "text" => "Facebook",
                 "to" => "https=>//www.facebook.com/",
                 "icon" => "icomoon-free=>facebook",
-                "position" => "footer",
+                "link_position_id" => 3,
                 "weight" => 100,
                 "access_level_id" => 2
             ],
@@ -75,7 +75,7 @@ class LinkSeeder extends Seeder
                 "text" => "Twitter",
                 "to" => "https=>//www.twitter.com/",
                 "icon" => "la=>twitter",
-                "position" => "footer",
+                "link_position_id" => 3,
                 "weight" => 90,
                 "access_level_id" => 2
             ],
@@ -83,7 +83,7 @@ class LinkSeeder extends Seeder
                 "text" => "Documentation",
                 "to" => "./documentation.pdf",
                 "icon" => "fa-file",
-                "position" => "footer",
+                "link_position_id" => 3,
                 "weight" => 80,
                 "access_level_id" => 2
             ],
@@ -91,14 +91,14 @@ class LinkSeeder extends Seeder
                 "text" => "Sitemap",
                 "to" => "./sitemap.xml",
                 "icon" => "bx=>sitemap",
-                "position" => "footer",
+                "link_position_id" => 3,
                 "weight" => 70,
                 "access_level_id" => 2
             ],
             [
                 "text" => "Individual book",
                 "to" => "Book preview",
-                "position" => "hidden",
+                "link_position_id" => 4,
                 "weight" => 0,
                 "access_level_id" => 2
             ]

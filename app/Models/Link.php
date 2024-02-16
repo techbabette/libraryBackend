@@ -11,6 +11,7 @@ class Link extends Model
 
     protected $fillable = [
       'access_level_id',
+      'link_position_id',
       'text',
       'to',
       'icon',
@@ -22,6 +23,10 @@ class Link extends Model
         return $this->belongsTo(AccessLevel::class);
     }
 
+    public function link_position(){
+        return $this->belongsTo(LinkPosition::class);
+    }
+
     public static function getLinksForAccessLevel(int $accessLevel){
         $links = Link::whereHas('access_level', function ($query) use ($accessLevel) {
             if($accessLevel > 0){
@@ -31,7 +36,8 @@ class Link extends Model
             else{
                 $query->where('access_level', '<=', 2);
             }
-        })->get();
+        })->join('link_positions', 'links.link_position_id', '=', 'link_positions.id')
+           ->get(["text", "to", "icon", "weight", "position"]);
 
         return $links;
     }
