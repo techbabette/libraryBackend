@@ -29,8 +29,6 @@ Route::get("/author", [AuthorController::class, "index"]);
 
 Route::get("/book", [BookController::class, "index"]);
 
-Route::post('/book', [BookController::class, "store"])->name('StoreBook');
-
 Route::group([
     'prefix' => 'link'
 ], function ($router){
@@ -47,3 +45,10 @@ Route::group([
      Route::post('me', [AuthController::class, "me"]);
      Route::post('register', [AuthController::class, "register"])->name('register');
  });
+
+Route::group([
+    'prefix' => 'admin'
+], function ($router) {
+    Route::post('/book', [BookController::class, "store"])->name('StoreBook');
+    Route::post('/link', [LinkController::class, "store"])->name('StoreLink');
+});

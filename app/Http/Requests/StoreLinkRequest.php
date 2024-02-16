@@ -11,7 +11,7 @@ class StoreLinkRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,10 @@ class StoreLinkRequest extends FormRequest
         return [
             "access_level_id" => "required|exists:access_levels,id",
             "link_position_id" => "required|exists:link_positions,id",
-            "text" => "required",
-            "to" => "required",
-            "icon" => "",
-            "weight" => "required",
+            "text" => "required|string|max:20",
+            "to" => "required|string|max:25",
+            "icon" => "string|max:25",
+            "weight" => "required|integer|min:0|max:100",
         ];
     }
 }

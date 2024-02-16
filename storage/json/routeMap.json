@@ -3,6 +3,10 @@
         "access_level": 2,
         "text": "Created a new book"
     },
+    "StoreLink": {
+        "access_level": 2,
+        "text": "Created a new link"
+    },
     "login": {
         "text": "Logged in"
     },
