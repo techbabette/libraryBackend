@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\MessageTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("/category", [CategoryController::class, "index"]);
 
 Route::get("/author", [AuthorController::class, "index"]);
+
+Route::get("/messagetype", [MessageTypeController::class, "index"]);
 
 Route::get("/book", [BookController::class, "index"]);
 
@@ -53,4 +56,5 @@ Route::group([
     Route::post('/link', [LinkController::class, "store"])->name('StoreLink');
     Route::post('/category', [CategoryController::class, "store"])->name("StoreCategory");
     Route::post('/author', [AuthorController::class, "store"])->name("StoreAuthor");
+    Route::post('/messagetype', [MessageTypeController::class, "store"])->name("StoreMessageType");
 });
