@@ -40,7 +40,7 @@ class LinkSeeder extends Seeder
                 "to" => "Your books",
                 "link_position_id" => 1,
                 "weight" => 89,
-                "access_level_id" => 2
+                "access_level_id" => 3
             ],
             [
                 "text" => "Login",
@@ -66,7 +66,7 @@ class LinkSeeder extends Seeder
             [
                 "text" => "Facebook",
                 "to" => "https=>//www.facebook.com/",
-                "icon" => "icomoon-free=>facebook",
+                "icon" => "icomoon-free:facebook",
                 "link_position_id" => 3,
                 "weight" => 100,
                 "access_level_id" => 2
@@ -74,7 +74,7 @@ class LinkSeeder extends Seeder
             [
                 "text" => "Twitter",
                 "to" => "https=>//www.twitter.com/",
-                "icon" => "la=>twitter",
+                "icon" => "la:twitter",
                 "link_position_id" => 3,
                 "weight" => 90,
                 "access_level_id" => 2
@@ -90,7 +90,7 @@ class LinkSeeder extends Seeder
             [
                 "text" => "Sitemap",
                 "to" => "./sitemap.xml",
-                "icon" => "bx=>sitemap",
+                "icon" => "bx:sitemap",
                 "link_position_id" => 3,
                 "weight" => 70,
                 "access_level_id" => 2
