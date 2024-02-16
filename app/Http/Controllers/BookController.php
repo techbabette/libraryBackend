@@ -10,11 +10,27 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::all();
+        $perPage = 3;
 
-        return $books;
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
+        }
+
+        $books = Book::with('author')->with('category');
+
+        if($request->get('categories')){
+            $books->whereIn('category_id', $request->get('categories'));
+        }
+
+        if($request->get('authors')){
+            $books->whereIn('author_id', $request->get('authors'));
+        }
+
+        $books = $books->paginate($perPage);
+
+        return response()->json(['message' => 'Successfully fetched books', 'body' => $books], 201);
     }
 
     public function store(StoreBookRequest $request){
