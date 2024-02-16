@@ -52,4 +52,5 @@ Route::group([
     Route::post('/book', [BookController::class, "store"])->name('StoreBook');
     Route::post('/link', [LinkController::class, "store"])->name('StoreLink');
     Route::post('/category', [CategoryController::class, "store"])->name("StoreCategory");
+    Route::post('/author', [AuthorController::class, "store"])->name("StoreAuthor");
 });
