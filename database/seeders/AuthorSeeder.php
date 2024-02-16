@@ -25,6 +25,26 @@ class AuthorSeeder extends Seeder
             [
                 'name' => 'Stephen',
                 'last_name' => 'King'
+            ],
+            [
+                'name' => 'Steven',
+                'last_name' => 'Pinker'
+            ],
+            [
+                'name' => 'Vaclav',
+                'last_name' => 'Smith'
+            ],
+            [
+                "name" => "Wendy",
+                "last_name" => "Foster"
+            ],
+            [
+                "name" => "Bart Denton",
+                "last_name" => "Ehrman"
+            ],
+            [
+                "name" => "Henrik",
+                "last_name" => "Fexeus"
             ]
         ];
 

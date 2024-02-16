@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $baseCategories = [["text" => "History"], ["text" => "Sci-Fi"], ['text' => 'Popular science']];
+        $baseCategories = [["text" => "History"], ["text" => "Sci-Fi"], ['text' => 'Popular science'], ['text' => 'Linguistics'], ['text' => 'Popular Psychology']];
 
         foreach($baseCategories as $category){
             Category::create($category);
