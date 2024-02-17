@@ -13,24 +13,24 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $request->all(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         $user = auth()->user();
 
         if(!$user->email_verified_at){
-            return response()->json(['error' => 'Email not verified'], 401);
+            return response()->json(['message' => 'Email not verified'], 401);
         }
 
         $accessLevel = $user->access_level->access_level;
 
         if($accessLevel < 0){
-            return response()->json(['error' => 'User blocked'], 403);
+            return response()->json(['message' => 'User blocked'], 403);
         }
 
         return $this->respondWithToken($token);
@@ -38,7 +38,7 @@ class AuthController extends Controller
 
     public function register(RegisterUserRequest $request)
     {
-        $credentials = $request->validated(['name', 'last_name', 'address', 'email', 'password']);
+        $credentials = $request->validated();
 
         $defaultRoleId = 2;
 
@@ -108,7 +108,8 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'access_token' => $token,
+            'message' => 'Successfully logged in',
+            'body' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
