@@ -15,9 +15,14 @@ class BookController extends Controller
         $perPage = 3;
         $sortSelected = 0;
 
+        if($request->get('onlyCount')){
+            $bookCount = Book::count();
+            return response()->json(['message' => 'Successfully got book count', 'body' => $bookCount], 200);
+        }
+
         if($request->get('sortOptions')){
             $sortOptions = Book::sortOptions();
-            return response()->json(['message' => 'Successfully fetched sort options', 'body' => $sortOptions], 201);
+            return response()->json(['message' => 'Successfully fetched sort options', 'body' => $sortOptions], 200);
         }
 
         if($request->get('perPage')){
@@ -41,7 +46,7 @@ class BookController extends Controller
         Book::sort($books, $sortSelected);
         $books = $books->paginate($perPage);
 
-        return response()->json(['message' => 'Successfully fetched books', 'body' => $books], 201);
+        return response()->json(['message' => 'Successfully fetched books', 'body' => $books], 200);
     }
 
     public function store(StoreBookRequest $request){
