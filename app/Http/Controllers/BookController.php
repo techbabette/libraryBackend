@@ -13,6 +13,12 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $perPage = 3;
+        $sortSelected = 0;
+
+        if($request->get('sortOptions')){
+            $sortOptions = Book::sortOptions();
+            return response()->json(['message' => 'Successfully fetched sort options', 'body' => $sortOptions], 201);
+        }
 
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
@@ -28,6 +34,11 @@ class BookController extends Controller
             $books->whereIn('author_id', $request->get('authors'));
         }
 
+        if($request->get('sortSelected')){
+            $sortSelected = $request->get("sortSelected");
+        }
+
+        Book::sort($books, $sortSelected);
         $books = $books->paginate($perPage);
 
         return response()->json(['message' => 'Successfully fetched books', 'body' => $books], 201);

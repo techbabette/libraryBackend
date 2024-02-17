@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Book extends Model
 {
@@ -30,5 +31,28 @@ class Book extends Model
 
     public function author(){
         return $this->belongsTo(Author::class);
+    }
+
+    public static function sortOptions(){
+        return [["id" => 0, "text" => "Newest first"], ["id" => 1, "text" => "Oldest first"]];
+    }
+    public static function sort(Builder $query, $selectedOption){
+        if($selectedOption === 0){
+            $query->orderByDesc("created_at");
+        }
+
+        if($selectedOption === 1){
+            $query->orderBy("created_at");
+        }
+
+        if($selectedOption === 2){
+            $query->orderBy("name");
+        }
+
+        if($selectedOption === 3){
+            $query->orderByDesc("name");
+        }
+
+        return $query;
     }
 }
