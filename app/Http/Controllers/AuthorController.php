@@ -11,7 +11,7 @@ class AuthorController extends Controller
 {
     //
     public function index(){
-        $authors = Author::has('books')->select('name', 'last_name')->withCount('books')->orderBy('books_count', 'desc')->get();
+        $authors = Author::has('books')->select('id', 'name', 'last_name')->withCount('books')->orderBy('books_count', 'desc')->get();
 
         foreach ($authors as $auth){
             $auth["full_name"] = $auth->getFullName() . " (" . $auth->books_count.")";
