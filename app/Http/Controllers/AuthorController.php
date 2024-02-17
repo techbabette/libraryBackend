@@ -10,12 +10,11 @@ use Illuminate\Http\Request;
 class AuthorController extends Controller
 {
     //
-    public function index()
-    {
-        $authors = Author::all(["id", "name", "last_name"]);
+    public function index(){
+        $authors = Author::has('books')->select('name', 'last_name')->withCount('books')->orderBy('books_count', 'desc')->get();
 
         foreach ($authors as $auth){
-            $auth["full_name"] = $auth->getFullName();
+            $auth["full_name"] = $auth->getFullName() . " (" . $auth->books_count.")";
         }
 
         return $authors;

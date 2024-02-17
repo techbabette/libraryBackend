@@ -17,4 +17,7 @@ class Author extends Model
     public function getFullName(){
         return "{$this->name} {$this->last_name}";
     }
+    public function books(){
+        return $this->hasMany(Book::class);
+    }
 }

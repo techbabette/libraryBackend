@@ -10,7 +10,13 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function index(){
-        return Category::all(['id', 'text']);
+        $categories = Category::has('books')->select(["id", "text"])->withCount('books')->orderBy('books_count', 'desc')->get();
+
+        foreach ($categories as $category){
+            $category["text"] = $category['text'] . " (" . $category->books_count.")";
+        }
+
+        return $categories;
     }
     public function store(StoreCategoryRequest $request){
         $requestData = $request->validated();
