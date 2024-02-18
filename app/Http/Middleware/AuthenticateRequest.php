@@ -19,7 +19,7 @@ class AuthenticateRequest
         $routeMap = File::json(storage_path('/json/routeMap.json'));
         $requestedRoute = $request->route()->getName();
 
-        if(!array_key_exists($requestedRoute, $routeMap)){
+        if(!isset($routeMap[$requestedRoute])){
             return $next($request);
         }
 

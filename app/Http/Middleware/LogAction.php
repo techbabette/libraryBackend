@@ -26,7 +26,7 @@ class LogAction
         $routesAndActions = File::json(storage_path('/json/routeMap.json'));
         $requestedRoute = $request->route()->getName();
 
-        if(!array_key_exists($requestedRoute, $routesAndActions)){
+        if(!isset($routesAndActions[$requestedRoute])){
             return $response;
         }
 
