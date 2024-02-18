@@ -14,6 +14,11 @@ class LoanController extends Controller
     public function index(Request $request){
         $perPage = 5;
 
+        if($request->get('onlyCount')){
+            $booksLoaned = Loan::count();
+            return response()->json(['message' => 'Successfully got book count', 'body' => $booksLoaned], 200);
+        }
+
         $userId = auth()->user()->id;
 
         $loans = Loan::where('user_id', '=', $userId)->with('book');

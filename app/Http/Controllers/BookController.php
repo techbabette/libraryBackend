@@ -31,6 +31,10 @@ class BookController extends Controller
 
         $books = Book::with('author')->with('category');
 
+        if($request->get('title')){
+            $books->where('name', 'LIKE', '%'.$request->get('title').'%');
+        }
+
         if($request->get('categories')){
             $books->whereIn('category_id', $request->get('categories'));
         }
