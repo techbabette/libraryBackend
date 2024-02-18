@@ -27,6 +27,14 @@
         "access_level": 1,
         "text": "Viewed their loans"
     },
+    "ReturnLoan": {
+        "access_level": 1,
+        "text": "Returned a book"
+    },
+    "ExtendLoan": {
+        "access_level": 1,
+        "text": "Extended a loan"
+    },
     "login": {
         "text": "Logged in"
     },

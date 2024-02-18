@@ -33,7 +33,13 @@ Route::get("/messagetype", [MessageTypeController::class, "index"]);
 
 Route::get("/book", [BookController::class, "index"]);
 
-Route::get('/loan', [LoanController::class, 'index'])->name('GetUserLoans');
+Route::group([
+    'prefix' => 'loan'
+], function ($router){
+    Route::get('/', [LoanController::class, 'index'])->name('GetUserLoans');
+    Route::patch('/return/{id}', [LoanController::class, 'return'])->name('ReturnLoan');
+    Route::patch('/extend/{id}', [LoanController::class, 'extend'])->name('ExtendLoan');
+});
 
 Route::group([
     'prefix' => 'link'
