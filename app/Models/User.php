@@ -48,6 +48,10 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
+    public function getFullName(){
+        return "{$this->name} {$this->last_name}";
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -69,6 +73,9 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return ['name' => $this->name, 'links' => $this->linksForUser(), 'access_level' => $this->access_level->access_level];
+        return ['links' => $this->linksForUser(),
+            'access_level' => $this->access_level->access_level,
+            'name' => $this->getFullName()
+        ];
     }
 }
