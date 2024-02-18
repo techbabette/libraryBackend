@@ -30,13 +30,36 @@ class LogAction
             return $response;
         }
 
-        if(!array_key_exists('text', $routesAndActions[$requestedRoute])){
+        $requestedRouteObject = $routesAndActions[$requestedRoute];
+        $action = "";
+
+        //Set action to base route text if it exists
+        if(isset($requestedRouteObject['text'])){
+            $action = $requestedRouteObject['text'];
+        }
+
+        //Override text action if option in list used
+        if(isset($requestedRouteObject['subroute_options'])){
+            $alternateOptions = $requestedRouteObject['subroute_options'];
+            foreach($alternateOptions as $key => $option){
+                if($request->get($key)){
+                    if(!isset($pption['text'])){
+                        $action = "";
+                    }
+                    else{
+                        $action = $option['text'];
+                    }
+                }
+                break;
+            }
+        }
+
+        if(!$action){
             return $response;
         }
 
-        $action = $routesAndActions[$requestedRoute]['text'];
-        $actionIssuer = "Anonymous";
 
+        $actionIssuer = "Anonymous";
         if(auth()->user()){
             $actionIssuer = auth()->user()->email;
         }

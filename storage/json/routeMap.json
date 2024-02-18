@@ -25,7 +25,12 @@
     },
     "GetUserLoans" : {
         "access_level": 1,
-        "text": "Viewed their loans"
+        "text": "Viewed their loans",
+        "subroute_options" : {
+            "onlyCount" : {
+                "access_level" : -1
+            }
+        }
     },
     "ReturnLoan": {
         "access_level": 1,
