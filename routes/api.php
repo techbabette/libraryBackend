@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MessageTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,8 @@ Route::get("/author", [AuthorController::class, "index"]);
 Route::get("/messagetype", [MessageTypeController::class, "index"]);
 
 Route::get("/book", [BookController::class, "index"]);
+
+Route::get('/loan', [LoanController::class, 'index'])->name('GetUserLoans');
 
 Route::group([
     'prefix' => 'link'

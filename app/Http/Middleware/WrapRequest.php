@@ -28,6 +28,7 @@ class WrapRequest
 
         if ($response instanceof Response && $response->getStatusCode() > 499) {
             DB::rollBack();
+            dd($response);
             return response()->json(['message' => 'Error communicating with database'], 500);
         } else {
             DB::commit();

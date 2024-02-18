@@ -23,6 +23,10 @@
         "access_level": 2,
         "text": "Assumed user"
     },
+    "GetUserLoans" : {
+        "access_level": 1,
+        "text": "Viewed their loans"
+    },
     "login": {
         "text": "Logged in"
     },

@@ -54,6 +54,14 @@ class BookSeeder extends Seeder
                 "description" => "Henrik teaches a type of social skill reserved for a privileged few – until now. People with social finesse are more often appointed leaders, gets promoted faster and can quickly create meaningful and deep relationships with others. ",
                 "number_available" => 2
             ],
+            [
+                "category_id" => 2,
+                "author_id" => 8,
+                "name" => "Some book",
+                "img" => "image.png",
+                "description" => "This is a placeholder book",
+                "number_available" => 2
+            ],
         ];
 
         foreach($baseBooks as $book){
