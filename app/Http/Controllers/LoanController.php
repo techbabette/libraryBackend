@@ -14,14 +14,12 @@ class LoanController extends Controller
     public function index(Request $request){
         $perPage = 5;
 
-        if($request->get('onlyCount')){
-            $booksLoaned = Loan::count();
-            return response()->json(['message' => 'Successfully got book count', 'body' => $booksLoaned], 200);
+        $loans = Loan::query();
+
+        if(!$request->get('onlyCount')){
+            $userId = auth()->user()->id;
+            $loans->where('user_id', '=', $userId)->with('book');
         }
-
-        $userId = auth()->user()->id;
-
-        $loans = Loan::where('user_id', '=', $userId)->with('book');
 
         if($request->get('current')){
             $loans->where('end', '>=', date('Y-m-d'))->whereNull('returned');
@@ -31,7 +29,18 @@ class LoanController extends Controller
             $loans->whereNotNull('returned');
         }
 
-        if($request->get(''))
+        if($request->get('since')){
+            $loans->whereDate('start', '>=', $request->get('since'));
+        }
+
+        if($request->get('before')){
+            $loans->whereDate('start', '<=', $request->get('before'));
+        }
+
+        if($request->get('onlyCount')){
+            $booksLoaned = $loans->count();
+            return response()->json(['message' => 'Successfully got loan count', 'body' => $booksLoaned], 200);
+        }
 
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
