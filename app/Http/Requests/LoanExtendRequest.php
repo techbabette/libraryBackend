@@ -16,6 +16,9 @@ class LoanExtendRequest extends FormRequest
     {
         $loanId = $this->route('id');
         $loan = Loan::find($loanId);
+        if(!$loan){
+            return false;
+        }
         if(!Gate::allows('update-loan', $loan)){
             return false;
         }

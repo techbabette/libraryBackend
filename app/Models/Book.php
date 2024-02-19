@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-
 class Book extends Model
 {
     use HasFactory;
@@ -33,16 +32,20 @@ class Book extends Model
         return $this->belongsTo(Author::class);
     }
 
+
+    public function allLoans(){
+        return $this->hasMany(Loan::class)->withTrashed();
+    }
     public function loans(){
         return $this->hasMany(Loan::class);
     }
 
     public function loanTotalCount(){
-        return $this->loans->count();
+        return $this->allLoans->count();
     }
 
     public function loansCurrentCount(){
-        return $this->loans->whereNull('returned')->count();
+        return $this->loans->count();
     }
 
     public function currentlyAvailable(){
@@ -54,7 +57,7 @@ class Book extends Model
         if(auth()->user()){
             $userId = auth()->user()->id;
         }
-        $activeLoan = $this->loans->where('user_id', '=', $userId)->whereNull('returned')->first();
+        $activeLoan = $this->loans->where('user_id', '=', $userId)->first();
         if($activeLoan){
             return $activeLoan->id;
         }
@@ -91,11 +94,11 @@ class Book extends Model
         }
 
         if($selectedOption === "4"){
-            $query->withCount('loans')->orderByDesc('loans_count');
+            $query->withCount('allLoans')->orderByDesc('all_loans_count');
         }
 
         if($selectedOption === "5"){
-            $query->withCount('loans')->orderBy('loans_count');
+            $query->withCount('allLoans')->orderBy('all_loans_count');
         }
 
         return $query;

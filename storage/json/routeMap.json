@@ -19,6 +19,15 @@
         "access_level": 2,
         "text": "Created a new message type"
     },
+    "UsersGet": {
+        "access_level": 2,
+        "text": "Viewed user information",
+        "subroute_options" : {
+            "onlyCount" : {
+                "access_level" : -1
+            }
+        }
+    },
     "AssumeUser": {
         "access_level": 2,
         "text": "Assumed user"

@@ -29,9 +29,6 @@ class AuthServiceProvider extends ServiceProvider
             if($user->access_level->access_level === 2){
                 return true;
             }
-            if($loan->returned){
-                return false;
-            }
             return $loan->user_id === $user->id;
         });
     }

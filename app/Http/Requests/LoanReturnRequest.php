@@ -16,6 +16,9 @@ class LoanReturnRequest extends FormRequest
     {
         $loanId = $this->route('id');
         $loan = Loan::find($loanId);
+        if(!$loan){
+            return false;
+        }
         if(!Gate::allows('update-loan', $loan)){
             return false;
         }
@@ -40,13 +43,6 @@ class LoanReturnRequest extends FormRequest
             "loanId" => [
                 "required",
                 "integer",
-                function(string $attribute, mixed $value, Closure $fail){
-                    $loan = Loan::find($value);
-
-                    if($loan->returned){
-                        $fail("Book already returned");
-                    }
-                }
             ]
         ];
     }

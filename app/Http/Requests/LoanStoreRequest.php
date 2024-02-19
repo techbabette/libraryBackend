@@ -18,7 +18,7 @@ class LoanStoreRequest extends FormRequest
         $userId = auth()->user()->id;
         $bookId = $this->input('book_id');
 
-        $alreadyLoanedOut = Loan::where('user_id', '=', $userId)->where('book_id', '=', $bookId)->whereNull('returned')->exists();
+        $alreadyLoanedOut = Loan::where('user_id', '=', $userId)->where('book_id', '=', $bookId)->exists();
         return !$alreadyLoanedOut;
     }
 

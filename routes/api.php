@@ -54,7 +54,7 @@ Route::group([
 Route::group([
     'prefix' => 'user'
 ], function($router){
-    Route::get("/", [UserController::class, 'index']);
+    Route::get("/", [UserController::class, 'index'])->name('UsersGet');
     Route::get('/assume/{id}', [AuthController::class, 'assumeUser'])->name("AssumeUser");
 });
 

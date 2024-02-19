@@ -15,27 +15,26 @@ class LoanController extends Controller
     public function index(Request $request){
         $perPage = 5;
 
-        $loans = Loan::query()->with('book');;
+        $loans = Loan::query()->with('book');
 
-        if($request->get('current')){
-            $loans->whereNull('returned');
+        if($request->get('currentAndPrevious')){
+            $loans->withTrashed();
         }
 
         if($request->get('late')){
-            $loans->whereNull('returned');
             $loans->where('end', '<', date('Y-m-d'));
         }
 
         if($request->get('previous')){
-            $loans->whereNotNull('returned');
+            $loans->onlyTrashed();
         }
 
         if($request->get('since')){
-            $loans->whereDate('start', '>=', $request->get('since'));
+            $loans->whereDate('created_at', '>=', $request->get('since'));
         }
 
         if($request->get('before')){
-            $loans->whereDate('start', '<=', $request->get('before'));
+            $loans->whereDate('created_at', '<=', $request->get('before'));
         }
 
         if($request->get('onlyCount')){
@@ -74,8 +73,7 @@ class LoanController extends Controller
 
         $loan = Loan::find($loanId);
 
-        $loan->returned = now();
-        $loan->save();
+        $loan->delete();
 
         return response()->json(['message' => 'Successfully returned book'], 200);
     }
