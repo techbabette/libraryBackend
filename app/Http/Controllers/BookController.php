@@ -15,11 +15,6 @@ class BookController extends Controller
         $perPage = 3;
         $sortSelected = 0;
 
-        if($request->get('onlyCount')){
-            $bookCount = Book::count();
-            return response()->json(['message' => 'Successfully got book count', 'body' => $bookCount], 200);
-        }
-
         if($request->get('sortOptions')){
             $sortOptions = Book::sortOptions();
             return response()->json(['message' => 'Successfully fetched sort options', 'body' => $sortOptions], 200);
@@ -41,6 +36,11 @@ class BookController extends Controller
 
         if($request->get('authors')){
             $books->whereIn('author_id', $request->get('authors'));
+        }
+
+        if($request->get('onlyCount')){
+            $bookCount = Book::count();
+            return response()->json(['message' => 'Successfully got book count', 'body' => $bookCount], 200);
         }
 
         if($request->get('sortSelected')){

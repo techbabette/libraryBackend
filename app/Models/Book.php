@@ -33,24 +33,43 @@ class Book extends Model
         return $this->belongsTo(Author::class);
     }
 
+    public function loans(){
+        return $this->hasMany(Loan::class);
+    }
+
     public static function sortOptions(){
-        return [["id" => 0, "text" => "Newest first"], ["id" => 1, "text" => "Oldest first"]];
+        return [
+            ["id" => 0, "text" => "Newest first"],
+            ["id" => 1, "text" => "Oldest first"],
+            ["id" => 2, "text" => "Z-A"],
+            ["id" => 3, "text" => "A-Z"],
+            ["id" => 4, "text" => "Most popular"],
+            ["id" => 5, "text" => "Least popular"],
+        ];
     }
     public static function sort(Builder $query, $selectedOption){
-        if($selectedOption === 0){
+        if($selectedOption === "0"){
             $query->orderByDesc("created_at");
         }
 
-        if($selectedOption === 1){
+        if($selectedOption === "1"){
             $query->orderBy("created_at");
         }
 
-        if($selectedOption === 2){
-            $query->orderBy("name");
+        if($selectedOption === "2"){
+            $query->orderByDesc("name");
         }
 
-        if($selectedOption === 3){
-            $query->orderByDesc("name");
+        if($selectedOption === "3"){
+            $query->orderBy("name", 'asc');
+        }
+
+        if($selectedOption === "4"){
+            $query->withCount('loans')->orderByDesc('loans_count');
+        }
+
+        if($selectedOption === "5"){
+            $query->withCount('loans')->orderBy('loans_count');
         }
 
         return $query;

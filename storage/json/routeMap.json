@@ -23,12 +23,13 @@
         "access_level": 2,
         "text": "Assumed user"
     },
-    "GetLoans" : {
-        "access_level": 2,
+    "LoansGet" : {
+        "access_level" : 1,
+        "text": "Viewed their loans",
         "subroute_options" : {
-            "onlyForUser" : {
-                "access_level" : 1,
-                "text": "Viewed their loans"
+            "panel" : {
+                "access_level" : 2,
+                "text": "Viewed all user loans"
             },
             "onlyCount" : {
                 "access_level" : -1
@@ -44,12 +45,15 @@
         "text": "Extended a loan"
     },
     "login": {
+        "access_level": -1,
         "text": "Logged in"
     },
     "register": {
+        "access_level": -1,
         "text": "Registered"
     },
     "verifyEmail" : {
+        "access_level": -1,
         "text": "Verified their email"
     }
 }

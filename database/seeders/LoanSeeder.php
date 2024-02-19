@@ -37,6 +37,10 @@ class LoanSeeder extends Seeder
             [
                 "book_id" => 6,
                 "user_id" => 1,
+            ],
+            [
+                "book_id" => 6,
+                "user_id" => 1,
             ]
         ];
 

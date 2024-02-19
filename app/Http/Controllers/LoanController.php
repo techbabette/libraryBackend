@@ -14,7 +14,7 @@ class LoanController extends Controller
     public function index(Request $request){
         $perPage = 5;
 
-        $loans = Loan::query();
+        $loans = Loan::query()->with('book');;
 
         if($request->get('current')){
             $loans->where('end', '>=', date('Y-m-d'))->whereNull('returned');
@@ -32,11 +32,6 @@ class LoanController extends Controller
             $loans->whereDate('start', '<=', $request->get('before'));
         }
 
-        if($request->get('onlyForUser')){
-            $userId = auth()->user()->id;
-            $loans->where('user_id', '=', $userId)->with('book');
-        }
-
         if($request->get('onlyCount')){
             $booksLoaned = $loans->count();
             return response()->json(['message' => 'Successfully got loan count', 'body' => $booksLoaned], 200);
@@ -45,6 +40,14 @@ class LoanController extends Controller
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }
+
+        if($request->get('panel')){
+            $loans = $loans->with('user')->paginate($perPage);
+            return response()->json(['message' => 'Successfully retrieved all loans', 'body' => $loans], 200);
+        }
+
+        $userId = auth()->user()->id;
+        $loans->where('user_id', '=', $userId);
 
         $loans = $loans->paginate($perPage);
 
