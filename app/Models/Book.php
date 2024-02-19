@@ -45,6 +45,10 @@ class Book extends Model
         return $this->loans->whereNull('returned')->count();
     }
 
+    public function currentlyAvailable(){
+        return $this->number_owned - $this->loansCurrentCount();
+    }
+
     public function loanedToCurrentUser(){
         $userId = 0;
         if(auth()->user()){

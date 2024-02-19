@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoanExtendRequest;
 use App\Http\Requests\LoanReturnRequest;
+use App\Http\Requests\LoanStoreRequest;
 use App\Models\Loan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class LoanController extends Controller
         return response()->json(['message' => 'Successfully retrieved user loans', 'body' => $loans], 200);
     }
 
-    public function store(Request $request){
+    public function store(LoanStoreRequest $request){
         $bookId = $request->book_id;
         $userId = auth()->user()->id;
 
