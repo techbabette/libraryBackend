@@ -54,6 +54,15 @@ class LoanController extends Controller
         return response()->json(['message' => 'Successfully retrieved user loans', 'body' => $loans], 200);
     }
 
+    public function store(Request $request){
+        $bookId = $request->book_id;
+        $userId = auth()->user()->id;
+
+        $loanId = Loan::create(["user_id" => $userId, "book_id" => $bookId])->id;
+
+        return response()->json(['message' => 'Successfully loaned book', "body" => ["loan_id" => $loanId]], 200);
+    }
+
     public function return(LoanReturnRequest $request){
         $loanId = $request->id;
 

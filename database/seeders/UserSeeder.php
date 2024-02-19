@@ -22,6 +22,15 @@ class UserSeeder extends Seeder
                 'password' => 'password',
                 'address' => 'My address 123',
                 'email_verified_at' => now()
+            ],
+            [
+                'role_id' => '3',
+                'name' => 'Name',
+                'last_name' => 'Lastname',
+                'email' => 'email2@gmail.com',
+                'password' => 'password',
+                'address' => 'My address 123',
+                'email_verified_at' => now()
             ]
         ];
 

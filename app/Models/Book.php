@@ -50,7 +50,13 @@ class Book extends Model
         if(auth()->user()){
             $userId = auth()->user()->id;
         }
-        return !$this->loans->where('user_id', '=', $userId)->whereNotNull('returned')->isEmpty();
+        $activeLoan = $this->loans->where('user_id', '=', $userId)->whereNull('returned')->first();
+        if($activeLoan){
+            return $activeLoan->id;
+        }
+        else{
+            return false;
+        }
     }
 
     public static function sortOptions(){

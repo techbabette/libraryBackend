@@ -23,6 +23,10 @@
         "access_level": 2,
         "text": "Assumed user"
     },
+    "LoanStore" : {
+        "access_level" : 1,
+        "text" : "Loaned out a book"
+    },
     "LoansGet" : {
         "access_level" : 1,
         "text": "Viewed their loans",
