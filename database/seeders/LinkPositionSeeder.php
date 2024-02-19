@@ -28,6 +28,9 @@ class LinkPositionSeeder extends Seeder
             ],
             [
                 "position" => "adminNavbar"
+            ],
+            [
+                "position" => "adminFooter"
             ]
         ];
 

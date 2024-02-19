@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('link_position_id')->constrained();
             $table->string("text", 20);
             $table->string("to", 50);
-            $table->string('icon', 25)->nullable();
+            $table->string('icon', 50)->nullable();
             $table->integer("weight")->unsigned();
             $table->timestamps();
         });

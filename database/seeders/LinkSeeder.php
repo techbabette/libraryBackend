@@ -101,7 +101,46 @@ class LinkSeeder extends Seeder
                 "link_position_id" => 4,
                 "weight" => 0,
                 "access_level_id" => 2
-            ]
+            ],
+            [
+                "text" => "Admin",
+                "to" => "Admin Dashboard",
+                "link_position_id" => 1,
+                "weight" => 85,
+                "access_level_id" => 4
+            ],
+            [
+                "text" => "Dashboard",
+                "to" => "Admin Dashboard",
+                "icon" => "material-symbols:dashboard",
+                "link_position_id" => 5,
+                "weight" => 100,
+                "access_level_id" => 4,
+            ],
+            [
+                "text" => "Control Panel",
+                "to" => "Admin Control",
+                "icon" => "ant-design:control-outlined",
+                "link_position_id" => 5,
+                "weight" => 95,
+                "access_level_id" => 4,
+            ],
+            [
+                "text" => "Logs",
+                "to" => "Admin Logs",
+                "icon" => "akar-icons:paper",
+                "link_position_id" => 5,
+                "weight" => 90,
+                "access_level_id" => 4
+            ],
+            [
+                "text" => "Back to main site",
+                "to" => "Home",
+                "icon" => "ri:logout-box-line",
+                "link_position_id" => 6,
+                "weight" => 100,
+                "access_level_id" => 4
+            ],
         ];
 
 
