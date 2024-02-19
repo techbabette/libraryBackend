@@ -53,6 +53,10 @@ class BookController extends Controller
         return response()->json(['message' => 'Successfully fetched books', 'body' => $books], 200);
     }
 
+    public function show(Request $request){
+
+    }
+
     public function store(StoreBookRequest $request){
         $requestData = $request->all(['category_id', 'author_id', 'name', 'img', 'description', 'number_available']);
 

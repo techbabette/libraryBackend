@@ -22,19 +22,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'category'
+], function ($router){
+    Route::get("/", [CategoryController::class, "index"]);
+    Route::post('/book', [CategoryController::class, "store"])->name('StoreCategory');
 });
 
-Route::get("/category", [CategoryController::class, "index"]);
+Route::group([
+    'prefix' => 'messagetype'
+], function ($router){
+    Route::get("/", [MessageTypeController::class, "index"]);
+    Route::post('/', [MessageTypeController::class, "store"])->name("StoreMessageType");
+});
 
-Route::get("/author", [AuthorController::class, "index"]);
+Route::group([
+    'prefix' => 'author'
+], function ($router){
+    Route::get("/", [AuthorController::class, "index"]);
+    Route::post('/', [AuthorController::class, "store"])->name("StoreAuthor");
+});
 
-Route::get("/messagetype", [MessageTypeController::class, "index"]);
+Route::group([
+    'prefix' => 'book'
+], function ($router){
+    Route::get("/", [BookController::class, "index"]);
+    Route::post('/book', [BookController::class, "store"])->name('StoreBook');
+});
 
-Route::get("/book", [BookController::class, "index"]);
-
-Route::get("/user", [UserController::class, 'index']);
+Route::group([
+    'prefix' => 'user'
+], function($router){
+    Route::get("/", [UserController::class, 'index']);
+    Route::get('/assume/{id}', [AuthController::class, 'assumeUser'])->name("AssumeUser");
+});
 
 Route::group([
     'prefix' => 'loan'
@@ -48,6 +69,7 @@ Route::group([
     'prefix' => 'link'
 ], function ($router){
    Route::get('/', [LinkController::class, 'index']);
+   Route::post('/', [LinkController::class, "store"])->name('StoreLink');
 });
 
  Route::group([
@@ -60,15 +82,3 @@ Route::group([
      Route::post('me', [AuthController::class, "me"]);
      Route::post('register', [AuthController::class, "register"])->name('register');
  });
-
-Route::group([
-    'prefix' => 'admin'
-], function ($router) {
-    Route::post('/book', [BookController::class, "store"])->name('StoreBook');
-    Route::post('/link', [LinkController::class, "store"])->name('StoreLink');
-    Route::post('/category', [CategoryController::class, "store"])->name("StoreCategory");
-    Route::post('/author', [AuthorController::class, "store"])->name("StoreAuthor");
-    Route::post('/messagetype', [MessageTypeController::class, "store"])->name("StoreMessageType");
-
-    Route::get('/user/assume/{id}', [AuthController::class, 'assumeUser'])->name("AssumeUser");
-});
