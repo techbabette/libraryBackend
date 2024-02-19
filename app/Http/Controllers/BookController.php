@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookShowRequest;
 use App\Http\Requests\BookStoreRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
@@ -53,12 +54,18 @@ class BookController extends Controller
         return response()->json(['message' => 'Successfully fetched books', 'body' => $books], 200);
     }
 
-    public function show(Request $request){
+    public function show(BookShowRequest $request){
+        $book = Book::with('author')->with('category')->find($request->id);
 
+        $book['total_loans'] = $book->loanTotalCount();
+        $book['current_loans'] = $book->loansCurrentCount();
+        $book['currently_available'] = $book->number_owned - $book->current_loans;
+
+        return response()->json(['message' => 'Successfully fetched book', 'body' => $book], 200);
     }
 
     public function store(BookStoreRequest $request){
-        $requestData = $request->all(['category_id', 'author_id', 'name', 'img', 'description', 'number_available']);
+        $requestData = $request->all(['category_id', 'author_id', 'name', 'img', 'description', 'number_owned']);
 
         $requestData['img'] = 'image.jpg';
 

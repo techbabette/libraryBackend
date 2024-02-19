@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("name", 30);
             $table->string('img', 50);
             $table->text("description");
-            $table->unsignedInteger("number_available");
+            $table->unsignedInteger("number_owned");
             $table->timestamps();
         });
     }

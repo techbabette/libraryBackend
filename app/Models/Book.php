@@ -14,14 +14,14 @@ class Book extends Model
 //$table->foreignId("author_id")->constrained();
 //$table->string("name", 30);
 //$table->text("description");
-//$table->unsignedInteger("number_available");
+//$table->unsignedInteger("number_owned");
 
     protected $fillable = [
       'category_id',
       'author_id',
       'name',
       'description',
-      'number_available',
+      'number_owned',
       'img'
     ];
 
@@ -35,6 +35,14 @@ class Book extends Model
 
     public function loans(){
         return $this->hasMany(Loan::class);
+    }
+
+    public function loanTotalCount(){
+        return $this->loans->count();
+    }
+
+    public function loansCurrentCount(){
+        return $this->loans->whereNull('returned')->count();
     }
 
     public static function sortOptions(){

@@ -11,7 +11,7 @@ class BookShowRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,18 @@ class BookShowRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'id' => $this->route('id')
+        ]);
+    }
+
     public function rules(): array
     {
         return [
-            //
+            'id' => 'required|exists:books'
         ];
     }
 }
