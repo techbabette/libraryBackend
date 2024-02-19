@@ -18,7 +18,12 @@ class LoanController extends Controller
         $loans = Loan::query()->with('book');;
 
         if($request->get('current')){
-            $loans->where('end', '>=', date('Y-m-d'))->whereNull('returned');
+            $loans->whereNull('returned');
+        }
+
+        if($request->get('late')){
+            $loans->whereNull('returned');
+            $loans->where('end', '<', date('Y-m-d'));
         }
 
         if($request->get('previous')){

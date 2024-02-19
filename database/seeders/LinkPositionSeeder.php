@@ -25,6 +25,9 @@ class LinkPositionSeeder extends Seeder
             ],
             [
                 "position" => "hidden"
+            ],
+            [
+                "position" => "adminNavbar"
             ]
         ];
 
