@@ -16,11 +16,6 @@ class LoanController extends Controller
 
         $loans = Loan::query();
 
-        if(!$request->get('onlyCount')){
-            $userId = auth()->user()->id;
-            $loans->where('user_id', '=', $userId)->with('book');
-        }
-
         if($request->get('current')){
             $loans->where('end', '>=', date('Y-m-d'))->whereNull('returned');
         }
@@ -35,6 +30,11 @@ class LoanController extends Controller
 
         if($request->get('before')){
             $loans->whereDate('start', '<=', $request->get('before'));
+        }
+
+        if($request->get('onlyForUser')){
+            $userId = auth()->user()->id;
+            $loans->where('user_id', '=', $userId)->with('book');
         }
 
         if($request->get('onlyCount')){

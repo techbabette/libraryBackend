@@ -39,7 +39,7 @@ Route::get("/user", [UserController::class, 'index']);
 Route::group([
     'prefix' => 'loan'
 ], function ($router){
-    Route::get('/', [LoanController::class, 'index'])->name('GetUserLoans');
+    Route::get('/', [LoanController::class, 'index'])->name('GetLoans');
     Route::patch('/return/{id}', [LoanController::class, 'return'])->name('ReturnLoan');
     Route::patch('/extend/{id}', [LoanController::class, 'extend'])->name('ExtendLoan');
 });

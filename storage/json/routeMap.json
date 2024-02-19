@@ -23,10 +23,13 @@
         "access_level": 2,
         "text": "Assumed user"
     },
-    "GetUserLoans" : {
-        "access_level": 1,
-        "text": "Viewed their loans",
+    "GetLoans" : {
+        "access_level": 2,
         "subroute_options" : {
+            "onlyForUser" : {
+                "access_level" : 1,
+                "text": "Viewed their loans"
+            },
             "onlyCount" : {
                 "access_level" : -1
             }

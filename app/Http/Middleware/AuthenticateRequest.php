@@ -47,8 +47,8 @@ class AuthenticateRequest
             foreach($requestedRouteObject['subroute_options'] as $key => $option){
                 if($request->get($key) && isset($option['access_level'])){
                     $routeAccessLevelRequired = $option['access_level'];
+                    break;
                 }
-                break;
             }
         }
 

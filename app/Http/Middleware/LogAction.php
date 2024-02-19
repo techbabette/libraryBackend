@@ -49,8 +49,8 @@ class LogAction
                     else{
                         $action = $option['text'];
                     }
+                    break;
                 }
-                break;
             }
         }
 
