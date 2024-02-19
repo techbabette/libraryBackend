@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreLinkRequest;
+use App\Http\Requests\LinkStoreRequest;
 use App\Models\Link;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class LinkController extends Controller
         return response($links);
     }
 
-    public function store(StoreLinkRequest $request){
+    public function store(LinkStoreRequest $request){
         $requestData = $request->validated();
 
         Link::create($requestData);

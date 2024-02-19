@@ -2,22 +2,23 @@
 
 namespace App\Http\Requests;
 
-use App\Models\EmailVerificationToken;
 use Illuminate\Foundation\Http\FormRequest;
 
-class VerifyEmailRequest extends FormRequest
+class UserAssumeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        $requestedUserId = $this->route("id");
-        $token = $this->route("token");
+        return true;
+    }
 
-        $tokenExistsForUser = EmailVerificationToken::where('user_id', '=', $requestedUserId)->where('token', '=', $token)->count() > 0;
-
-        return $tokenExistsForUser;
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'id' => $this->route('id')
+        ]);
     }
 
     /**
@@ -27,6 +28,9 @@ class VerifyEmailRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [];
+
+        return [
+            "id" => 'required|exists:users,id'
+        ];
     }
 }

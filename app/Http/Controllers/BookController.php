@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\BookStoreRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -57,7 +57,7 @@ class BookController extends Controller
 
     }
 
-    public function store(StoreBookRequest $request){
+    public function store(BookStoreRequest $request){
         $requestData = $request->all(['category_id', 'author_id', 'name', 'img', 'description', 'number_available']);
 
         $requestData['img'] = 'image.jpg';

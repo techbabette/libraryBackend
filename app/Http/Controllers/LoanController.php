@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ExtendLoanRequest;
-use App\Http\Requests\ReturnLoanRequest;
+use App\Http\Requests\LoanExtendRequest;
+use App\Http\Requests\LoanReturnRequest;
 use App\Models\Loan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -54,7 +54,7 @@ class LoanController extends Controller
         return response()->json(['message' => 'Successfully retrieved user loans', 'body' => $loans], 200);
     }
 
-    public function return(ReturnLoanRequest $request){
+    public function return(LoanReturnRequest $request){
         $loanId = $request->id;
 
         $loan = Loan::find($loanId);
@@ -65,7 +65,7 @@ class LoanController extends Controller
         return response()->json(['message' => 'Successfully returned book'], 200);
     }
 
-    public function extend(ExtendLoanRequest $request){
+    public function extend(LoanExtendRequest $request){
         $loanId = $request->id;
 
         $loan = Loan::find($loanId);

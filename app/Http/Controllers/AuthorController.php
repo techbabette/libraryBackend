@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAuthorRequest;
+use App\Http\Requests\AuthorStoreRequest;
 use App\Models\Author;
 use Illuminate\Http\Request;
 
@@ -19,7 +19,7 @@ class AuthorController extends Controller
 
         return $authors;
     }
-    public function store(StoreAuthorRequest $request){
+    public function store(AuthorStoreRequest $request){
         $requestData = $request->validated();
 
         Author::create($requestData);

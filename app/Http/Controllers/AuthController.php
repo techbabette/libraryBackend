@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AssumeUserRequest;
-use App\Http\Requests\RegisterUserRequest;
-use App\Http\Requests\VerifyEmailRequest;
+use App\Http\Requests\UserAssumeRequest;
+use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserVerifyEmailRequest;
 use App\Models\EmailVerificationToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +36,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function register(RegisterUserRequest $request)
+    public function register(UserRegisterRequest $request)
     {
         $credentials = $request->validated();
 
@@ -55,7 +55,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'We sent you a verification email'], 201);
     }
 
-    public function verifyEmail(VerifyEmailRequest $request){
+    public function verifyEmail(UserVerifyEmailRequest $request){
         $routeToken = $request->route('token');
         $tokenObject = EmailVerificationToken::where('token', '=', $routeToken)->first();
 
@@ -75,7 +75,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully activated account', 'body' => $token], 201);
     }
 
-    public function assumeUser(AssumeUserRequest $request){
+    public function assumeUser(UserAssumeRequest $request){
         $idRequested = $request->route('id');
 
         $token = auth()->tokenById($idRequested);

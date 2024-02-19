@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -18,7 +18,7 @@ class CategoryController extends Controller
 
         return $categories;
     }
-    public function store(StoreCategoryRequest $request){
+    public function store(CategoryStoreRequest $request){
         $requestData = $request->validated();
 
         Category::create($requestData);

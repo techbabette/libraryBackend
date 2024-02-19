@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class ReturnLoanRequest extends FormRequest
+class LoanExtendRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -43,8 +43,8 @@ class ReturnLoanRequest extends FormRequest
                 function(string $attribute, mixed $value, Closure $fail){
                     $loan = Loan::find($value);
 
-                    if($loan->returned){
-                        $fail("Book already returned");
+                    if($loan->extended){
+                        $fail("Loan already extended");
                     }
                 }
             ]
