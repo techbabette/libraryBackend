@@ -59,6 +59,8 @@ class BookController extends Controller
 
         $book['total_loans'] = $book->loanTotalCount();
         $book['current_loans'] = $book->loansCurrentCount();
+        $book['loaned_to_user'] = $book->loanedToCurrentUser();
+
         $book['currently_available'] = $book->number_owned - $book->current_loans;
 
         return response()->json(['message' => 'Successfully fetched book', 'body' => $book], 200);

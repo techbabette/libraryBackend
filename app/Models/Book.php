@@ -45,6 +45,14 @@ class Book extends Model
         return $this->loans->whereNull('returned')->count();
     }
 
+    public function loanedToCurrentUser(){
+        $userId = 0;
+        if(auth()->user()){
+            $userId = auth()->user()->id;
+        }
+        return !$this->loans->where('user_id', '=', $userId)->whereNotNull('returned')->isEmpty();
+    }
+
     public static function sortOptions(){
         return [
             ["id" => 0, "text" => "Newest first"],
