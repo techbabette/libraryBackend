@@ -12,19 +12,40 @@ class CategoryController extends Controller
     public function index(Request $request){
         $categories = Category::query();
 
-        if($request->get('withLoanCount') || $request->get('onlyLoanCount')){
-            $categories->withCount("loans")->having("loans_count" , '>', 0);
+        if($request->get('havingBooks')){
+            $categories->has('books');
         }
 
-        if($request->get('onlyLoanCount')){
-            return $categories->get();
+        if($request->get('havingActiveLoans')){
+            $categories->has("activeLoans");
+        }
+
+        if($request->get('havingLoans')){
+            $categories->has("loans");
+        }
+
+        if($request->get('withActiveLoanCount') || $request->get('onlyActiveLoanCount')){
+            $categories->withCount("activeLoans");
+            if($request->get('onlyActiveLoanCount')){
+                $categories = $categories->get();
+                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+            }
+        }
+
+        if($request->get('withLoanCount') || $request->get('onlyLoanCount')){
+            $categories->withCount("loans");
+            if($request->get('onlyLoanCount')){
+                $categories = $categories->get();
+                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+            }
         }
 
         if($request->get('onlyCount')){
-            return $categories->count();
+            $categories = $categories->get();
+            return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
         }
 
-        $categories = $categories->has('books')->withCount('books')->orderBy('books_count', 'desc')->get();
+        $categories = $categories->withCount('books')->orderBy('books_count', 'desc')->get();
 
         if($request->get('bookCountInName')){
             foreach ($categories as $category){
@@ -32,7 +53,7 @@ class CategoryController extends Controller
             }
         }
 
-        return $categories;
+        return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
     }
     public function store(CategoryStoreRequest $request){
         $requestData = $request->validated();

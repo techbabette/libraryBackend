@@ -10,14 +10,26 @@ use Illuminate\Http\Request;
 class AuthorController extends Controller
 {
     //
-    public function index(){
-        $authors = Author::has('books')->select('id', 'name', 'last_name')->withCount('books')->orderBy('books_count', 'desc')->get();
+    public function index(Request $request){
+        $authors = Author::query();
 
-        foreach ($authors as $auth){
-            $auth["full_name"] = $auth->getFullName() . " (" . $auth->books_count.")";
+        if($request->get('havingBooks')){
+            $authors->has('books');
         }
 
-        return $authors;
+        $authors = $authors->select('id', 'name', 'last_name')->withCount('books')->orderBy('books_count', 'desc')->get();
+
+        if($request->get('bookCountInName')){
+            foreach ($authors as $auth){
+                $auth["full_name"] = $auth->getFullName() . " (" . $auth->books_count.")";
+            }
+        }else{
+            foreach ($authors as $auth){
+                $auth["full_name"] = $auth->getFullName();
+            }
+        }
+
+        return response()->json(['message' => 'Successfully retrieved authors', 'body' => $authors], 200);
     }
     public function store(AuthorStoreRequest $request){
         $requestData = $request->validated();
