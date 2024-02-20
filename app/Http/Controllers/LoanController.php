@@ -47,7 +47,7 @@ class LoanController extends Controller
         }
 
         if($request->get('panel')){
-            $loans = $loans->with('user')->paginate($perPage);
+            $loans = $loans->with('user')->with('book')->paginate($perPage);
             return response()->json(['message' => 'Successfully retrieved all loans', 'body' => $loans], 200);
         }
 

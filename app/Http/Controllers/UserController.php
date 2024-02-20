@@ -29,7 +29,7 @@ class UserController extends Controller
             $perPage = $request->get('perPage');
         }
 
-        $users->paginate($perPage);
+        $users = $users->paginate($perPage);
 
         return response()->json(['message' => 'Successfully got user information', 'body' => $users], 200);
     }
