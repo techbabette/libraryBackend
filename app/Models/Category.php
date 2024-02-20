@@ -13,6 +13,14 @@ class Category extends Model
         'text',
     ];
 
+    public function loans(){
+        return $this->hasManyThrough(Loan::class, Book::class)->withTrashed();
+    }
+
+    public function activeLoans(){
+        return $this->hasManyThrough(Loan::class, Book::class);
+    }
+
     public function books(){
         return $this->hasMany(Book::class);
     }

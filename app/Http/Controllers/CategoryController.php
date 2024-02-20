@@ -9,11 +9,27 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(){
-        $categories = Category::has('books')->select(["id", "text"])->withCount('books')->orderBy('books_count', 'desc')->get();
+    public function index(Request $request){
+        $categories = Category::query();
 
-        foreach ($categories as $category){
-            $category["text"] = $category['text'] . " (" . $category->books_count.")";
+        if($request->get('withLoanCount') || $request->get('onlyLoanCount')){
+            $categories->withCount("loans")->having("loans_count" , '>', 0);
+        }
+
+        if($request->get('onlyLoanCount')){
+            return $categories->get();
+        }
+
+        if($request->get('onlyCount')){
+            return $categories->count();
+        }
+
+        $categories = $categories->has('books')->withCount('books')->orderBy('books_count', 'desc')->get();
+
+        if($request->get('bookCountInName')){
+            foreach ($categories as $category){
+                $category["text"] = $category['text'] . " (" . $category->books_count.")";
+            }
         }
 
         return $categories;
