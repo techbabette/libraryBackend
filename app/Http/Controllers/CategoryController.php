@@ -32,6 +32,22 @@ class CategoryController extends Controller
             }
         }
 
+        if($request->get('withLateLoanCount') || $request->get('onlyLateLoanCount')){
+            $categories->withCount("lateLoans");
+            if($request->get('onlyLateLoanCount')){
+                $categories = $categories->get();
+                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+            }
+        }
+
+        if($request->get('withNewLoanCount') || $request->get('onlyNewLoanCount')){
+            $categories->withCount("newLoans");
+            if($request->get('onlyNewLoanCount')){
+                $categories = $categories->get();
+                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+            }
+        }
+
         if($request->get('withLoanCount') || $request->get('onlyLoanCount')){
             $categories->withCount("loans");
             if($request->get('onlyLoanCount')){

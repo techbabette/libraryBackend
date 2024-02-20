@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId("book_id")->constrained();
             $table->foreignId("user_id")->constrained();
             $table->boolean("extended")->default(0)->nullable();
-            $table->timestamp("end");
+            $table->timestamp("end")->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

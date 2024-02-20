@@ -22,7 +22,7 @@ class LoanController extends Controller
         }
 
         if($request->get('late')){
-            $loans->where('end', '<', date('Y-m-d'));
+            $loans->late();
         }
 
         if($request->get('previous')){

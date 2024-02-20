@@ -42,6 +42,13 @@ class Loan extends Model
         return $this->belongsTo(Book::class);
     }
 
+    public function scopeNew($query){
+        $query->where('loans.created_at', '>=', Carbon::now()->addDays(-1));
+    }
+    public function scopeLate($query){
+        $query->where('end', '<=', Carbon::now());
+    }
+
     public static function create(array $attributes)
     {
         $attributes['end'] = Carbon::now()->addDays(20);
