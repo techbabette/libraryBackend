@@ -30,11 +30,11 @@ class LoanController extends Controller
         }
 
         if($request->get('since')){
-            $loans->whereDate('created_at', '>=', $request->get('since'));
+            $loans->where('created_at', '>=', $request->get('since'));
         }
 
         if($request->get('before')){
-            $loans->whereDate('created_at', '<=', $request->get('before'));
+            $loans->where('created_at', '<=', $request->get('before'));
         }
 
         if($request->get('onlyCount')){
