@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserShowRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -32,5 +33,12 @@ class UserController extends Controller
         $users = $users->paginate($perPage);
 
         return response()->json(['message' => 'Successfully got user information', 'body' => $users], 200);
+    }
+
+    public function show(UserShowRequest $request){
+        $requestedUserId = $request->route('id');
+        $user = User::find($requestedUserId);
+
+        return response()->json(['message' => 'Successfully got user information', 'body' => $user], 200);
     }
 }

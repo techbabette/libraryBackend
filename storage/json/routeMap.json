@@ -26,6 +26,9 @@
     "LogsGet" : {
         "access_level": 2
     },
+    "UserShow" : {
+        "access_level": 2
+    },
     "UsersGet": {
         "access_level": 2,
         "text": "Viewed user information",
