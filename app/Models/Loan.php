@@ -42,6 +42,33 @@ class Loan extends Model
         return $this->belongsTo(Book::class);
     }
 
+    public static function sortOptions(){
+        return [
+            ["id" => 'end', "text" => "Action"],
+            ["id" => 'started_at', "text" => "Started at", "default" => "desc"],
+        ];
+    }
+
+    public function scopeSort($query, string $sortSelected){
+        switch($sortSelected){
+            case 'end_desc':
+                $query->orderBy('end', 'desc');
+                break;
+            case 'end_asc' :
+                $query->orderBy('end', 'asc');
+                break;
+            case 'started_at_desc':
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'started_at_asc':
+                $query->orderBy('created_at', 'asc');
+                break;
+            default :
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+    }
+
     public function scopeNew($query){
         $query->where('loans.created_at', '>=', Carbon::now()->addDays(-1));
     }
