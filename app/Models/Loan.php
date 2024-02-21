@@ -44,24 +44,35 @@ class Loan extends Model
 
     public static function sortOptions(){
         return [
-            ["id" => 'end', "text" => "Action"],
+            ["id" => 'extended', "text" => 'Extended'],
+            ['id' => 'book.name', 'text' => 'Book name'],
+            ["id" => 'end', "text" => "Return by"],
             ["id" => 'started_at', "text" => "Started at", "default" => "desc"],
+            ["id" => 'returned_at', "text" => 'Returned at']
         ];
     }
 
     public function scopeSort($query, string $sortSelected){
-        switch($sortSelected){
-            case 'end_desc':
-                $query->orderBy('end', 'desc');
+        $base = explode("_", $sortSelected);
+        $mode = array_pop($base);
+        $allowedModes = ["asc", "desc"];
+        if(!in_array($mode, $allowedModes)){
+            return;
+        }
+        $baseString = implode('_', $base);
+        switch($baseString){
+            case 'returned_at' :
+                $query->orderBy('deleted_at', $mode);
+            case 'extended' :
+                $query->orderBy('extended', $mode);
                 break;
-            case 'end_asc' :
-                $query->orderBy('end', 'asc');
+            case 'book.name':
+                $query->withAggregate('book', 'name')->orderBy('book_name', $mode);
+            case 'end':
+                $query->orderBy('end', $mode);
                 break;
-            case 'started_at_desc':
-                $query->orderBy('created_at', 'desc');
-                break;
-            case 'started_at_asc':
-                $query->orderBy('created_at', 'asc');
+            case 'started_at':
+                $query->orderBy('created_at', $mode);
                 break;
             default :
                 $query->orderBy('created_at', 'desc');

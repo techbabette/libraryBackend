@@ -43,7 +43,7 @@ class LogAction
             $alternateOptions = $requestedRouteObject['subroute_options'];
             foreach($alternateOptions as $key => $option){
                 if($request->get($key)){
-                    if(!isset($pption['text'])){
+                    if(!isset($option['text'])){
                         $action = "";
                     }
                     else{
