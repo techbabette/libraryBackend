@@ -19,6 +19,9 @@
         "access_level": 2,
         "text": "Created a new message type"
     },
+    "LogsGet" : {
+        "access_level": 2
+    },
     "UsersGet": {
         "access_level": 2,
         "text": "Viewed user information",

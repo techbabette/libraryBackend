@@ -6,6 +6,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\MessageTypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -65,6 +66,12 @@ Route::group([
 ], function ($router){
    Route::get('/', [LinkController::class, 'index']);
    Route::post('/', [LinkController::class, "store"])->name('StoreLink');
+});
+
+Route::group([
+    "prefix" => "log"
+], function($router){
+   Route::get('/', [LogController::class, 'index'])->name('LogsGet');
 });
 
  Route::group([
