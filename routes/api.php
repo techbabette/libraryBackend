@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MessageTypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -35,6 +36,14 @@ Route::group([
 ], function ($router){
     Route::get("/", [MessageTypeController::class, "index"]);
     Route::post('/', [MessageTypeController::class, "store"])->name("StoreMessageType");
+});
+
+
+Route::group([
+    'prefix' => 'message'
+], function ($router){
+    Route::get("/", [MessageController::class, "index"]);
+    Route::post('/', [MessageController::class, "store"])->name("MessageStore");
 });
 
 Route::group([

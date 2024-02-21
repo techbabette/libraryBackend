@@ -57,6 +57,13 @@ class LinkSeeder extends Seeder
                 "access_level_id" => 1
             ],
             [
+              "text" => "Contact",
+              "to" => "Contact",
+              "link_position_id" => 1,
+              "weight" => 70,
+              "access_level_id" => 3
+            ],
+            [
                 "text" => "Author",
                 "to" => "Author",
                 "link_position_id" => 1,
