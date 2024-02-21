@@ -13,7 +13,7 @@ class LogController extends Controller
         $logs = Log::query();
 
         $perPage = 5;
-        $sortSelected = 'created_at_desc';
+        $sortDefault = 'created_at_desc';
 
         if($request->get('since')){
             $logs->where('created_at', '>=', $request->get('since'));
@@ -28,14 +28,15 @@ class LogController extends Controller
         }
 
         if($request->get('sortSelected')){
-            $sortSelected = $request->get('sortSelected');
+            $logs->sort($request->get('sortSelected'));
+        }else{
+            $logs->sort($sortDefault);
         }
 
         $sortOptions = Log::sortOptions();
-        $logs->sort($sortSelected);
 
         $logs = $logs->paginate($perPage);
 
-        return response()->json(['message' => 'Successfully retrieved logs', 'body' => $logs, 'sortOptions' => $sortOptions], 200);
+        return response()->json(['message' => 'Successfully retrieved logs', 'body' => $logs, 'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
     }
 }

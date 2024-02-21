@@ -47,12 +47,12 @@ class Loan extends Model
             ["id" => 'extended', "text" => 'Extended'],
             ['id' => 'book.name', 'text' => 'Book name'],
             ["id" => 'end', "text" => "Return by"],
-            ["id" => 'started_at', "text" => "Started at", "default" => "desc"],
+            ["id" => 'started_at', "text" => "Started at"],
             ["id" => 'returned_at', "text" => 'Returned at']
         ];
     }
 
-    public function scopeSort($query, string $sortSelected){
+    public function scopeSort($query, string $sortSelected = "started_at_desc"){
         $base = explode("_", $sortSelected);
         $mode = array_pop($base);
         $allowedModes = ["asc", "desc"];

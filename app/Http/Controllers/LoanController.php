@@ -14,7 +14,7 @@ class LoanController extends Controller
 {
     public function index(Request $request){
         $perPage = 5;
-        $sortSelected = "";
+        $sortDefault = 'started_at_desc';
 
         $loans = Loan::query()->with('book');
 
@@ -47,16 +47,18 @@ class LoanController extends Controller
             $perPage = $request->get('perPage');
         }
 
+        //Sort before retrieval, after filters
         if($request->get('sortSelected')){
-            $sortSelected = $request->get('sortSelected');
+            $loans->sort($request->get('sortSelected'));
+        }else{
+            $loans->sort($sortDefault);
         }
 
         $sortOptions = Loan::sortOptions();
-        $loans->sort($sortSelected);
 
         if($request->get('panel')){
             $loans = $loans->with('user')->with('book')->paginate($perPage);
-            return response()->json(['message' => 'Successfully retrieved all loans', 'body' => $loans, 'sortOptions' => $sortOptions], 200);
+            return response()->json(['message' => 'Successfully retrieved all loans', 'body' => $loans, 'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
         }
 
         $userId = auth()->user()->id;
@@ -64,7 +66,7 @@ class LoanController extends Controller
 
         $loans = $loans->paginate($perPage);
 
-        return response()->json(['message' => 'Successfully retrieved user loans', 'body' => $loans, 'sortOptions' => $sortOptions], 200);
+        return response()->json(['message' => 'Successfully retrieved user loans', 'body' => $loans, 'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
     }
 
     public function store(LoanStoreRequest $request){
