@@ -12,7 +12,7 @@ class MessageTypeController extends Controller
     public function index(){
         $messageTypes = MessageType::get(["id", "name"]);
 
-        return $messageTypes;
+        return response()->json(['message' => 'Successfully fetched message types', "body" => $messageTypes], 201);
     }
     public function store(MessageTypeStoreRequest $request){
         $requestData = $request->validated();
