@@ -15,6 +15,14 @@ class LogController extends Controller
         $perPage = 5;
         $sortSelected = 'created_at_desc';
 
+        if($request->get('since')){
+            $logs->where('created_at', '>=', $request->get('since'));
+        }
+
+        if($request->get('before')){
+            $logs->where('created_at', '<=', $request->get('before'));
+        }
+
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }
