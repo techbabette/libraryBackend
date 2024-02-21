@@ -14,7 +14,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $perPage = 3;
-        $sortSelected = 0;
+        $sortDefault = "created_at_desc";
 
         if($request->get('sortOptions')){
             $sortOptions = Book::sortOptions();
@@ -45,13 +45,21 @@ class BookController extends Controller
         }
 
         if($request->get('sortSelected')){
-            $sortSelected = $request->get("sortSelected");
+            $books->sort($request->get('sortSelected'));
+        }else{
+            $books->sort($sortDefault);
         }
 
-        Book::sort($books, $sortSelected);
+        $sortOptions = Book::sortOptions();
         $books = $books->paginate($perPage);
 
-        return response()->json(['message' => 'Successfully fetched books', 'body' => $books], 200);
+        return response()->json(
+            [
+            'message' => 'Successfully fetched books',
+            'body' => $books,
+            'sortOptions' => $sortOptions,
+            'sortDefault' => $sortDefault
+            ], 200);
     }
 
     public function show(BookShowRequest $request){

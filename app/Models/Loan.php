@@ -63,6 +63,7 @@ class Loan extends Model
         switch($baseString){
             case 'returned_at' :
                 $query->orderBy('deleted_at', $mode);
+                break;
             case 'extended' :
                 $query->orderBy('extended', $mode);
                 break;

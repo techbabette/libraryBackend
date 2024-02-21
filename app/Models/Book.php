@@ -68,39 +68,32 @@ class Book extends Model
 
     public static function sortOptions(){
         return [
-            ["id" => 0, "text" => "Newest first"],
-            ["id" => 1, "text" => "Oldest first"],
-            ["id" => 2, "text" => "Z-A"],
-            ["id" => 3, "text" => "A-Z"],
-            ["id" => 4, "text" => "Most popular"],
-            ["id" => 5, "text" => "Least popular"],
+            ["id" => "created_at", "text" => "Recency"],
+            ["id" => "name", "text" => "Book title"],
+            ["id" => "all_loans_count", "text" => "Popularity"],
         ];
     }
-    public static function sort(Builder $query, $selectedOption){
-        if($selectedOption === "0"){
-            $query->orderByDesc("created_at");
+    public function scopeSort(Builder $query, $sortSelected = "created_at_desc"){
+        $base = explode("_", $sortSelected);
+        $mode = array_pop($base);
+        $allowedModes = ["asc", "desc"];
+        if(!in_array($mode, $allowedModes)) {
+            return;
         }
-
-        if($selectedOption === "1"){
-            $query->orderBy("created_at");
+        $baseString = implode('_', $base);
+        switch($baseString) {
+            case 'created_at' :
+                $query->orderBy('created_at', $mode);
+                break;
+            case 'name' :
+                $query->orderBy('name', $mode);
+                break;
+            case 'all_loans_count':
+                $query->withCount('allLoans')->orderBy('all_loans_count', $mode);
+                break;
+            default :
+                $query->orderBy('created_at', 'desc');
+                break;
         }
-
-        if($selectedOption === "2"){
-            $query->orderByDesc("name");
         }
-
-        if($selectedOption === "3"){
-            $query->orderBy("name", 'asc');
-        }
-
-        if($selectedOption === "4"){
-            $query->withCount('allLoans')->orderByDesc('all_loans_count');
-        }
-
-        if($selectedOption === "5"){
-            $query->withCount('allLoans')->orderBy('all_loans_count');
-        }
-
-        return $query;
-    }
 }
