@@ -12,13 +12,34 @@ class AuthorController extends Controller
     //
     public function index(Request $request){
         $authors = Author::query();
+        $perPage = 5;
+        $sortDefault = 'books_count_desc';
 
         if($request->get('havingBooks')){
             $authors->has('books');
         }
 
-        $authors = $authors->select('id', 'name', 'last_name')->withCount('books')->orderBy('books_count', 'desc')->get();
+        $sortOptions = Author::SortOptons();
+        //Sort before retrieval, after filters
+        if($request->get('sortSelected')){
+            $authors->sort($request->get('sortSelected'));
+        }else{
+            $authors->sort($sortDefault);
+        }
 
+        //Retrieval
+        $authors->withCount('books');
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
+        }
+
+        if($request->get('noPage')){
+            $authors = $authors->select('id', 'name', 'last_name')->get();
+        }else{
+            $authors = $authors->paginate($perPage);
+        }
+
+        //In-memory changes
         if($request->get('bookCountInName')){
             foreach ($authors as $auth){
                 $auth["full_name"] = $auth->getFullName() . " (" . $auth->books_count.")";
@@ -29,7 +50,8 @@ class AuthorController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Successfully retrieved authors', 'body' => $authors], 200);
+        return response()->json(['message' => 'Successfully retrieved authors', 'body' => $authors,
+            'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
     }
     public function store(AuthorStoreRequest $request){
         $requestData = $request->validated();

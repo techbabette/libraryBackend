@@ -12,7 +12,13 @@ class UserController extends Controller
     public function index(Request $request){
         $users = User::query();
         $perPage = 5;
+        $sortDefault = 'created_at_desc';
 
+        $response = [];
+        $response['SortOptions'] = User::SortOptons();
+        $response['sortDefault'] = $sortDefault;
+
+        //Filters
         if($request->get('since')){
             $users->where('created_at', '>=', $request->get('since'));
         }
@@ -26,13 +32,32 @@ class UserController extends Controller
             return response()->json(['message' => 'Successfully got user count', 'body' => $bookCount], 200);
         }
 
+        //Sort
+        $sortOptions = User::SortOptons();
+        //Sort before retrieval, after filters
+        if($request->get('sortSelected')){
+            $users->sort($request->get('sortSelected'));
+        }else{
+            $users->sort($sortDefault);
+        }
+
+        //Retrieval
+        $users->withCount('loans');
+
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }
 
-        $users = $users->paginate($perPage);
+        if($request->get('noPage')){
+            $categories = $users->get();
+        }else{
+            $categories = $users->paginate($perPage);
+        }
 
-        return response()->json(['message' => 'Successfully got user information', 'body' => $users], 200);
+        $response['message'] = 'Successfully retrieved users';
+        $response['body'] = $categories;
+
+        return response()->json($response, 200);
     }
 
     public function show(UserShowRequest $request){

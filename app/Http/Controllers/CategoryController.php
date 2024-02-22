@@ -11,6 +11,8 @@ class CategoryController extends Controller
 {
     public function index(Request $request){
         $categories = Category::query();
+        $perPage = 5;
+        $sortDefault = 'books_count_desc';
 
         if($request->get('havingBooks')){
             $categories->has('books');
@@ -61,7 +63,21 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
         }
 
-        $categories = $categories->withCount('books')->orderBy('books_count', 'desc')->get();
+        $categories->withCount('books');
+
+        $sortOptions = Category::SortOptons();
+        //Sort before retrieval, after filters
+        if($request->get('sortSelected')){
+            $categories->sort($request->get('sortSelected'));
+        }else{
+            $categories->sort($sortDefault);
+        }
+
+        if($request->get('noPage')){
+            $categories = $categories->get();
+        }else{
+            $categories = $categories->paginate($perPage);
+        }
 
         if($request->get('bookCountInName')){
             foreach ($categories as $category){
@@ -69,7 +85,8 @@ class CategoryController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+        return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories,
+        'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
     }
     public function store(CategoryStoreRequest $request){
         $requestData = $request->validated();

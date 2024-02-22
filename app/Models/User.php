@@ -65,6 +65,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->role->belongsTo(AccessLevel::class);
     }
 
+    public function loans(){
+        return $this->hasMany(Loan::class)->withTrashed();
+    }
+
     public function linksForUser(){
         $userAccessLevel = $this->access_level->access_level;
         $links = Link::getLinksForAccessLevel($userAccessLevel);
@@ -77,5 +81,38 @@ class User extends Authenticatable implements JWTSubject
             'access_level' => $this->access_level->access_level,
             'name' => $this->getFullName()
         ];
+    }
+
+
+    public static function SortOptons(){
+        return [
+            ["id" => "email", 'text' => "Email"],
+            ["id" => "loans_count", 'text' => "Loan count"],
+            ["id" => "created_At", 'text' => "Created at"],
+        ];
+    }
+
+    public function scopeSort($query, string $sortSelected = "books_count_desc"){
+        $base = explode("_", $sortSelected);
+        $mode = array_pop($base);
+        $allowedModes = ["asc", "desc"];
+        if(!in_array($mode, $allowedModes)){
+            return;
+        }
+        $baseString = implode('_', $base);
+        switch($baseString){
+            case 'email' :
+                $query->orderBy('email', $mode);
+                break;
+            case 'loans_count' :
+                $query->withCount('loans')->orderBy('loans_count', $mode);
+                break;
+            case 'created_at':
+                $query->orderBy('created_at', $mode);
+                break;
+            default :
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
     }
 }
