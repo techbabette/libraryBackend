@@ -14,6 +14,11 @@ class CategoryController extends Controller
         $perPage = 5;
         $sortDefault = 'books_count_desc';
 
+        $response = [];
+        $response['message'] = 'Successfully retrieved categories';
+        $response['sortOptions'] = Category::sortOptions();
+        $response['sortDefault'] = $sortDefault;
+
         if($request->get('havingBooks')){
             $categories->has('books');
         }
@@ -30,7 +35,8 @@ class CategoryController extends Controller
             $categories->withCount("activeLoans");
             if($request->get('onlyActiveLoanCount')){
                 $categories = $categories->get();
-                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+                $response['body'] = $categories;
+                return response()->json($response, 200);
             }
         }
 
@@ -38,7 +44,8 @@ class CategoryController extends Controller
             $categories->withCount("lateLoans");
             if($request->get('onlyLateLoanCount')){
                 $categories = $categories->get();
-                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+                $response['body'] = $categories;
+                return response()->json($response, 200);
             }
         }
 
@@ -46,7 +53,8 @@ class CategoryController extends Controller
             $categories->withCount("newLoans");
             if($request->get('onlyNewLoanCount')){
                 $categories = $categories->get();
-                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+                $response['body'] = $categories;
+                return response()->json($response, 200);
             }
         }
 
@@ -54,18 +62,20 @@ class CategoryController extends Controller
             $categories->withCount("loans");
             if($request->get('onlyLoanCount')){
                 $categories = $categories->get();
-                return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+                $response['body'] = $categories;
+                return response()->json($response, 200);
             }
         }
 
         if($request->get('onlyCount')){
             $categories = $categories->get();
-            return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories], 200);
+            $response['body'] = $categories;
+            return response()->json($response, 200);
         }
 
         $categories->withCount('books');
 
-        $sortOptions = Category::SortOptons();
+        $sortOptions = Category::sortOptions();
         //Sort before retrieval, after filters
         if($request->get('sortSelected')){
             $categories->sort($request->get('sortSelected'));
@@ -85,8 +95,8 @@ class CategoryController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Successfully retrieved categories', 'body' => $categories,
-        'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
+        $response['body'] = $categories;
+        return response()->json($response, 200);
     }
     public function store(CategoryStoreRequest $request){
         $requestData = $request->validated();

@@ -15,7 +15,7 @@ class UserController extends Controller
         $sortDefault = 'created_at_desc';
 
         $response = [];
-        $response['sortOptions'] = User::SortOptons();
+        $response['sortOptions'] = User::sortOptions();
         $response['sortDefault'] = $sortDefault;
 
         //Filters
@@ -33,7 +33,7 @@ class UserController extends Controller
         }
 
         //Sort
-        $sortOptions = User::SortOptons();
+        $sortOptions = User::sortOptions();
         //Sort before retrieval, after filters
         if($request->get('sortSelected')){
             $users->sort($request->get('sortSelected'));

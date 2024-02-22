@@ -21,7 +21,7 @@ class Author extends Model
         return $this->hasMany(Book::class);
     }
 
-    public static function SortOptons(){
+    public static function sortOptions(){
         return [
             ["id" => "name", 'text' => "Name"],
             ["id" => "last_name", 'text' => "Last name"],

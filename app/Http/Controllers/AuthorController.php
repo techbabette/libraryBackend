@@ -15,11 +15,14 @@ class AuthorController extends Controller
         $perPage = 5;
         $sortDefault = 'books_count_desc';
 
+        $response = [];
+        $response['sortOptions'] = Author::sortOptions();
+        $response['sortDefault'] = $sortDefault;
+
         if($request->get('havingBooks')){
             $authors->has('books');
         }
 
-        $sortOptions = Author::SortOptons();
         //Sort before retrieval, after filters
         if($request->get('sortSelected')){
             $authors->sort($request->get('sortSelected'));
@@ -49,8 +52,10 @@ class AuthorController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Successfully retrieved authors', 'body' => $authors,
-            'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
+        $response['message'] = 'Successfully retrieved authors';
+        $response['body'] = $authors;
+
+        return response()->json($response, 200);
     }
     public function store(AuthorStoreRequest $request){
         $requestData = $request->validated();

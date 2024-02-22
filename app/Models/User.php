@@ -84,7 +84,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public static function SortOptons(){
+    public static function sortOptions(){
         return [
             ["id" => "email", 'text' => "Email"],
             ["id" => "loans_count", 'text' => "Loan count"],

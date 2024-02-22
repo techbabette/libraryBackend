@@ -34,7 +34,7 @@ class Category extends Model
         return $this->hasMany(Book::class);
     }
 
-    public static function SortOptons(){
+    public static function sortOptions(){
         return [
           ["id" => "text", 'text' => "Category name"],
           ["id" => "books_count", 'text' => "Book count"],

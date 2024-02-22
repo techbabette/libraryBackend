@@ -15,6 +15,11 @@ class LogController extends Controller
         $perPage = 5;
         $sortDefault = 'created_at_desc';
 
+        $response = [];
+        $response['sortOptions'] = Log::sortOptions();
+        $response['sortDefault'] = $sortDefault;
+
+        //Filters
         if($request->get('since')){
             $logs->where('created_at', '>=', $request->get('since'));
         }
@@ -23,20 +28,22 @@ class LogController extends Controller
             $logs->where('created_at', '<=', $request->get('before'));
         }
 
-        if($request->get('perPage')){
-            $perPage = $request->get('perPage');
-        }
-
+        //Sorting
         if($request->get('sortSelected')){
             $logs->sort($request->get('sortSelected'));
         }else{
             $logs->sort($sortDefault);
         }
 
-        $sortOptions = Log::sortOptions();
+        //Retrieval
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
+        }
 
         $logs = $logs->paginate($perPage);
+        $response['body'] = $logs;
+        $response['message'] = 'Successfully retrieved logs';
 
-        return response()->json(['message' => 'Successfully retrieved logs', 'body' => $logs, 'sortOptions' => $sortOptions, 'sortDefault' => $sortDefault], 200);
+        return response()->json($response, 200);
     }
 }
