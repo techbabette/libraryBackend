@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookDeleteRequest;
 use App\Http\Requests\BookShowRequest;
 use App\Http\Requests\BookStoreRequest;
 use App\Models\Book;
-use Illuminate\Http\Request;
 use function Webmozart\Assert\Tests\StaticAnalysis\integer;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -26,11 +27,16 @@ class BookController extends Controller
             return response()->json(['message' => 'Successfully fetched sort options', 'body' => $sortOptions], 200);
         }
 
-        if($request->get('perPage')){
-            $perPage = $request->get('perPage');
+        $books=Book::query();
+
+        //Filters
+        if($request->get('currentAndPrevious')){
+            $books->withTrashed();
         }
 
-        $books = Book::with('author')->with('category');
+        if($request->get('previous')){
+            $books->onlyTrashed();
+        }
 
         if($request->get('title')){
             $books->where('name', 'LIKE', '%'.$request->get('title').'%');
@@ -44,15 +50,25 @@ class BookController extends Controller
             $books->whereIn('author_id', $request->get('authors'));
         }
 
+        //Early response
         if($request->get('onlyCount')){
             $bookCount = Book::count();
             return response()->json(['message' => 'Successfully got book count', 'body' => $bookCount], 200);
         }
 
+        //Select before sort
+        $books->with('author')->with('category');
+
+        //Sort
         if($request->get('sortSelected')){
             $books->sort($request->get('sortSelected'));
         }else{
             $books->sort($sortDefault);
+        }
+
+
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
         }
 
         $books = $books->paginate($perPage);
@@ -83,5 +99,17 @@ class BookController extends Controller
         Book::create($requestData);
 
         return response()->json(['message' => 'Successfully created new book'], 201);
+    }
+
+    public function delete(BookDeleteRequest $request){
+        $bookId = $request->id;
+
+        $response = [];
+
+        $book = Book::find($bookId);
+
+        $book->delete();
+
+        return response()->json(['message' => 'Successfully deleted book'], 201);
     }
 }

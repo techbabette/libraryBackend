@@ -52,6 +52,7 @@ Route::group([
     Route::get("/", [BookController::class, "index"]);
     Route::get('/{id}', [BookController::class, "show"]);
     Route::post('/', [BookController::class, "store"])->name('StoreBook');
+    Route::delete('/{id}', [BookController::class, "delete"])->name('DeleteBook');
 });
 
 Route::group([

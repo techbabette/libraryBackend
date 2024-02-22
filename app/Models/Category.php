@@ -14,8 +14,13 @@ class Category extends Model
         'text',
     ];
 
+    public function books(){
+        return $this->hasMany(Book::class);
+    }
+    
+    //Get total loan count, including inactive books and inactive loans
     public function loans(){
-        return $this->hasManyThrough(Loan::class, Book::class)->withTrashed();
+        return $this->hasManyThrough(Loan::class, Book::class)->withTrashedParents()->withTrashed();
     }
 
     public function activeLoans(){
@@ -28,10 +33,6 @@ class Category extends Model
 
     public function lateLoans(){
         return $this->activeLoans()->late();
-    }
-
-    public function books(){
-        return $this->hasMany(Book::class);
     }
 
     public static function sortOptions(){

@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Category;
+
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory; use SoftDeletes;
 
 //$table->foreignId("category_id")->constrained();
 //$table->foreignId("author_id")->constrained();
@@ -32,10 +35,10 @@ class Book extends Model
         return $this->belongsTo(Author::class);
     }
 
-
     public function allLoans(){
         return $this->hasMany(Loan::class)->withTrashed();
     }
+
     public function loans(){
         return $this->hasMany(Loan::class);
     }

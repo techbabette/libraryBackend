@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('img', 50);
             $table->text("description");
             $table->unsignedInteger("number_owned");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
