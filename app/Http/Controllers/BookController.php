@@ -7,6 +7,7 @@ use App\Http\Requests\BookShowRequest;
 use App\Http\Requests\BookStoreRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use function Webmozart\Assert\Tests\StaticAnalysis\integer;
 
 class BookController extends Controller
 {

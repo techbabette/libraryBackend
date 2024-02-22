@@ -28,13 +28,12 @@ class AuthorController extends Controller
         }
 
         //Retrieval
-        $authors->withCount('books');
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }
 
         if($request->get('noPage')){
-            $authors = $authors->select('id', 'name', 'last_name')->get();
+            $authors = $authors->get();
         }else{
             $authors = $authors->paginate($perPage);
         }
