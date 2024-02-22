@@ -15,7 +15,7 @@ class UserController extends Controller
         $sortDefault = 'created_at_desc';
 
         $response = [];
-        $response['SortOptions'] = User::SortOptons();
+        $response['sortOptions'] = User::SortOptons();
         $response['sortDefault'] = $sortDefault;
 
         //Filters

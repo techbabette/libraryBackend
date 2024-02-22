@@ -26,7 +26,7 @@ class Author extends Model
             ["id" => "name", 'text' => "Name"],
             ["id" => "last_name", 'text' => "Last name"],
             ["id" => "books_count", 'text' => "Book count"],
-            ["id" => "created_At", 'text' => "Created at"],
+            ["id" => "created_at", 'text' => "Created at"],
         ];
     }
 
