@@ -71,7 +71,11 @@ class BookController extends Controller
             $perPage = $request->get('perPage');
         }
 
-        $books = $books->paginate($perPage);
+        if($request->get('noPage')){
+            $books = $books->get();
+        }else{
+            $books = $books->paginate($perPage);
+        }
 
         $response['message'] = 'Successfully fetched books';
         $response['body'] = $books;

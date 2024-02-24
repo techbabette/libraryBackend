@@ -10,7 +10,15 @@ use Illuminate\Http\Request;
 class MessageTypeController extends Controller
 {
     public function index(){
-        $messageTypes = MessageType::get(["id", "name"]);
+        $perPage = 5;
+
+        $messageTypes = MessageType::query();
+
+        if($request->get('noPage')){
+            $messageTypes = $messageTypes->get();
+        }else{
+            $messageTypes = $messageTypes->paginate($perPage);
+        }
 
         return response()->json(['message' => 'Successfully fetched message types', "body" => $messageTypes], 201);
     }

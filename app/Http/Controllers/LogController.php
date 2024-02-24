@@ -40,7 +40,12 @@ class LogController extends Controller
             $perPage = $request->get('perPage');
         }
 
-        $logs = $logs->paginate($perPage);
+        if($request->get('noPage')){
+            $logs = $logs->get();
+        }else{
+            $logs = $logs->paginate($perPage);
+        }
+
         $response['body'] = $logs;
         $response['message'] = 'Successfully retrieved logs';
 

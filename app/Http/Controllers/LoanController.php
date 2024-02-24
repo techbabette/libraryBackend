@@ -76,7 +76,11 @@ class LoanController extends Controller
         $userId = auth()->user()->id;
         $loans->where('user_id', '=', $userId);
 
-        $loans = $loans->paginate($perPage);
+        if($request->get('noPage')){
+            $laons = $laons->get();
+        }else{
+            $laons = $laons->paginate($perPage);
+        }
 
         $response['message'] = 'Successfully retrieved user loans';
         $response['body'] = $loans;
