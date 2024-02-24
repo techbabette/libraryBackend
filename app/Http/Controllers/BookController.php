@@ -66,7 +66,6 @@ class BookController extends Controller
             $books->sort($sortDefault);
         }
 
-
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }
@@ -77,6 +76,10 @@ class BookController extends Controller
             $books = $books->paginate($perPage);
         }
 
+        // foreach($books as $book){
+        //     $book['favorite_id'] = $book->favoriteToUser();
+        // }
+
         $response['message'] = 'Successfully fetched books';
         $response['body'] = $books;
 
@@ -84,13 +87,16 @@ class BookController extends Controller
     }
 
     public function show(BookShowRequest $request){
-        $book = Book::with('author')->with('category')->find($request->id);
+        $book = Book::with('author')->with('category');
 
-        $book['total_loans'] = $book->loanTotalCount();
-        $book['current_loans'] = $book->loansCurrentCount();
-        $book['loan_id'] = $book->loanedToCurrentUser();
+        // $book->with('loanToCurrentUser:id,book_id');
+        // $book->with('favoriteToCurrentUser:id,book_id');
+        $book->withCount('allLoans');
+        $book->withCount('loans');
+        $book = $book->find($request->id);
 
-        $book['currently_available'] = $book->number_owned - $book->current_loans;
+        $book['loan_to_user_id'] = $book->loanToCurrentUser();
+        $book['favorite_to_user_id'] = $book->favoriteToCurrentUser();
 
         return response()->json(['message' => 'Successfully fetched book', 'body' => $book], 200);
     }

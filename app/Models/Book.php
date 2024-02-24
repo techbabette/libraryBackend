@@ -52,11 +52,15 @@ class Book extends Model
         return $this->loans->count();
     }
 
+    public function favorites(){
+        return $this->hasMany(Favorite::class);
+    }
+
     public function currentlyAvailable(){
         return $this->number_owned - $this->loansCurrentCount();
     }
 
-    public function loanedToCurrentUser(){
+    public function loanToCurrentUser(){
         $userId = 0;
         if(auth()->user()){
             $userId = auth()->user()->id;
@@ -68,6 +72,22 @@ class Book extends Model
         else{
             return false;
         }
+        // return $this->hasMany(Loan::class)->where('user_id', $userId);
+    }
+
+    public function favoriteToCurrentUser(){
+        $userId = 0;
+        if(auth()->user()){
+            $userId = auth()->user()->id;
+        }
+        $activefavorite = $this->favorites->where('user_id', '=', $userId)->first();
+        if($activefavorite){
+            return $activefavorite->id;
+        }
+        else{
+            return false;
+        }
+        // return $this->hasOne(Favorite::class)->where('user_id', $userId);
     }
 
     public static function sortOptions(){

@@ -30,7 +30,7 @@ class BookDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "id" => "exists:books,id,deleted_at,NULL"
+            "id" => "required|exists:books,id,deleted_at,NULL"
         ];
     }
 }

@@ -34,6 +34,10 @@ class LoanStoreRequest extends FormRequest
                 "required",
                 function (string $attribute, mixed $value, Closure $fail){
                     $book = Book::find($value);
+                    if(!$book){
+                        $fail("Book not active");
+                        return;
+                    }
                     if($book->currentlyAvailable() < 1){
                         $fail("Zero copies available");
                     }

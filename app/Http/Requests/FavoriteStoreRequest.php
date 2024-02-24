@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookShowRequest extends FormRequest
+class FavoriteStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -19,18 +19,10 @@ class BookShowRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'id' => $this->route('id')
-        ]);
-    }
-
     public function rules(): array
     {
         return [
-            "id" => "required|exists:books,id"
+            //
         ];
     }
 }

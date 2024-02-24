@@ -20,9 +20,19 @@ class LoanController extends Controller
         $response['sortOptions'] = Loan::sortOptions();
         $response['sortDefault'] = $sortDefault;
 
-        $loans = Loan::query()->with('book');
+        $loans = Loan::query()->with(['book' => function ($query) {
+            return $query->withTrashed();
+        }]);
 
         //Filters
+
+        //Limit response for base case
+        if(!$request->get('panel') && auth()->user()){
+            $userId = auth()->user()->id;
+            $loans->where('user_id', '=', $userId);
+            $response['message'] = 'Successfully retrieved user loans';
+        }
+
         if($request->get('currentAndPrevious')){
             $loans->withTrashed();
         }
@@ -58,28 +68,16 @@ class LoanController extends Controller
             $loans->sort($sortDefault);
         }
 
-        $sortOptions = Loan::sortOptions();
+        //Selection
+        if($request->get('panel')){
+            $loans = $loans->with('user')->with('book');
+            $response['message'] = 'Successfully retrieved all loans';
+        }
 
+        //Retrieval
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }
-
-        //Early resposne if query param present
-        if($request->get('panel')){
-            $loans = $loans->with('user')->with('book');
-            if($request->get('noPage')){
-                $loans = $loans->get();
-            }else{
-                $loans = $loans->paginate($perPage);
-            }
-            $response['message'] = 'Successfully retrieved all loans';
-            $response['body'] = $loans;
-            return response()->json($response, 200);
-        }
-
-        //Response for base case
-        $userId = auth()->user()->id;
-        $loans->where('user_id', '=', $userId);
 
         if($request->get('noPage')){
             $loans = $loans->get();
@@ -87,7 +85,6 @@ class LoanController extends Controller
             $loans = $loans->paginate($perPage);
         }
 
-        $response['message'] = 'Successfully retrieved user loans';
         $response['body'] = $loans;
         return response()->json($response, 200);
     }
