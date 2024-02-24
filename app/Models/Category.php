@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use SortHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,14 +45,8 @@ class Category extends Model
     }
 
     public function scopeSort($query, string $sortSelected = "books_count_desc"){
-        $base = explode("_", $sortSelected);
-        $mode = array_pop($base);
-        $allowedModes = ["asc", "desc"];
-        if(!in_array($mode, $allowedModes)){
-            return;
-        }
-        $baseString = implode('_', $base);
-        switch($baseString){
+        extract(SortHelper::sortOptionAndMode($sortSelected));
+        switch($sortOption){
             case 'text' :
                 $query->orderBy('text', $mode);
                 break;

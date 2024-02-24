@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use SortHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,24 +24,16 @@ class Log extends Model
     }
 
     public function scopeSort($query, string $sortSelected){
-        switch($sortSelected){
-            case 'issuer_desc':
-                $query->orderBy('issuer', 'desc');
+        extract(SortHelper::sortOptionAndMode($sortSelected));
+        switch($sortOption){
+            case 'issuer':
+                $query->orderBy('issuer', $mode);
                 break;
-            case 'issuer_asc' :
-                $query->orderBy('issuer', 'asc');
+            case 'created_at':
+                $query->orderBy('created_at', $mode);
                 break;
-            case 'created_at_desc':
-                $query->orderBy('created_at', 'desc');
-                break;
-            case 'created_at_asc':
-                $query->orderBy('created_at', 'asc');
-                break;
-            case 'action_desc':
-                $query->orderBy('action', 'desc');
-                break;
-            case 'action_asc':
-                $query->orderBy('action', 'asc');
+            case 'action':
+                $query->orderBy('action', $mode);
                 break;
             default :
                 $query->orderBy('created_at', 'desc');

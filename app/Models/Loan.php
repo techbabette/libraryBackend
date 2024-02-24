@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use SortHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,14 +54,8 @@ class Loan extends Model
     }
 
     public function scopeSort($query, string $sortSelected = "started_at_desc"){
-        $base = explode("_", $sortSelected);
-        $mode = array_pop($base);
-        $allowedModes = ["asc", "desc"];
-        if(!in_array($mode, $allowedModes)){
-            return;
-        }
-        $baseString = implode('_', $base);
-        switch($baseString){
+        extract(SortHelper::sortOptionAndMode($sortSelected));
+        switch($sortOption){
             case 'returned_at' :
                 $query->orderBy('deleted_at', $mode);
                 break;

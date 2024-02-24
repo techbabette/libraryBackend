@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+use SortHelper;
+
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -88,19 +90,13 @@ class User extends Authenticatable implements JWTSubject
         return [
             ["id" => "email", 'text' => "Email"],
             ["id" => "loans_count", 'text' => "Loan count"],
-            ["id" => "created_At", 'text' => "Created at"],
+            ["id" => "created_at", 'text' => "Created at"],
         ];
     }
 
     public function scopeSort($query, string $sortSelected = "books_count_desc"){
-        $base = explode("_", $sortSelected);
-        $mode = array_pop($base);
-        $allowedModes = ["asc", "desc"];
-        if(!in_array($mode, $allowedModes)){
-            return;
-        }
-        $baseString = implode('_', $base);
-        switch($baseString){
+        extract(SortHelper::sortOptionAndMode($sortSelected));
+        switch($sortOption){
             case 'email' :
                 $query->orderBy('email', $mode);
                 break;

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use SortHelper;
+
 class Author extends Model
 {
     use HasFactory;
@@ -31,14 +33,8 @@ class Author extends Model
     }
 
     public function scopeSort($query, string $sortSelected = "books_count_desc"){
-        $base = explode("_", $sortSelected);
-        $mode = array_pop($base);
-        $allowedModes = ["asc", "desc"];
-        if(!in_array($mode, $allowedModes)){
-            return;
-        }
-        $baseString = implode('_', $base);
-        switch($baseString){
+        extract(SortHelper::sortOptionAndMode($sortSelected));
+        switch($sortOption){
             case 'name' :
                 $query->orderBy('name', $mode);
                 break;

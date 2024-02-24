@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Category;
+use SortHelper;
 
 class Book extends Model
 {
@@ -77,14 +78,8 @@ class Book extends Model
         ];
     }
     public function scopeSort(Builder $query, $sortSelected = "created_at_desc"){
-        $base = explode("_", $sortSelected);
-        $mode = array_pop($base);
-        $allowedModes = ["asc", "desc"];
-        if(!in_array($mode, $allowedModes)) {
-            return;
-        }
-        $baseString = implode('_', $base);
-        switch($baseString) {
+        extract(SortHelper::sortOptionAndMode($sortSelected));
+        switch($sortOption){
             case 'created_at' :
                 $query->orderBy('created_at', $mode);
                 break;
