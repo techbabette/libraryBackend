@@ -60,8 +60,10 @@ class AuthorController extends Controller
     public function store(AuthorStoreRequest $request){
         $requestData = $request->validated();
 
-        Author::create($requestData);
+        $newAuthorId = Author::create($requestData)->id;
+        $response['message'] = 'Successfully created new author';
+        $response['body']['author_id'] = $newAuthorId;
 
-        return response()->json(['message' => 'Successfully created new author'], 201);
+        return response()->json($response, 201);
     }
 }

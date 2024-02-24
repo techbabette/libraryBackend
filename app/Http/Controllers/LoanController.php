@@ -51,10 +51,6 @@ class LoanController extends Controller
             return response()->json($response, 200);
         }
 
-        if($request->get('perPage')){
-            $perPage = $request->get('perPage');
-        }
-
         //Sort before retrieval, after filters
         if($request->get('sortSelected')){
             $loans->sort($request->get('sortSelected'));
@@ -64,9 +60,18 @@ class LoanController extends Controller
 
         $sortOptions = Loan::sortOptions();
 
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
+        }
+
         //Early resposne if query param present
         if($request->get('panel')){
-            $loans = $loans->with('user')->with('book')->paginate($perPage);
+            $loans = $loans->with('user')->with('book');
+            if($request->get('noPage')){
+                $loans = $loans->get();
+            }else{
+                $loans = $loans->paginate($perPage);
+            }
             $response['message'] = 'Successfully retrieved all loans';
             $response['body'] = $loans;
             return response()->json($response, 200);
@@ -77,9 +82,9 @@ class LoanController extends Controller
         $loans->where('user_id', '=', $userId);
 
         if($request->get('noPage')){
-            $laons = $laons->get();
+            $loans = $loans->get();
         }else{
-            $laons = $laons->paginate($perPage);
+            $loans = $loans->paginate($perPage);
         }
 
         $response['message'] = 'Successfully retrieved user loans';

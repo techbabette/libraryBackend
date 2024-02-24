@@ -83,6 +83,10 @@ class CategoryController extends Controller
             $categories->sort($sortDefault);
         }
 
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
+        }
+
         if($request->get('noPage')){
             $categories = $categories->get();
         }else{
@@ -101,8 +105,10 @@ class CategoryController extends Controller
     public function store(CategoryStoreRequest $request){
         $requestData = $request->validated();
 
-        Category::create($requestData);
+        $newCategoryId = Category::create($requestData)->id;
+        $response['message'] = 'Successfully created new category';
+        $response['body']['category_id'] = $newCategoryId;
 
-        return response()->json(['message' => 'Successfully created new category'], 201);
+        return response()->json($response, 201);
     }
 }

@@ -24,8 +24,10 @@ class LinkController extends Controller
     public function store(LinkStoreRequest $request){
         $requestData = $request->validated();
 
-        Link::create($requestData);
+        $newLinkId = Link::create($requestData)->id;
+        $response['message'] = 'Successfully created new link';
+        $response['body']['link_id'] = $newLinkId;
 
-        return response()->json(['message' => 'Successfully created new link'], 201);
+        return response()->json($response, 201);
     }
 }

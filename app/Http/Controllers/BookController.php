@@ -97,12 +97,13 @@ class BookController extends Controller
 
     public function store(BookStoreRequest $request){
         $requestData = $request->all(['category_id', 'author_id', 'name', 'img', 'description', 'number_owned']);
-
         $requestData['img'] = 'image.jpg';
 
-        Book::create($requestData);
+        $newBookId = Book::create($requestData)->id;
+        $response['message'] = 'Successfully created new book';
+        $response['body']['book_id'] = $newBookId;
 
-        return response()->json(['message' => 'Successfully created new book'], 201);
+        return response()->json($response, 201);
     }
 
     public function delete(BookDeleteRequest $request){
