@@ -36,7 +36,7 @@ Route::group([
 Route::group([
     'prefix' => 'messagetype'
 ], function ($router){
-    Route::get("/", [MessageTypeController::class, "index"]);
+    Route::get("/", [MessageTypeController::class, "index"])->name('MessageTypesGet');
     Route::post('/', [MessageTypeController::class, "store"])->name("StoreMessageType");
 });
 

@@ -9,10 +9,14 @@ use Illuminate\Http\Request;
 
 class MessageTypeController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $perPage = 5;
 
         $messageTypes = MessageType::query();
+
+        if($request->get('panel')){
+            $messageTypes->withCount('messages');
+        }
 
         if($request->get('noPage')){
             $messageTypes = $messageTypes->get();

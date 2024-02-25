@@ -19,6 +19,14 @@
         "access_level": 1,
         "text" : "Sent a message"
     },
+    "MessageTypesGet" : {
+        "access_level" : 1,
+        "subroute_options" : {
+            "panel" : {
+                "access_level" : 2
+            }
+        }
+    },
     "StoreMessageType": {
         "access_level": 2,
         "text": "Created a new message type"
