@@ -40,15 +40,11 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-        $defaultRoleId = 2;
-
-        $credentials['role_id'] = $defaultRoleId;
-
         $newUserId = User::create($credentials)->id;
 
         $activationToken = md5(uniqid(rand())).md5(time()).md5(uniqid(rand()));
 
-        EmailVerificationToken::create(["user_id" => $newUserId, "role_id" => $defaultRoleId, "token" => $activationToken]);
+        EmailVerificationToken::create(["user_id" => $newUserId, "token" => $activationToken, "access_level_id" => 3]);
 
         //In the future, send email here
 
@@ -60,11 +56,9 @@ class AuthController extends Controller
         $tokenObject = EmailVerificationToken::where('token', '=', $routeToken)->first();
 
         $userToActivateId = $tokenObject->user->id;
-        $newUserRole = $tokenObject->role->id;
         $timeOfActivation = now();
 
         $user = User::find($userToActivateId);
-        $user->role_id = $newUserRole;
         $user->email_verified_at = $timeOfActivation;
         $user->save();
 

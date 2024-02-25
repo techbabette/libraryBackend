@@ -18,7 +18,7 @@ class LinkController extends Controller
         $response['message'] = 'Successfully retrieved links';
         $response['sortDefault'] = $sortDefault;
 
-        $links->with("access_level");
+        $links->with("access_level")->with('link_position');
 
         if($request->get('perPage')){
             $perPage = $request->get('perPage');

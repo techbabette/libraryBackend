@@ -23,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
-        'role_id',
+        'access_level_id',
         'last_name',
         'email',
         'password',
@@ -59,12 +59,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->getKey();
     }
 
-    public function role(){
-        return $this->belongsTo(Role::class);
-    }
-
     public function access_level(){
-        return $this->role->belongsTo(AccessLevel::class);
+        return $this->belongsTo(AccessLevel::class);
     }
 
     public function loans(){

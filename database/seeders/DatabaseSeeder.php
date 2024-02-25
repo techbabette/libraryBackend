@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
             AccessLevelSeeder::class,
             LinkPositionSeeder::class,
             LinkSeeder::class,
-            RoleSeeder::class,
             CategorySeeder::class,
             AuthorSeeder::class,
             BookSeeder::class,
