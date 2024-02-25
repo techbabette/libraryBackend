@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FavoriteDeleteRequest;
+use App\Http\Requests\FavoriteStoreRequest;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $perPage = 5;
         $sortDefault = 'created_at_desc';
 
@@ -20,7 +23,7 @@ class FavoriteController extends Controller
             return response()->json($response, 200);
         }
 
-        $favorites = Favorite::query();
+        $favorites = Favorite::query()->with('book');
 
         //Filters
         
@@ -42,6 +45,12 @@ class FavoriteController extends Controller
         if($request->get('panel')){
             $favorites = $favorites->with('user')->with('book');
             $response['message'] = 'Successfully retrieved all favorites';
+        }
+
+        if($request->get('sortSelected')){
+            $favorites->sort($request->get('sortSelected'));
+        }else{
+            $favorites->sort($sortDefault);
         }
 
         if($request->get('perPage')){
@@ -68,7 +77,7 @@ class FavoriteController extends Controller
         return response()->json($response, 200);
     }
 
-    public function delete(FavoriteStoreRequest $request){
+    public function delete(FavoriteDeleteRequest $request){
         $favoriteId = $request->id;
 
         $favorite = Favorite::find($favoriteId);

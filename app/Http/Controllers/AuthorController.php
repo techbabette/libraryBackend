@@ -19,6 +19,14 @@ class AuthorController extends Controller
         $response['sortOptions'] = Author::sortOptions();
         $response['sortDefault'] = $sortDefault;
 
+        if($request->get('currentAndPrevious')){
+            $categories->withTrashed();
+        }
+
+        if($request->get('previous')){
+            $categories->onlyTrashed();
+        }
+
         if($request->get('havingBooks')){
             $authors->has('books');
         }

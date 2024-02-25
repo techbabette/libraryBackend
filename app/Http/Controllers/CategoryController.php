@@ -19,6 +19,14 @@ class CategoryController extends Controller
         $response['sortOptions'] = Category::sortOptions();
         $response['sortDefault'] = $sortDefault;
 
+        if($request->get('currentAndPrevious')){
+            $categories->withTrashed();
+        }
+
+        if($request->get('previous')){
+            $categories->onlyTrashed();
+        }
+
         if($request->get('havingBooks')){
             $categories->has('books');
         }

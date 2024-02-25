@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Favorite;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FavoriteStoreRequest extends FormRequest
@@ -11,7 +12,11 @@ class FavoriteStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $userId = auth()->user()->id;
+        $bookId = $this->input('book_id');
+
+        $alreadyfavorite = Favorite::where('user_id', '=', $userId)->where('book_id', '=', $bookId)->exists();
+        return !$alreadyfavorite;
     }
 
     /**
@@ -22,7 +27,7 @@ class FavoriteStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "book_id" => "required|exists:books,id"
         ];
     }
 }

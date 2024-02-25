@@ -87,7 +87,7 @@ class BookController extends Controller
     }
 
     public function show(BookShowRequest $request){
-        $book = Book::with('author')->with('category');
+        $book = Book::withTrashed()->with('author')->with('category');
 
         // $book->with('loanToCurrentUser:id,book_id');
         // $book->with('favoriteToCurrentUser:id,book_id');

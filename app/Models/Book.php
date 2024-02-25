@@ -29,11 +29,11 @@ class Book extends Model
     ];
 
     public function category(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->withTrashed();
     }
 
     public function author(){
-        return $this->belongsTo(Author::class);
+        return $this->belongsTo(Author::class)->withTrashed();
     }
 
     public function allLoans(){

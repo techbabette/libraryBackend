@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LogController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\MessageTypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +72,14 @@ Route::group([
     Route::post('/', [LoanController::class, 'store'])->name('LoanStore');
     Route::patch('/return/{id}', [LoanController::class, 'return'])->name('ReturnLoan');
     Route::patch('/extend/{id}', [LoanController::class, 'extend'])->name('ExtendLoan');
+});
+
+Route::group([
+    "prefix" => "favorite"
+], function($router){
+    Route::get("/", [FavoriteController::class, 'index'])->name('FavoritesGet');
+    Route::post("/", [FavoriteController::class, 'store'])->name('FavoriteStore');
+    Route::delete("/{id}", [FavoriteController::class, 'delete'])->name("FavoriteDelete");
 });
 
 Route::group([
