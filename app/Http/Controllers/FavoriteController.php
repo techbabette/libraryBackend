@@ -23,7 +23,9 @@ class FavoriteController extends Controller
             return response()->json($response, 200);
         }
 
-        $favorites = Favorite::query()->with('book');
+        $favorites = Favorite::query()->with(['book' => function ($query) {
+            return $query->withTrashed();
+        }]);
 
         //Filters
         
