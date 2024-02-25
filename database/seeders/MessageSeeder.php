@@ -15,11 +15,13 @@ class MessageSeeder extends Seeder
     {
         $baseMessages = [
             [
+                "user_id" => 1,
                 'message_type_id' => 3,
                 'title' => 'Hello',
                 'body' => 'Hello how are you'
             ],
             [
+                "user_id" => 2,
                 'message_type_id' => 1,
                 'title' => 'Issue',
                 'body' => 'Hello I have an issue'

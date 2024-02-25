@@ -44,7 +44,7 @@ Route::group([
 Route::group([
     'prefix' => 'message'
 ], function ($router){
-    Route::get("/", [MessageController::class, "index"]);
+    Route::get("/", [MessageController::class, "index"])->name("MessagesGet");
     Route::post('/', [MessageController::class, "store"])->name("MessageStore");
 });
 
