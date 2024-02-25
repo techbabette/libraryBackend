@@ -85,7 +85,8 @@ Route::group([
 Route::group([
     'prefix' => 'link'
 ], function ($router){
-   Route::get('/', [LinkController::class, 'index']);
+   Route::get('/', [LinkController::class, 'index'])->name("LinksGet");
+   Route::get('/me', [LinkController::class, 'me']);
    Route::post('/', [LinkController::class, "store"])->name('StoreLink');
 });
 

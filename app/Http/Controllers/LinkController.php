@@ -9,8 +9,33 @@ use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = 5;
+        $links = Link::query();
+        $sortDefault = "created_at_desc";
+
+        $response['message'] = 'Successfully retrieved links';
+        $response['sortDefault'] = $sortDefault;
+
+        $links->with("access_level");
+
+        if($request->get('perPage')){
+            $perPage = $request->get('perPage');
+        }
+
+        if($request->get('noPage')){
+            $links = $links->get();
+        }else{
+            $links = $links->paginate($perPage);
+        }
+
+        $response['body'] = $links;
+
+        return response()->json($response, 201);
+    }
+
+    public function me(){
         $userAccessLevel = -1;
         if(auth()->user()){
             $userAccessLevel = auth()->user()->access_level->access_level;
