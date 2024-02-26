@@ -27,8 +27,8 @@ class LoanController extends Controller
         //Filters
 
         //Early resposne if query param present
-        if($request->get('onlyCount')){
-            $booksLoaned = $loans->count();
+        if($request->get('allCount')){
+            $booksLoaned = Loan::withTrashed()->count();
             $response['body'] = $booksLoaned;
             $response['message'] = 'Successfully got loan count';
             return response()->json($response, 200);
@@ -59,6 +59,13 @@ class LoanController extends Controller
 
         if($request->get('before')){
             $loans->where('created_at', '<=', $request->get('before'));
+        }
+
+        if($request->get('onlyCount')){
+            $booksLoaned = $loans->count();
+            $response['body'] = $booksLoaned;
+            $response['message'] = 'Successfully got loan count';
+            return response()->json($response, 200);
         }
 
         //Sort before retrieval, after filters

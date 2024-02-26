@@ -18,6 +18,11 @@ class UserController extends Controller
         $response['sortOptions'] = User::sortOptions();
         $response['sortDefault'] = $sortDefault;
 
+        if($request->get('allCount')){
+            $userCount = User::count();
+            return response()->json(['message' => 'Successfully got user count', 'body' => $userCount], 200);
+        }
+
         //Filters
         if($request->get('since')){
             $users->where('created_at', '>=', $request->get('since'));
@@ -25,11 +30,6 @@ class UserController extends Controller
 
         if($request->get('before')){
             $users->where('created_at', '<=', $request->get('before'));
-        }
-
-        if($request->get('onlyCount')){
-            $bookCount = $users->count();
-            return response()->json(['message' => 'Successfully got user count', 'body' => $bookCount], 200);
         }
 
         //Sort

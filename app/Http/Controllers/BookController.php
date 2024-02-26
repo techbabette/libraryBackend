@@ -29,6 +29,12 @@ class BookController extends Controller
 
         $books=Book::query();
 
+        //Early response
+        if($request->get('allCount')){
+            $bookCount = Book::count();
+            return response()->json(['message' => 'Successfully got book count', 'body' => $bookCount], 200);
+        }
+
         //Filters
         if($request->get('currentAndPrevious')){
             $books->withTrashed();
@@ -48,12 +54,6 @@ class BookController extends Controller
 
         if($request->get('authors')){
             $books->whereIn('author_id', $request->get('authors'));
-        }
-
-        //Early response
-        if($request->get('onlyCount')){
-            $bookCount = Book::count();
-            return response()->json(['message' => 'Successfully got book count', 'body' => $bookCount], 200);
         }
 
         //Select before sort
