@@ -30,14 +30,14 @@ Route::group([
     'prefix' => 'category'
 ], function ($router){
     Route::get("/", [CategoryController::class, "index"]);
-    Route::post('/book', [CategoryController::class, "store"])->name('StoreCategory');
+    Route::post('/book', [CategoryController::class, "store"])->name('CategoryStore');
 });
 
 Route::group([
     'prefix' => 'messagetype'
 ], function ($router){
     Route::get("/", [MessageTypeController::class, "index"])->name('MessageTypesGet');
-    Route::post('/', [MessageTypeController::class, "store"])->name("StoreMessageType");
+    Route::post('/', [MessageTypeController::class, "store"])->name("MessageTypeStore");
 });
 
 
@@ -53,16 +53,18 @@ Route::group([
 ], function ($router){
     Route::get("/", [BookController::class, "index"]);
     Route::get('/{id}', [BookController::class, "show"]);
-    Route::post('/', [BookController::class, "store"])->name('StoreBook');
-    Route::delete('/{id}', [BookController::class, "delete"])->name('DeleteBook');
+    Route::get('/edit/{id}', [BookController::class, 'edit'])->name("BookEdit");
+    Route::patch('/update/{id}', [BookController::class, 'update'])->name('BookUpdate');
+    Route::post('/', [BookController::class, "store"])->name('BookStore');
+    Route::delete('/{id}', [BookController::class, "delete"])->name('BookDelete');
 });
 
 Route::group([
     'prefix' => 'user'
 ], function($router){
     Route::get("/", [UserController::class, 'index'])->name('UsersGet');
-    Route::get('/{id}', [UserController::class, 'show'])->name('UserShow');
-    Route::get('/assume/{id}', [AuthController::class, 'assumeUser'])->name("AssumeUser");
+    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('UserEdit');
+    Route::get('/assume/{id}', [AuthController::class, 'UserAssume'])->name("UserAssume");
 });
 
 Route::group([
@@ -87,7 +89,7 @@ Route::group([
 ], function ($router){
    Route::get('/', [LinkController::class, 'index'])->name("LinksGet");
    Route::get('/me', [LinkController::class, 'me']);
-   Route::post('/', [LinkController::class, "store"])->name('StoreLink');
+   Route::post('/', [LinkController::class, "store"])->name('LinkStore');
 });
 
 Route::group([
@@ -111,5 +113,5 @@ Route::group([
     'prefix' => 'author'
 ], function ($router){
     Route::get("/", [AuthorController::class, "index"]);
-    Route::post('/', [AuthorController::class, "store"])->name("StoreAuthor");
+    Route::post('/', [AuthorController::class, "store"])->name("AuthorStore");
 });

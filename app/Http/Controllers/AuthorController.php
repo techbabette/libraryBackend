@@ -54,10 +54,6 @@ class AuthorController extends Controller
             foreach ($authors as $auth){
                 $auth["full_name"] = $auth->getFullName() . " (" . $auth->books_count.")";
             }
-        }else{
-            foreach ($authors as $auth){
-                $auth["full_name"] = $auth->getFullName();
-            }
         }
 
         $response['message'] = 'Successfully retrieved authors';

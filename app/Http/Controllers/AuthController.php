@@ -69,7 +69,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully activated account', 'body' => $token], 201);
     }
 
-    public function assumeUser(UserAssumeRequest $request){
+    public function UserAssume(UserAssumeRequest $request){
         $idRequested = $request->route('id');
 
         $token = auth()->tokenById($idRequested);

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookDeleteRequest;
+use App\Http\Requests\BookEditRequest;
 use App\Http\Requests\BookShowRequest;
 use App\Http\Requests\BookStoreRequest;
+use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use function Webmozart\Assert\Tests\StaticAnalysis\integer;
 use Illuminate\Http\Request;
@@ -97,6 +99,22 @@ class BookController extends Controller
         $book['favorite_to_user_id'] = $book->favoriteToCurrentUser();
 
         return response()->json(['message' => 'Successfully fetched book', 'body' => $book], 200);
+    }
+
+    public function edit(BookEditRequest $request){
+        $book = Book::withTrashed()->find($request->id);
+
+        return response()->json(['message' => "Successfully fetched editable information", 'body' => $book], 200);
+    }
+
+    public function update(BookUpdateRequest $request){
+        $data = $request->all();
+
+        $bookToUpdate = Book::withTrashed()->find($request->id);
+        $bookToUpdate->fill($data);
+        $bookToUpdate->save();
+
+        return response()->json(['message' => 'Successfully updated book', 'body' => $bookToUpdate], 201);
     }
 
     public function store(BookStoreRequest $request){

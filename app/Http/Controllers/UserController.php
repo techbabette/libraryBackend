@@ -60,7 +60,7 @@ class UserController extends Controller
         return response()->json($response, 200);
     }
 
-    public function show(UserShowRequest $request){
+    public function edit(UserShowRequest $request){
         $requestedUserId = $request->route('id');
         $user = User::find($requestedUserId);
 

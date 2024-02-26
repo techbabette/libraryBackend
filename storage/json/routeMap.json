@@ -1,20 +1,27 @@
 {
-    "StoreBook": {
+    "BookStore": {
         "access_level": 2,
         "text": "Created a new book"
+    },
+    "BookEdit": {
+        "access_level" : 2
+    },
+    "BookDelete": {
+        "access_level" : 2,
+        "text" : "Deactivated a book"
     },
     "LinksGet" : {
         "access_level": 2
     },
-    "StoreLink": {
+    "LinkStore": {
         "access_level": 2,
         "text": "Created a new link"
     },
-    "StoreCategory": {
+    "CategoryStore": {
         "access_level": 2,
         "text": "Created a new category"
     },
-    "StoreAuthor": {
+    "AuthorStore": {
         "access_level": 2,
         "text": "Created a new author"
     },
@@ -34,7 +41,7 @@
             }
         }
     },
-    "StoreMessageType": {
+    "MessageTypeStore": {
         "access_level": 2,
         "text": "Created a new message type"
     },
@@ -53,7 +60,7 @@
             }
         }
     },
-    "AssumeUser": {
+    "UserAssume": {
         "access_level": 2,
         "text": "Assumed user"
     },

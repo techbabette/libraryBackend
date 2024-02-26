@@ -16,6 +16,14 @@ class Author extends Model
         'last_name',
     ];
 
+    protected $appends = ['full_name'];
+
+    public function getFullNameAttribute()
+    {
+        // Concatenate first_name and last_name with a space in between
+        return $this->attributes['name'] . ' ' . $this->attributes['last_name'];
+    }
+
     public function getFullName(){
         return "{$this->name} {$this->last_name}";
     }
