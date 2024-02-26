@@ -58,6 +58,8 @@ class BookController extends Controller
 
         //Select before sort
         $books->with('author')->with('category');
+        $books->withCount('allLoans');
+        $books->withCount('loans');
 
         //Sort
         if($request->get('sortSelected')){
@@ -75,10 +77,6 @@ class BookController extends Controller
         }else{
             $books = $books->paginate($perPage);
         }
-
-        // foreach($books as $book){
-        //     $book['favorite_id'] = $book->favoriteToUser();
-        // }
 
         $response['message'] = 'Successfully fetched books';
         $response['body'] = $books;

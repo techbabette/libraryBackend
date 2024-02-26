@@ -26,6 +26,14 @@ class LoanController extends Controller
 
         //Filters
 
+        //Early resposne if query param present
+        if($request->get('onlyCount')){
+            $booksLoaned = $loans->count();
+            $response['body'] = $booksLoaned;
+            $response['message'] = 'Successfully got loan count';
+            return response()->json($response, 200);
+        }
+
         //Limit response for base case
         if(!$request->get('panel') && auth()->user()){
             $userId = auth()->user()->id;
@@ -51,14 +59,6 @@ class LoanController extends Controller
 
         if($request->get('before')){
             $loans->where('created_at', '<=', $request->get('before'));
-        }
-
-        //Early resposne if query param present
-        if($request->get('onlyCount')){
-            $booksLoaned = $loans->count();
-            $response['body'] = $booksLoaned;
-            $response['message'] = 'Successfully got loan count';
-            return response()->json($response, 200);
         }
 
         //Sort before retrieval, after filters
