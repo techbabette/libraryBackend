@@ -20,11 +20,11 @@ class AuthorController extends Controller
         $response['sortDefault'] = $sortDefault;
 
         if($request->get('currentAndPrevious')){
-            $categories->withTrashed();
+            $authors->withTrashed();
         }
 
         if($request->get('previous')){
-            $categories->onlyTrashed();
+            $authors->onlyTrashed();
         }
 
         if($request->get('havingBooks')){
