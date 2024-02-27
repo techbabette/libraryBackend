@@ -110,6 +110,11 @@ class BookController extends Controller
     public function update(BookUpdateRequest $request){
         $data = $request->all();
 
+        $file = $data['img'];
+
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $fileName);
+
         $bookToUpdate = Book::withTrashed()->find($request->id);
         $bookToUpdate->fill($data);
         $bookToUpdate->save();
@@ -119,6 +124,9 @@ class BookController extends Controller
 
     public function store(BookStoreRequest $request){
         $requestData = $request->all(['category_id', 'author_id', 'name', 'img', 'description', 'number_owned']);
+
+        dd($requestData->img);
+
         $requestData['img'] = 'image.jpg';
 
         $newBookId = Book::create($requestData)->id;
