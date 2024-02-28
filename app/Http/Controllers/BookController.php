@@ -111,10 +111,12 @@ class BookController extends Controller
     public function update(BookUpdateRequest $request){
         $data = $request->all();
 
-        $image = $request->img;
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $path = $request->img->storeAs('',$imageName);
-        $data['img'] = $imageName;
+        if($request->img){
+            $image = $request->img;
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $path = $request->img->storeAs('',$imageName);
+            $data['img'] = $imageName;
+        }
 
         $bookToUpdate = Book::withTrashed()->find($request->id);
         $bookToUpdate->fill($data);
@@ -126,9 +128,10 @@ class BookController extends Controller
     public function store(BookStoreRequest $request){
         $requestData = $request->all(['category_id', 'author_id', 'name', 'img', 'description', 'number_owned']);
 
-        dd($requestData->img);
-
-        $requestData['img'] = 'image.jpg';
+        $image = $request->img;
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $path = $request->img->storeAs('',$imageName);
+        $requestData['img'] = $imageName;
 
         $newBookId = Book::create($requestData)->id;
         $response['message'] = 'Successfully created new book';
