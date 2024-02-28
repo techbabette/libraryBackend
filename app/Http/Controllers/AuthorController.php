@@ -15,7 +15,7 @@ class AuthorController extends Controller
     public function index(Request $request){
         $authors = Author::query();
         $perPage = 5;
-        $sortDefault = 'authors_count_desc';
+        $sortDefault = 'books_count_desc';
 
         $response = [];
         $response['sortOptions'] = Author::sortOptions();

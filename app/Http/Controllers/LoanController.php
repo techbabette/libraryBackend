@@ -77,7 +77,7 @@ class LoanController extends Controller
 
         //Selection
         if($request->get('panel')){
-            $loans = $loans->with('user')->with('book');
+            $loans = $loans->with('user');
             $response['message'] = 'Successfully retrieved all loans';
         }
 
