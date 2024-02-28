@@ -110,6 +110,23 @@ class CategoryController extends Controller
         $response['body'] = $categories;
         return response()->json($response, 200);
     }
+
+    public function edit(CategoryEditRequest $request){
+        $category = Category::withTrashed()->find($request->id);
+
+        return response()->json(['message' => "Successfully fetched editable information", 'body' => $category], 200);
+    }
+
+    public function update(CategoryUpdateRequest $request){
+        $data = $request->all();
+
+        $categoryToUpdate = Category::withTrashed()->find($request->id);
+        $categoryToUpdate->fill($data);
+        $categoryToUpdate->save();
+
+        return response()->json(['message' => 'Successfully updated category', 'body' => $categoryToUpdate], 201);
+    }
+
     public function store(CategoryStoreRequest $request){
         $requestData = $request->validated();
 

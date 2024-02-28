@@ -46,6 +46,22 @@ class LinkController extends Controller
         return response($links);
     }
 
+    public function edit(LinkEditRequest $request){
+        $link = Link::find($request->id);
+
+        return response()->json(['message' => "Successfully fetched editable information", 'body' => $link], 200);
+    }
+
+    public function update(LinkUpdateRequest $request){
+        $data = $request->all();
+
+        $linkToUpdate = Link::find($request->id);
+        $linkToUpdate->fill($data);
+        $linkToUpdate->save();
+
+        return response()->json(['message' => 'Successfully updated link', 'body' => $linkToUpdate], 201);
+    }
+
     public function store(LinkStoreRequest $request){
         $requestData = $request->validated();
 

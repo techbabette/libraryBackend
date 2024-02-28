@@ -13,7 +13,7 @@ class AuthorController extends Controller
     public function index(Request $request){
         $authors = Author::query();
         $perPage = 5;
-        $sortDefault = 'books_count_desc';
+        $sortDefault = 'authors_count_desc';
 
         $response = [];
         $response['sortOptions'] = Author::sortOptions();
@@ -28,7 +28,7 @@ class AuthorController extends Controller
         }
 
         if($request->get('havingBooks')){
-            $authors->has('books');
+            $authors->has('authors');
         }
 
         //Sort before retrieval, after filters
@@ -50,9 +50,9 @@ class AuthorController extends Controller
         }
 
         //In-memory changes
-        if($request->get('bookCountInName')){
+        if($request->get('authorCountInName')){
             foreach ($authors as $auth){
-                $auth["full_name"] = $auth->getFullName() . " (" . $auth->books_count.")";
+                $auth["full_name"] = $auth->getFullName() . " (" . $auth->authors_count.")";
             }
         }
 
@@ -61,6 +61,23 @@ class AuthorController extends Controller
 
         return response()->json($response, 200);
     }
+
+    public function edit(AuthorEditRequest $request){
+        $author = Author::withTrashed()->find($request->id);
+
+        return response()->json(['message' => "Successfully fetched editable information", 'body' => $author], 200);
+    }
+
+    public function update(AuthorUpdateRequest $request){
+        $data = $request->all();
+
+        $authorToUpdate = Author::withTrashed()->find($request->id);
+        $authorToUpdate->fill($data);
+        $authorToUpdate->save();
+
+        return response()->json(['message' => 'Successfully updated author', 'body' => $authorToUpdate], 201);
+    }
+
     public function store(AuthorStoreRequest $request){
         $requestData = $request->validated();
 

@@ -66,4 +66,14 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Successfully got user information', 'body' => $user], 200);
     }
+
+    public function update(UserUpdateRequest $request){
+        $data = $request->all();
+
+        $categoryToUpdate = User::find($request->id);
+        $categoryToUpdate->fill($data);
+        $categoryToUpdate->save();
+
+        return response()->json(['message' => 'Successfully updated category', 'body' => $categoryToUpdate], 201);
+    }
 }
