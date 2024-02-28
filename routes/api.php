@@ -30,6 +30,8 @@ Route::group([
     'prefix' => 'category'
 ], function ($router){
     Route::get("/", [CategoryController::class, "index"]);
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name("CategoryEdit");
+    Route::patch('/update/{id}', [CategoryController::class, 'update'])->name('CategoryUpdate');
     Route::post('/book', [CategoryController::class, "store"])->name('CategoryStore');
 });
 
@@ -63,7 +65,8 @@ Route::group([
     'prefix' => 'user'
 ], function($router){
     Route::get("/", [UserController::class, 'index'])->name('UsersGet');
-    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('UserEdit');
+    Route::get('/edit/{id}', [UserController::class, 'edit'])->name("UserEdit");
+    Route::patch('/update/{id}', [UserController::class, 'update'])->name('UserUpdate');
     Route::get('/assume/{id}', [AuthController::class, 'UserAssume'])->name("UserAssume");
 });
 
@@ -88,6 +91,8 @@ Route::group([
     'prefix' => 'link'
 ], function ($router){
    Route::get('/', [LinkController::class, 'index'])->name("LinksGet");
+   Route::get('/edit/{id}', [LinkController::class, 'edit'])->name("LinkEdit");
+   Route::patch('/update/{id}', [LinkController::class, 'update'])->name('LinkUpdate');
    Route::get('/me', [LinkController::class, 'me']);
    Route::post('/', [LinkController::class, "store"])->name('LinkStore');
 });
@@ -113,5 +118,7 @@ Route::group([
     'prefix' => 'author'
 ], function ($router){
     Route::get("/", [AuthorController::class, "index"]);
+    Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name("AuthorEdit");
+    Route::patch('/update/{id}', [AuthorController::class, 'update'])->name('AuthorUpdate');
     Route::post('/', [AuthorController::class, "store"])->name("AuthorStore");
 });
