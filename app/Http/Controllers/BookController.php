@@ -11,6 +11,7 @@ use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use function Webmozart\Assert\Tests\StaticAnalysis\integer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -110,10 +111,10 @@ class BookController extends Controller
     public function update(BookUpdateRequest $request){
         $data = $request->all();
 
-        $file = $data['img'];
-
-        $fileName = $file->getClientOriginalName();
-        $file->move(public_path('uploads'), $fileName);
+        $image = $request->img;
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $path = $request->img->storeAs('',$imageName);
+        $data['img'] = $imageName;
 
         $bookToUpdate = Book::withTrashed()->find($request->id);
         $bookToUpdate->fill($data);

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'dev_disk'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,12 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
             'throw' => false,
+        ],
+
+        'dev_disk' => [
+            'driver' => 'local',
+            'root' => 'M:/Projects/libraryfrontend/src/assets/imgs/',
+            'visibility' => 'public'
         ],
 
         'public' => [
