@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthorEditRequest;
 use App\Http\Requests\AuthorStoreRequest;
+use App\Http\Requests\AuthorUpdateRequest;
 use App\Models\Author;
 use Illuminate\Http\Request;
 
@@ -39,6 +41,7 @@ class AuthorController extends Controller
         }
 
         //Retrieval
+        $authors->withCount('books');
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LinkEditRequest;
 use App\Http\Requests\LinkStoreRequest;
+use App\Http\Requests\LinkUpdateRequest;
 use App\Models\Link;
 use Illuminate\Http\Request;
 

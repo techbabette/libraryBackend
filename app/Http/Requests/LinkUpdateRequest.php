@@ -11,7 +11,7 @@ class LinkUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -34,7 +34,7 @@ class LinkUpdateRequest extends FormRequest
             "link_position_id" => "required|exists:link_positions,id",
             "text" => "required|string|max:20",
             "to" => "required|string|max:25",
-            "icon" => "string|max:25",
+            "icon" => "nullable|string|max:25",
             "weight" => "required|integer|min:0|max:100",
         ];
     }

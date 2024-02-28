@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserShowRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,7 @@ class UserController extends Controller
         }
 
         //Retrieval
-        $users->withCount('loans');
+        $users->withCount('loans')->with('access_level');
 
         if($request->get('perPage')){
             $perPage = $request->get('perPage');

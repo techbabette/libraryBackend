@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AccessLevelController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\LinkPositionController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MessageController;
@@ -13,6 +15,8 @@ use App\Http\Controllers\MessageTypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 /*
@@ -36,18 +40,12 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'messagetype'
+    'prefix' => 'author'
 ], function ($router){
-    Route::get("/", [MessageTypeController::class, "index"])->name('MessageTypesGet');
-    Route::post('/', [MessageTypeController::class, "store"])->name("MessageTypeStore");
-});
-
-
-Route::group([
-    'prefix' => 'message'
-], function ($router){
-    Route::get("/", [MessageController::class, "index"])->name("MessagesGet");
-    Route::post('/', [MessageController::class, "store"])->name("MessageStore");
+    Route::get("/", [AuthorController::class, "index"]);
+    Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name("AuthorEdit");
+    Route::patch('/update/{id}', [AuthorController::class, 'update'])->name('AuthorUpdate');
+    Route::post('/', [AuthorController::class, "store"])->name("AuthorStore");
 });
 
 Route::group([
@@ -59,6 +57,26 @@ Route::group([
     Route::patch('/update/{id}', [BookController::class, 'update'])->name('BookUpdate');
     Route::post('/', [BookController::class, "store"])->name('BookStore');
     Route::delete('/{id}', [BookController::class, "delete"])->name('BookDelete');
+});
+
+Route::group([
+    'prefix' => 'message'
+], function ($router){
+    Route::get("/", [MessageController::class, "index"])->name("MessagesGet");
+    Route::post('/', [MessageController::class, "store"])->name("MessageStore");
+});
+
+Route::group([
+    'prefix' => 'messagetype'
+], function ($router){
+    Route::get("/", [MessageTypeController::class, "index"])->name('MessageTypesGet');
+    Route::post('/', [MessageTypeController::class, "store"])->name("MessageTypeStore");
+});
+
+Route::group([
+    "prefix" => 'accesslevel'
+], function($router){
+    Route::get("/", [AccessLevelController::class, 'index'])->name('AccessLevelsGet');
 });
 
 Route::group([
@@ -98,6 +116,12 @@ Route::group([
 });
 
 Route::group([
+    "prefix" => 'linkposition'
+], function($router){
+    Route::get("/", [LinkPositionController::class, 'index'])->name('LinkPositionsGet');
+});
+
+Route::group([
     "prefix" => "log"
 ], function($router){
    Route::get('/', [LogController::class, 'index'])->name('LogsGet');
@@ -113,12 +137,3 @@ Route::group([
      Route::post('me', [AuthController::class, "me"]);
      Route::post('register', [AuthController::class, "register"])->name('register');
  });
-
-Route::group([
-    'prefix' => 'author'
-], function ($router){
-    Route::get("/", [AuthorController::class, "index"]);
-    Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name("AuthorEdit");
-    Route::patch('/update/{id}', [AuthorController::class, 'update'])->name('AuthorUpdate');
-    Route::post('/', [AuthorController::class, "store"])->name("AuthorStore");
-});
