@@ -31,6 +31,24 @@ class Author extends Model
         return $this->hasMany(Book::class);
     }
 
+    public function allBooks(){
+        return $this->hasMany(Book::class)->withTrashed();
+    }
+
+    public function loans(){
+        return $this->hasManyThrough(Loan::class, Book::class)->withTrashedParents()->withTrashed();
+    }
+
+    public function activeLoans(){
+        return $this->hasManyThrough(Loan::class, Book::class)->withTrashedParents();
+    }
+
+    public function delete(){
+        $this->books->each->delete();
+
+        return parent::delete();
+    }
+
     public static function sortOptions(){
         return [
             ["id" => "name", 'text' => "Name"],

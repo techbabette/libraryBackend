@@ -64,6 +64,14 @@
         "access_level": 2,
         "text" : "Updated author information"
     },
+    "AuthorDelete": {
+        "access_level": 2,
+        "text": "Deactivated an author"
+    },
+    "AuthorRestore": {
+        "access_level": 2,
+        "text": "Restored an author"
+    },
     "MessagesGet" : {
         "access_level" : 2,
         "text" : "Read user messages"

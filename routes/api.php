@@ -36,18 +36,20 @@ Route::group([
     Route::get("/", [CategoryController::class, "index"]);
     Route::post('/', [CategoryController::class, "store"])->name('CategoryStore');
     Route::delete('/{id}', [CategoryController::class, 'delete'])->name('CategoryDelete');
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name("CategoryEdit");
     Route::patch('/update/{id}', [CategoryController::class, 'update'])->name('CategoryUpdate');
     Route::patch('/restore/{id}', [CategoryController::class, 'restore'])->name('CategoryRestore');
-    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name("CategoryEdit");
 });
 
 Route::group([
     'prefix' => 'author'
 ], function ($router){
     Route::get("/", [AuthorController::class, "index"]);
+    Route::post('/', [AuthorController::class, "store"])->name("AuthorStore");
+    Route::delete('/{id}', [AuthorController::class, 'delete'])->name('AuthorDelete');
     Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name("AuthorEdit");
     Route::patch('/update/{id}', [AuthorController::class, 'update'])->name('AuthorUpdate');
-    Route::post('/', [AuthorController::class, "store"])->name("AuthorStore");
+    Route::patch('/restore/{id}', [AuthorController::class, 'restore'])->name('AuthorRestore');
 });
 
 Route::group([

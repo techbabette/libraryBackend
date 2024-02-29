@@ -15,7 +15,7 @@ class MessageController extends Controller
         $messages = Message::query()->with('message_type')->with('user');
 
         if($request->get('message_types')){
-            $books->whereIn('message_type_id', $request->get('message_types'));
+            $messages->whereIn('message_type_id', $request->get('message_types'));
         }
 
         if($request->get('noPage')){

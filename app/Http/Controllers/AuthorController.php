@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthorDeleteRequest;
 use App\Http\Requests\AuthorEditRequest;
+use App\Http\Requests\AuthorRestoreRequest;
 use App\Http\Requests\AuthorStoreRequest;
 use App\Http\Requests\AuthorUpdateRequest;
 use App\Models\Author;
@@ -42,6 +44,26 @@ class AuthorController extends Controller
 
         //Retrieval
         $authors->withCount('books');
+        $authors->withCount('allBooks');
+
+        if($request->get('withActiveLoanCount') || $request->get('onlyActiveLoanCount')){
+            $authors->withCount("activeLoans");
+            if($request->get('onlyActiveLoanCount')){
+                $authors = $authors->get();
+                $response['body'] = $authors;
+                return response()->json($response, 200);
+            }
+        }
+
+        if($request->get('withLoanCount') || $request->get('onlyLoanCount')){
+            $authors->withCount("loans");
+            if($request->get('onlyLoanCount')){
+                $authors = $authors->get();
+                $response['body'] = $authors;
+                return response()->json($response, 200);
+            }
+        }
+
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
         }
@@ -89,5 +111,21 @@ class AuthorController extends Controller
         $response['body']['author_id'] = $newAuthorId;
 
         return response()->json($response, 201);
+    }
+
+    public function delete(AuthorDeleteRequest $request){
+        $authorId = $request->id;
+        $author = Author::find($authorId);
+        $author->delete();
+
+        return response()->json(['message' => 'Successfully deactivated author'], 200);
+    }
+
+    public function restore(AuthorRestoreRequest $request){
+        $authorId = $request->id;
+        $author = Author::withTrashed()->find($authorId);
+        $author->restore();
+
+        return response()->json(['message' => 'Successfully reactivated author', 200]);
     }
 }

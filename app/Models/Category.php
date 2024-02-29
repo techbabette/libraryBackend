@@ -30,7 +30,7 @@ class Category extends Model
     }
 
     public function activeLoans(){
-        return $this->hasManyThrough(Loan::class, Book::class);
+        return $this->hasManyThrough(Loan::class, Book::class)->withTrashedParents();
     }
 
     public function newLoans(){
