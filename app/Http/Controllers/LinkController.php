@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkEditRequest;
 use App\Http\Requests\LinkStoreRequest;
 use App\Http\Requests\LinkUpdateRequest;
 use App\Models\Link;
+use App\Models\MessageType;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
@@ -72,5 +74,13 @@ class LinkController extends Controller
         $response['body']['link_id'] = $newLinkId;
 
         return response()->json($response, 201);
+    }
+
+    public function delete(LinkDeleteRequest $request){
+        $linkId = $request->id;
+        $link = MessageType::find($linkId);
+
+        $link->delete();
+        return response()->json(['message' => 'Successfully deleted link'], 200);
     }
 }

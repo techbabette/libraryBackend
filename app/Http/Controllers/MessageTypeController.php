@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MessageTypeDeleteRequest;
+use App\Http\Requests\MessageTypeEditRequest;
 use App\Http\Requests\MessageTypeStoreRequest;
+use App\Http\Requests\MessageTypeUpdateRequest;
 use App\Models\MessageType;
 use Illuminate\Http\Request;
 
@@ -49,5 +52,13 @@ class MessageTypeController extends Controller
         MessageType::create($requestData);
 
         return response()->json(['message' => 'Successfully created new message type'], 201);
+    }
+
+    public function delete(MessageTypeDeleteRequest $request){
+        $messageTypeId = $request->id;
+        $messageType = MessageType::find($messageTypeId);
+
+        $messageType->delete();
+        return response()->json(['message' => 'Successfully deleted message type'], 200);
     }
 }

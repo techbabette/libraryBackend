@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MessageDeleteRequest;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Message;
+use App\Models\MessageType;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -38,5 +40,13 @@ class MessageController extends Controller
         Message::create($messageData);
 
         return response()->json(['message' => 'Successfully sent new message'], 201);
+    }
+
+    public function delete(MessageDeleteRequest $request){
+        $messageId = $request->id;
+        $message = MessageType::find($messageId);
+
+        $message->delete();
+        return response()->json(['message' => 'Successfully deleted message'], 200);
     }
 }

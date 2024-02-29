@@ -68,13 +68,17 @@ Route::group([
 ], function ($router){
     Route::get("/", [MessageController::class, "index"])->name("MessagesGet");
     Route::post('/', [MessageController::class, "store"])->name("MessageStore");
+    Route::delete('/{id}', [MessageController::class, "delete"])->name('MessageDelete');
 });
 
 Route::group([
     'prefix' => 'messagetype'
 ], function ($router){
     Route::get("/", [MessageTypeController::class, "index"])->name('MessageTypesGet');
+    Route::get('/edit/{id}', [MessageTypeController::class, 'edit'])->name("MessageTypeEdit");
+    Route::patch('/update/{id}', [MessageTypeController::class, 'update'])->name('MessageTypeUpdate');
     Route::post('/', [MessageTypeController::class, "store"])->name("MessageTypeStore");
+    Route::delete('/{id}', [MessageTypeController::class, "delete"])->name('MessageTypeDelete');
 });
 
 Route::group([
@@ -117,6 +121,7 @@ Route::group([
    Route::patch('/update/{id}', [LinkController::class, 'update'])->name('LinkUpdate');
    Route::get('/me', [LinkController::class, 'me']);
    Route::post('/', [LinkController::class, "store"])->name('LinkStore');
+   Route::delete('/{id}', [LinkController::class, "delete"])->name('LinkDelete');
 });
 
 Route::group([
