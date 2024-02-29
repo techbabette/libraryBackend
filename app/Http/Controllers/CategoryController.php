@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryDeleteRequest;
 use App\Http\Requests\CategoryEditRequest;
+use App\Http\Requests\CategoryRestoreRequest;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
@@ -85,6 +86,7 @@ class CategoryController extends Controller
         }
 
         $categories->withCount('books');
+        $categories->withCount('allBooks');
 
         $sortOptions = Category::sortOptions();
         //Sort before retrieval, after filters
@@ -145,6 +147,14 @@ class CategoryController extends Controller
         $category = Category::find($categoryId);
         $category->delete();
 
-        return response()->json(['message' => 'Successfully deleted category'], 200);
+        return response()->json(['message' => 'Successfully deactivated category'], 200);
+    }
+
+    public function restore(CategoryRestoreRequest $request){
+        $categoryId = $request->id;
+        $category = Category::withTrashed()->find($categoryId);
+        $category->restore();
+
+        return response()->json(['message' => 'Successfully reactivated category', 200]);
     }
 }

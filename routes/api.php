@@ -37,6 +37,7 @@ Route::group([
     Route::post('/', [CategoryController::class, "store"])->name('CategoryStore');
     Route::delete('/{id}', [CategoryController::class, 'delete'])->name('CategoryDelete');
     Route::patch('/update/{id}', [CategoryController::class, 'update'])->name('CategoryUpdate');
+    Route::patch('/restore/{id}', [CategoryController::class, 'restore'])->name('CategoryRestore');
     Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name("CategoryEdit");
 });
 

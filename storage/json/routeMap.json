@@ -49,6 +49,10 @@
         "access_level": 2,
         "text": "Deactivated a category"
     },
+    "CategoryRestore": {
+        "access_level" : 2,
+        "text": "Restored a category"
+    },
     "AuthorStore": {
         "access_level": 2,
         "text": "Created a new author"
