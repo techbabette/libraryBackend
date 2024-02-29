@@ -44,7 +44,7 @@ class MessageController extends Controller
 
     public function delete(MessageDeleteRequest $request){
         $messageId = $request->id;
-        $message = MessageType::find($messageId);
+        $message = Message::find($messageId);
 
         $message->delete();
         return response()->json(['message' => 'Successfully deleted message'], 200);

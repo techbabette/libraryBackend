@@ -63,7 +63,7 @@ class LinkController extends Controller
         $linkToUpdate->fill($data);
         $linkToUpdate->save();
 
-        return response()->json(['message' => 'Successfully updated link', 'body' => $linkToUpdate], 201);
+        return response()->json(['message' => 'Successfully updated link', 'body' => $linkToUpdate], 200);
     }
 
     public function store(LinkStoreRequest $request){
@@ -78,7 +78,7 @@ class LinkController extends Controller
 
     public function delete(LinkDeleteRequest $request){
         $linkId = $request->id;
-        $link = MessageType::find($linkId);
+        $link = Link::find($linkId);
 
         $link->delete();
         return response()->json(['message' => 'Successfully deleted link'], 200);
