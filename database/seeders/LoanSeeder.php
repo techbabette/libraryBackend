@@ -15,10 +15,6 @@ class LoanSeeder extends Seeder
     {
         $baseLoans = [
             [
-                "book_id" => 1,
-                "user_id" => 1,
-            ],
-            [
                 "book_id" => 2,
                 "user_id" => 1,
             ],
@@ -40,8 +36,12 @@ class LoanSeeder extends Seeder
             ],
             [
                 "book_id" => 6,
-                "user_id" => 1,
-            ]
+                "user_id" => 2,
+            ],
+            [
+                "book_id" => 5,
+                "user_id" => 2,
+            ],
         ];
 
         foreach($baseLoans as $loan){
