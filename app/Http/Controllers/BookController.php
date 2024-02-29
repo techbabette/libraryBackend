@@ -122,7 +122,7 @@ class BookController extends Controller
         $bookToUpdate->fill($data);
         $bookToUpdate->save();
 
-        return response()->json(['message' => 'Successfully updated book', 'body' => $bookToUpdate], 201);
+        return response()->json(['message' => 'Successfully updated book', 'body' => $bookToUpdate], 200);
     }
 
     public function store(BookStoreRequest $request){
@@ -149,6 +149,6 @@ class BookController extends Controller
 
         $book->delete();
 
-        return response()->json(['message' => 'Successfully deleted book'], 201);
+        return response()->json(['message' => 'Successfully deleted book'], 200);
     }
 }

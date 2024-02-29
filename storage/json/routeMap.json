@@ -1,4 +1,7 @@
 {
+    "AccessLevelsGet": {
+        "access_level": 2
+    },
     "BookStore": {
         "access_level": 2,
         "text": "Created a new book"
@@ -6,24 +9,56 @@
     "BookEdit": {
         "access_level" : 2
     },
+    "BookUpdated": {
+        "access_level" : 2,
+        "text" : "Updated book information"
+    },
     "BookDelete": {
         "access_level" : 2,
         "text" : "Deactivated a book"
     },
+    "LinkPositionsGet": {
+        "access_level": 2
+    },
     "LinksGet" : {
         "access_level": 2
+    },
+    "LinkEdit": {
+        "access_level": 2
+    },
+    "LinkUpdate": {
+        "access_level": 2,
+        "text": "Updated link information"
     },
     "LinkStore": {
         "access_level": 2,
         "text": "Created a new link"
     },
+    "CategoryEdit": {
+        "access_level": 2
+    },
+    "CategoryUpdate": {
+        "access_level": 2,
+        "text": "Updated category information"
+    },
     "CategoryStore": {
         "access_level": 2,
         "text": "Created a new category"
     },
+    "CategoryDelete" : {
+        "access_level": 2,
+        "text": "Deactivated a category"
+    },
     "AuthorStore": {
         "access_level": 2,
         "text": "Created a new author"
+    },
+    "AuthorEdit": {
+        "access_level": 2
+    },
+    "AuthorUpdate": {
+        "access_level": 2,
+        "text" : "Updated author information"
     },
     "MessagesGet" : {
         "access_level" : 2,
@@ -48,8 +83,12 @@
     "LogsGet" : {
         "access_level": 2
     },
-    "UserShow" : {
+    "UserEdit" : {
         "access_level": 2
+    },
+    "UserUpdate" : {
+        "access_level": 2,
+        "text": "Updated user information"
     },
     "UsersGet": {
         "access_level": 2,
@@ -81,11 +120,11 @@
             }
         }
     },
-    "ReturnLoan": {
+    "LoanReturn": {
         "access_level": 1,
         "text": "Returned a book"
     },
-    "ExtendLoan": {
+    "LoanExtend": {
         "access_level": 1,
         "text": "Extended a loan"
     },

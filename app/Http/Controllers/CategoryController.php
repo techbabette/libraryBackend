@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryDeleteRequest;
 use App\Http\Requests\CategoryEditRequest;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
@@ -137,5 +138,13 @@ class CategoryController extends Controller
         $response['body']['category_id'] = $newCategoryId;
 
         return response()->json($response, 201);
+    }
+
+    public function delete(CategoryDeleteRequest $request){
+        $categoryId = $request->id;
+        $category = Category::find($categoryId);
+        $category->delete();
+
+        return response()->json(['message' => 'Successfully deleted category'], 200);
     }
 }

@@ -34,9 +34,10 @@ Route::group([
     'prefix' => 'category'
 ], function ($router){
     Route::get("/", [CategoryController::class, "index"]);
-    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name("CategoryEdit");
+    Route::post('/', [CategoryController::class, "store"])->name('CategoryStore');
+    Route::delete('/{id}', [CategoryController::class, 'delete'])->name('CategoryDelete');
     Route::patch('/update/{id}', [CategoryController::class, 'update'])->name('CategoryUpdate');
-    Route::post('/book', [CategoryController::class, "store"])->name('CategoryStore');
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name("CategoryEdit");
 });
 
 Route::group([
@@ -93,8 +94,8 @@ Route::group([
 ], function ($router){
     Route::get('/', [LoanController::class, 'index'])->name('LoansGet');
     Route::post('/', [LoanController::class, 'store'])->name('LoanStore');
-    Route::patch('/return/{id}', [LoanController::class, 'return'])->name('ReturnLoan');
-    Route::patch('/extend/{id}', [LoanController::class, 'extend'])->name('ExtendLoan');
+    Route::patch('/return/{id}', [LoanController::class, 'return'])->name('LoanReturn');
+    Route::patch('/extend/{id}', [LoanController::class, 'extend'])->name('LoanExtend');
 });
 
 Route::group([
