@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAssumeRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserVerifyEmailRequest;
+use App\Mail\ConfirmationEmail;
 use App\Models\EmailVerificationToken;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -47,6 +49,8 @@ class AuthController extends Controller
         EmailVerificationToken::create(["user_id" => $newUserId, "token" => $activationToken]);
 
         //In the future, send email here
+
+        Mail::to($credentials['email'])->send(new ConfirmationEmail($newUserId, $activationToken));
 
         return response()->json(['message' => 'We sent you a verification email'], 201);
     }
