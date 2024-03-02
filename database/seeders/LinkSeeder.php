@@ -72,7 +72,7 @@ class LinkSeeder extends Seeder
             ],
             [
                 "text" => "Facebook",
-                "to" => "https=>//www.facebook.com/",
+                "to" => "https://www.facebook.com/",
                 "icon" => "icomoon-free:facebook",
                 "link_position_id" => 3,
                 "weight" => 100,
@@ -80,7 +80,7 @@ class LinkSeeder extends Seeder
             ],
             [
                 "text" => "Twitter",
-                "to" => "https=>//www.twitter.com/",
+                "to" => "https://www.twitter.com/",
                 "icon" => "la:twitter",
                 "link_position_id" => 3,
                 "weight" => 90,

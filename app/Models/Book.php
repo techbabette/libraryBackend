@@ -65,14 +65,7 @@ class Book extends Model
         if(auth()->user()){
             $userId = auth()->user()->id;
         }
-        $activeLoan = $this->loans->where('user_id', '=', $userId)->first();
-        if($activeLoan){
-            return $activeLoan->id;
-        }
-        else{
-            return false;
-        }
-        // return $this->hasMany(Loan::class)->where('user_id', $userId);
+        return $this->hasMany(Loan::class)->where('user_id', $userId)->first();
     }
 
     public function favoriteToCurrentUser(){
@@ -80,14 +73,7 @@ class Book extends Model
         if(auth()->user()){
             $userId = auth()->user()->id;
         }
-        $activefavorite = $this->favorites->where('user_id', '=', $userId)->first();
-        if($activefavorite){
-            return $activefavorite->id;
-        }
-        else{
-            return false;
-        }
-        // return $this->hasOne(Favorite::class)->where('user_id', $userId);
+        return $this->hasMany(Favorite::class)->where('user_id', $userId)->first();
     }
 
     public static function sortOptions(){

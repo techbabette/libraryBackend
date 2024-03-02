@@ -90,14 +90,21 @@ class BookController extends Controller
     public function show(BookShowRequest $request){
         $book = Book::withTrashed()->with('author')->with('category');
 
-        // $book->with('loanToCurrentUser:id,book_id');
-        // $book->with('favoriteToCurrentUser:id,book_id');
         $book->withCount('allLoans');
         $book->withCount('loans');
         $book = $book->find($request->id);
+        $book['loan_to_user_id'] = false;
+        $book['favorite_to_user_id'] = false;
 
-        $book['loan_to_user_id'] = $book->loanToCurrentUser();
-        $book['favorite_to_user_id'] = $book->favoriteToCurrentUser();
+        $loanedToCurrentUser = $book->loanToCurrentUser();
+        if($loanedToCurrentUser){
+            $book['loan_to_user_id'] = $loanedToCurrentUser->id;
+        }
+
+        $favoriteToCurrentUser = $book->favoriteToCurrentUser();
+        if($favoriteToCurrentUser){
+            $book['favorite_to_user_id'] = $favoriteToCurrentUser->id;
+        }
 
         return response()->json(['message' => 'Successfully fetched book', 'body' => $book], 200);
     }
