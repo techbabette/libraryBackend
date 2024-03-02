@@ -24,6 +24,10 @@ class Author extends Model
         return $this->attributes['name'] . ' ' . $this->attributes['last_name'];
     }
 
+    public function setFullNameAttribute($value){
+        return $this->full_name = $value;
+    }
+
     public function getFullName(){
         return "{$this->name} {$this->last_name}";
     }

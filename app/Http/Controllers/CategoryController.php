@@ -112,6 +112,13 @@ class CategoryController extends Controller
             }
         }
 
+        if($request->get('statusInName')){
+            foreach ($categories as $category){
+                $status = $category->deleted_at ? "Inactive" : "Active";
+                $category['text'] = $category['text']. " (".$status.")";
+            }
+        }
+
         $response['body'] = $categories;
         return response()->json($response, 200);
     }

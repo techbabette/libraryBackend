@@ -32,7 +32,7 @@ class AuthorController extends Controller
         }
 
         if($request->get('havingBooks')){
-            $authors->has('authors');
+            $authors->has('books');
         }
 
         //Sort before retrieval, after filters
@@ -75,9 +75,18 @@ class AuthorController extends Controller
         }
 
         //In-memory changes
-        if($request->get('authorCountInName')){
-            foreach ($authors as $auth){
-                $auth["full_name"] = $auth->getFullName() . " (" . $auth->authors_count.")";
+        if($request->get('bookCountInName')){
+            foreach ($authors as $author){
+                $newFullName = $author['full_name']. " (".$author->books_count.")";
+                $author['full_name_book_count'] = $newFullName;
+            }
+        }
+
+        if($request->get('statusInName')){
+            foreach ($authors as $author){
+                $status = $author->deleted_at ? "Inactive" : "Active";
+                $newFullName = $author['full_name']. " (".$status.")";
+                $author['full_name_status'] = $newFullName;
             }
         }
 
