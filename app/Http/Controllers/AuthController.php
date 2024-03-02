@@ -48,8 +48,6 @@ class AuthController extends Controller
 
         EmailVerificationToken::create(["user_id" => $newUserId, "token" => $activationToken]);
 
-        //In the future, send email here
-
         Mail::to($credentials['email'])->send(new ConfirmationEmail($newUserId, $activationToken));
 
         return response()->json(['message' => 'We sent you a verification email'], 201);

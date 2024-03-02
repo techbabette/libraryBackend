@@ -19,6 +19,11 @@ class Link extends Model
       'weight'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     public function access_level(){
         return $this->belongsTo(AccessLevel::class);
     }

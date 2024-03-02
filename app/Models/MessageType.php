@@ -13,6 +13,11 @@ class MessageType extends Model
         'name',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     public function messages(){
         return $this->hasMany(Message::class);
     }
