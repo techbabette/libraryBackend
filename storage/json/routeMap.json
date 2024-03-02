@@ -17,6 +17,10 @@
         "access_level" : 2,
         "text" : "Deactivated a book"
     },
+    "BookRestore": {
+        "access_level": 2,
+        "text": "Restored a book"
+    },
     "LinkPositionsGet": {
         "access_level": 2
     },

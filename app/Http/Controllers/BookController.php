@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookDeleteRequest;
 use App\Http\Requests\BookEditRequest;
+use App\Http\Requests\BookRestoreRequest;
 use App\Http\Requests\BookShowRequest;
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
@@ -157,5 +158,13 @@ class BookController extends Controller
         $book->delete();
 
         return response()->json(['message' => 'Successfully deleted book'], 200);
+    }
+
+    public function restore(BookRestoreRequest $request){
+        $bookId = $request->id;
+        $book = Book::withTrashed()->find($bookId);
+        $book->restore();
+
+        return response()->json(['message' => 'Successfully reactivated book', 200]);
     }
 }

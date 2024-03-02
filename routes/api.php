@@ -61,6 +61,7 @@ Route::group([
     Route::patch('/update/{id}', [BookController::class, 'update'])->name('BookUpdate');
     Route::post('/', [BookController::class, "store"])->name('BookStore');
     Route::delete('/{id}', [BookController::class, "delete"])->name('BookDelete');
+    Route::patch('/restore/{id}', [BookController::class, 'restore'])->name('BookRestore');
 });
 
 Route::group([

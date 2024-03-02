@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Book;
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AuthorRestoreRequest extends FormRequest
+class BookRestoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,9 +34,20 @@ class AuthorRestoreRequest extends FormRequest
         return [
             "id" => [
                         "required",
-                        Rule::exists('authors')->where(function ($query){
+                        Rule::exists('books')->where(function ($query){
                             $query->whereNotNull('deleted_at');
-                        })
+                        }),
+                        function(string $attribute, mixed $value, Closure $fail){
+                            $book = Book::withTrashed()->find($value);
+        
+                            if($book->category->trashed()){
+                                $fail("Cannot restore book with inactive category");
+                            }
+
+                            if($book->author->trashed()){
+                                $fail("Cannot restore book with inactive author");
+                            }
+                        }
                     ]
         ];
     }
