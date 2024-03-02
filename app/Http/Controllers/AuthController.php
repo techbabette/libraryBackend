@@ -39,12 +39,12 @@ class AuthController extends Controller
     public function register(UserRegisterRequest $request)
     {
         $credentials = $request->validated();
-
+        $credentials['access_level_id'] = 3;
         $newUserId = User::create($credentials)->id;
 
         $activationToken = md5(uniqid(rand())).md5(time()).md5(uniqid(rand()));
 
-        EmailVerificationToken::create(["user_id" => $newUserId, "token" => $activationToken, "access_level_id" => 3]);
+        EmailVerificationToken::create(["user_id" => $newUserId, "token" => $activationToken]);
 
         //In the future, send email here
 
