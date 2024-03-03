@@ -46,6 +46,7 @@ class Loan extends Model
     public static function sortOptions(){
         return [
             ["id" => 'extended', "text" => 'Extended'],
+            ['id' => 'user.email', 'text' => 'User email'],
             ['id' => 'book.name', 'text' => 'Book name'],
             ["id" => 'end', "text" => "Return by"],
             ["id" => 'started_at', "text" => "Started at"],
@@ -62,6 +63,8 @@ class Loan extends Model
             case 'extended' :
                 $query->orderBy('extended', $mode);
                 break;
+            case 'user.email':
+                $query->withAggregate('user', 'email')->orderBy('user_email', $mode);
             case 'book.name':
                 $query->withAggregate('book', 'name')->orderBy('book_name', $mode);
             case 'end':
