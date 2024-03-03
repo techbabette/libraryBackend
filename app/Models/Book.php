@@ -87,6 +87,9 @@ class Book extends Model
             ["id" => "created_at", "text" => "Recency"],
             ["id" => "name", "text" => "Book title"],
             ["id" => "all_loans_count", "text" => "Popularity"],
+            ["id" => "loans_count", "text" => "!!Current loans"],
+            ["id" => "category.text", "text" => "!!Category name"],
+            ["id" => "author.full_name", "text" => "!!Author name"],
         ];
     }
     public function scopeSort(Builder $query, $sortSelected = "created_at_desc"){
@@ -97,6 +100,16 @@ class Book extends Model
                 break;
             case 'name' :
                 $query->orderBy('name', $mode);
+                break;
+            case 'category.text' :
+                $query->withAggregate('category', 'text')->orderBy('category_text', $mode);
+                break;
+            case 'author.full_name' :
+                $query->withAggregate('author', 'name')->orderBy('author_name', $mode);
+                $query->withAggregate('author', 'last_name')->orderBy('author_last_name', $mode);
+                break;
+            case 'loans_count':
+                $query->withCount('loans')->orderBy('loans_count', $mode);
                 break;
             case 'all_loans_count':
                 $query->withCount('allLoans')->orderBy('all_loans_count', $mode);

@@ -56,8 +56,11 @@ class Category extends Model
     public static function sortOptions(){
         return [
           ["id" => "text", 'text' => "Category name"],
-          ["id" => "books_count", 'text' => "Book count"],
-          ["id" => "created_At", 'text' => "Created at"],
+          ["id" => "books_count", 'text' => "Active book count"],
+          ["id" => "all_books_count", 'text' => "Associated books count"],
+          ["id" => "active_loans_count", 'text' => "Current loans"],
+          ["id" => "loans_count", 'text' => "Total loans"],
+          ["id" => "created_at", 'text' => "Created at"],
         ];
     }
 
@@ -70,6 +73,12 @@ class Category extends Model
             case 'books_count' :
                 $query->withCount('books')->orderBy('books_count', $mode);
                 break;
+            case 'all_books_count' : 
+                $query->withCount('allBooks')->orderBy('all_books_count', $mode);
+            case 'active_loans_count' : 
+                $query->withCount('activeLoans')->orderBy('active_loans_count', $mode);
+            case 'loans_count' : 
+                $query->withCount('loans')->orderBy('loans_count', $mode);
             case 'created_at':
                 $query->orderBy('created_at', $mode);
                 break;
