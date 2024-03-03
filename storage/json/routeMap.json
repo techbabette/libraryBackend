@@ -131,6 +131,24 @@
         "access_level": 2,
         "text": "Assumed user"
     },
+    "FavoritesGet" : {
+        "access_level" : 1,
+        "text": "Viewed their favorites",
+        "subroute_options" : {
+            "panel" : {
+                "access_level" : 2,
+                "text": "Viewed all user favorites"
+            }
+        }
+    },
+    "FavoriteStore" : {
+        "access_level" : 1,
+        "text" : "Added a book to favorites"
+    },
+    "FavoriteDelete" : {
+        "access_level" : 1,
+        "text" : "Removed a book from favorites"
+    },
     "LoanStore" : {
         "access_level" : 1,
         "text" : "Loaned out a book"

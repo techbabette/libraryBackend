@@ -45,7 +45,7 @@ class FavoriteController extends Controller
         }
 
         if($request->get('panel')){
-            $favorites = $favorites->with('user')->with('book');
+            $favorites = $favorites->with('user');
             $response['message'] = 'Successfully retrieved all favorites';
         }
 

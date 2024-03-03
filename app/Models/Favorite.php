@@ -29,6 +29,7 @@ class Favorite extends Model
     public static function sortOptions(){
         return [
             ['id' => 'book.name', 'text' => 'Book name'],
+            ['id' => 'user.email', 'text' => 'User email'],
             ["id" => 'created_at', "text" => "Added to favorites at"],
         ];
     }
@@ -36,6 +37,8 @@ class Favorite extends Model
     public function scopeSort($query, string $sortSelected = "started_at_desc"){
         extract(SortHelper::sortOptionAndMode($sortSelected));
         switch($sortOption){
+            case 'user.email':
+                $query->withAggregate('user', 'email')->orderBy('user_email', $mode);
             case 'book.name':
                 $query->withAggregate('book', 'name')->orderBy('book_name', $mode);
             case 'created_at':
