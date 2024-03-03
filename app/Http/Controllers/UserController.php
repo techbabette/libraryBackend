@@ -75,6 +75,6 @@ class UserController extends Controller
         $categoryToUpdate->fill($data);
         $categoryToUpdate->save();
 
-        return response()->json(['message' => 'Successfully updated category', 'body' => $categoryToUpdate], 201);
+        return response()->json(['message' => 'Successfully updated user', 'body' => $categoryToUpdate], 201);
     }
 }
