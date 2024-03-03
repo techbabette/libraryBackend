@@ -14,10 +14,23 @@ class MessageController extends Controller
     public function index(Request $request){
         $perPage = 5;
 
+        $sortDefault = 'started_at_desc';
+
+        $response = [];
+        $response['message'] = 'Successfully fetched messages';
+        $response['sortOptions'] = Message::sortOptions();
+        $response['sortDefault'] = $sortDefault;
+
         $messages = Message::query()->with('message_type')->with('user');
 
         if($request->get('message_types')){
             $messages->whereIn('message_type_id', $request->get('message_types'));
+        }
+
+        if($request->get('sortSelected')){
+            $messages->sort($request->get('sortSelected'));
+        }else{
+            $messages->sort($sortDefault);
         }
 
         if($request->get('noPage')){
@@ -26,7 +39,9 @@ class MessageController extends Controller
             $messages = $messages->paginate($perPage);
         }
 
-        return response()->json(['message' => 'Successfully fetched messages', "body" => $messages], 201);
+        $response['body'] = $messages;
+
+        return response()->json($response, 200);
     }
 
     public function store(MessageStoreRequest $request){

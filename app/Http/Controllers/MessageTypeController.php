@@ -14,10 +14,22 @@ class MessageTypeController extends Controller
 {
     public function index(Request $request){
         $perPage = 5;
+        $sortDefault = "created_at_desc";
+
+        $response = [];
+        $response['message'] = 'Successfully fetched message types';
 
         $messageTypes = MessageType::query();
 
         if($request->get('panel')){
+            $response['sortOptions'] = MessageType::sortOptions();
+            $response['sortDefault'] = $sortDefault;
+
+            if($request->get('sortSelected')){
+                $messageTypes->sort($request->get('sortSelected'));
+            }else{
+                $messageTypes->sort($sortDefault);
+            }
             $messageTypes->withCount('messages');
         }
 
@@ -27,7 +39,9 @@ class MessageTypeController extends Controller
             $messageTypes = $messageTypes->paginate($perPage);
         }
 
-        return response()->json(['message' => 'Successfully fetched message types', "body" => $messageTypes], 201);
+        $response['body'] = $messageTypes;
+
+        return response()->json($response, 200);
     }
 
     public function edit(MessageTypeEditRequest $request){
