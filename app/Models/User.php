@@ -46,7 +46,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime:Y-m-d H:i:s',
         'password' => 'hashed',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
@@ -89,10 +89,12 @@ class User extends Authenticatable implements JWTSubject
             ["id" => "email", 'text' => "Email"],
             ["id" => "loans_count", 'text' => "Loan count"],
             ["id" => "created_at", 'text' => "Created at"],
+            ["id" => "email_verified_at", 'text' => "Email verified at"],
+            ["id" => "access_level.access_level", "text" => "Text"],
         ];
     }
 
-    public function scopeSort($query, string $sortSelected = "books_count_desc"){
+    public function scopeSort($query, string $sortSelected = "created_at_desc"){
         extract(SortHelper::sortOptionAndMode($sortSelected));
         switch($sortOption){
             case 'email' :
@@ -104,6 +106,11 @@ class User extends Authenticatable implements JWTSubject
             case 'created_at':
                 $query->orderBy('created_at', $mode);
                 break;
+            case 'email_verified_at':
+                $query->orderBy('email_verified_at', $mode);
+                break;
+            case 'access_level.access_level' : 
+                $query->withAggregate('access_level', 'access_level')->orderBy('access_level_access_level', $mode);
             default :
                 $query->orderBy('created_at', 'desc');
                 break;
