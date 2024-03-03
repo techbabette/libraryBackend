@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use SortHelper;
 
 class Link extends Model
 {
@@ -15,7 +16,6 @@ class Link extends Model
       'text',
       'to',
       'icon',
-      'position',
       'weight'
     ];
 
@@ -48,5 +48,45 @@ class Link extends Model
            ->get(["text", "to", "icon", "weight", "position"]);
 
         return $links;
+    }
+
+    public static function sortOptions(){
+        return [
+            ["id" => "created_at", "text" => "Recency"],
+            ["id" => "icon", "text" => "Icon"],
+            ["id" => "weight", "text" => "Weight"],
+            ["id" => "text", "text" => "Text"],
+            ["id" => "to", "text" => "Leads to"],
+            ["id" => "access_level.access_level", "text" => "Text"],
+            ["id" => "link_position.position", "text" => "Link position"],
+        ];
+    }
+
+    public function scopeSort($query, $sortSelected = "created_at_desc"){
+        extract(SortHelper::sortOptionAndMode($sortSelected));
+        switch($sortOption){
+            case 'created_at' :
+                $query->orderBy('created_at', $mode);
+                break;
+            case 'icon' :
+                $query->orderBy('icon', $mode);
+                break;
+            case 'text' :
+                $query->orderBy('text', $mode);
+                break;
+            case 'to' :
+                $query->orderBy('to', $mode);
+                break;
+            case 'weight' :
+                $query->orderBy('weight', $mode);
+                break;
+            case 'access_level.access_level' : 
+                $query->withAggregate('access_level', 'access_level')->orderBy('access_level_access_level', $mode);
+            case 'link_position.position' : 
+                $query->withAggregate('link_position', 'position')->orderBy('link_position_position', $mode);
+            default :
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
     }
 }

@@ -105,5 +105,5 @@ class Book extends Model
                 $query->orderBy('created_at', 'desc');
                 break;
         }
-        }
+    }
 }

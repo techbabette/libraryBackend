@@ -20,9 +20,16 @@ class LinkController extends Controller
         $sortDefault = "created_at_desc";
 
         $response['message'] = 'Successfully retrieved links';
+        $response['sortOptions'] = Link::sortOptions();
         $response['sortDefault'] = $sortDefault;
 
         $links->with("access_level")->with('link_position');
+
+        if($request->get('sortSelected')){
+            $links->sort($request->get('sortSelected'));
+        }else{
+            $links->sort($sortDefault);
+        }
 
         if($request->get('perPage')){
             $perPage = $request->get('perPage');
