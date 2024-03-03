@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MessageDeleteRequest;
 use App\Http\Requests\MessageStoreRequest;
+use App\Mail\UserMessage;
 use App\Models\Message;
 use App\Models\MessageType;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
 {
@@ -48,10 +51,20 @@ class MessageController extends Controller
         $messageData = $request->all(["body", "title", "message_type_id"]);
         $userId = auth()->user()->id;
 
-        $messageData->merge([
+        $messageData = array_merge($messageData, [
             "user_id" => $userId
         ]);
 
+        $senderEmail = User::find($userId)->email;
+        $messageTitle = $messageData['title'];
+        $messageBody = $messageData['body'];
+        $messageType = MessageType::find($messageData['message_type_id'])->name;
+
+        $adminEmails = User::select('email')->where('access_level_id', '=', 4)->get();
+        foreach($adminEmails as $email){
+            Mail::to($email->email)->send(new UserMessage($senderEmail, $messageType, $messageTitle, $messageBody));
+        }
+        
         Message::create($messageData);
 
         return response()->json(['message' => 'Successfully sent new message'], 201);
