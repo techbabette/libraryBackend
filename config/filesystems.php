@@ -38,7 +38,7 @@ return [
 
         'dev_disk' => [
             'driver' => 'local',
-            'root' => 'M:/Projects/libraryfrontend/src/assets/imgs/',
+            'root' => env("FRONTEND_ROOT")."src/assets/imgs/",
             'visibility' => 'public'
         ],
 
