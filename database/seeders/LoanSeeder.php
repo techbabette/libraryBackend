@@ -42,6 +42,14 @@ class LoanSeeder extends Seeder
                 "book_id" => 5,
                 "user_id" => 2,
             ],
+            [
+                "book_id" => 1,
+                "user_id" => 3
+            ],
+            [
+                "book_id" => 2,
+                "user_id" => 3
+            ]
         ];
 
         foreach($baseLoans as $loan){
