@@ -38,7 +38,7 @@ return [
 
         'dev_disk' => [
             'driver' => 'local',
-            'root' => env("FRONTEND_ROOT")."src/assets/imgs/",
+            'root' => env("FRONTEND_ROOT")."public/imgs/",
             'visibility' => 'public'
         ],
 
@@ -59,7 +59,7 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'root' => 'img',
+            'root' => 'imgs',
             'throw' => false,
         ],
 
