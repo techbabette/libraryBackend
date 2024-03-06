@@ -103,7 +103,7 @@ class AuthorController extends Controller
     }
 
     public function update(AuthorUpdateRequest $request){
-        $data = $request->all();
+        $data = $request->validated();
 
         $authorToUpdate = Author::withTrashed()->find($request->id);
         $authorToUpdate->fill($data);

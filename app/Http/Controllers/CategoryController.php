@@ -130,7 +130,7 @@ class CategoryController extends Controller
     }
 
     public function update(CategoryUpdateRequest $request){
-        $data = $request->all();
+        $data = $request->validated();
 
         $categoryToUpdate = Category::withTrashed()->find($request->id);
         $categoryToUpdate->fill($data);

@@ -117,7 +117,7 @@ class BookController extends Controller
     }
 
     public function update(BookUpdateRequest $request){
-        $data = $request->all();
+        $data = $request->validated();
 
         if($request->img){
             $image = $request->img;

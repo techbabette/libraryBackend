@@ -69,7 +69,7 @@ class UserController extends Controller
     }
 
     public function update(UserUpdateRequest $request){
-        $data = $request->all();
+        $data = $request->validated();
 
         $categoryToUpdate = User::find($request->id);
         $categoryToUpdate->fill($data);

@@ -51,7 +51,7 @@ class MessageTypeController extends Controller
     }
 
     public function update(MessageTypeUpdateRequest $request){
-        $data = $request->all();
+        $data = $request->validated();
 
         $messageTypeToUpdate = MessageType::find($request->id);
         $messageTypeToUpdate->fill($data);

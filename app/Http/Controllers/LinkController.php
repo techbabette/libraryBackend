@@ -64,7 +64,7 @@ class LinkController extends Controller
     }
 
     public function update(LinkUpdateRequest $request){
-        $data = $request->all();
+        $data = $request->validated();
 
         $linkToUpdate = Link::find($request->id);
         $linkToUpdate->fill($data);
