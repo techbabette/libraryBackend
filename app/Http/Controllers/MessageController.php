@@ -60,7 +60,7 @@ class MessageController extends Controller
         $messageBody = $messageData['body'];
         $messageType = MessageType::find($messageData['message_type_id'])->name;
 
-        $adminEmails = User::select('email')->where('access_level_id', '=', 4)->get();
+        $adminEmails = User::select('email')->where('access_level_id', '=', 4)->whereNotNull('email_verified_at')->get();
         foreach($adminEmails as $email){
             Mail::to($email->email)->send(new UserMessage($senderEmail, $messageType, $messageTitle, $messageBody));
         }
