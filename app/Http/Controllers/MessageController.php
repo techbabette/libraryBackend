@@ -55,6 +55,8 @@ class MessageController extends Controller
             "user_id" => $userId
         ]);
 
+        Message::create($messageData);
+
         $senderEmail = User::find($userId)->email;
         $messageTitle = $messageData['title'];
         $messageBody = $messageData['body'];
@@ -65,7 +67,6 @@ class MessageController extends Controller
             Mail::to($email->email)->send(new UserMessage($senderEmail, $messageType, $messageTitle, $messageBody));
         }
         
-        Message::create($messageData);
 
         return response()->json(['message' => 'Successfully sent new message'], 201);
     }
