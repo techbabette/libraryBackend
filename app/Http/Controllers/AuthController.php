@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         $accessLevel = $user->access_level->access_level;
 
-        if($accessLevel < 0){
+        if($accessLevel <= 0){
             return response()->json(['message' => 'User blocked'], 403);
         }
 
