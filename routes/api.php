@@ -143,7 +143,5 @@ Route::group([
      Route::post('login', [AuthController::class, "login"])->name('login');
      Route::get('logout', [AuthController::class, "logout"])->name('logout');
      Route::get('verify/{id}/{token}', [AuthController::class, 'verifyEmail'])->name('verifyEmail');
-     Route::post('refresh', [AuthController::class, "refresh"]);
-     Route::post('me', [AuthController::class, "me"]);
      Route::post('register', [AuthController::class, "register"])->name('register');
  });

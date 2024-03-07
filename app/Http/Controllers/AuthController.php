@@ -79,26 +79,11 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully assumed user', 'body' => $token], 201);
     }
 
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
-
     public function logout()
     {
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
     }
 
     protected function respondWithToken($token)

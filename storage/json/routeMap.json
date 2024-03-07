@@ -178,6 +178,10 @@
         "access_level": -1,
         "text": "Logged in"
     },
+    "logout": {
+        "access_level": 1,
+        "text": "Logged out"
+    },
     "register": {
         "access_level": -1,
         "text": "Registered"

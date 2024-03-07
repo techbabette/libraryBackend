@@ -30,6 +30,7 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:users',
+            "access_level_id" => "required|exists:access_levels,id",
             "name" => "required|string|regex:/^[A-Z][a-z]{1,14}(\s[A-Z][a-z]{1,14}){0,2}$/",
             "last_name" => "required|string|regex:/^[A-Z][a-z]{1,14}(\s[A-Z][a-z]{1,14}){0,2}$/",
             "email" => "required|email|unique:users,email,".$this->route('id'),
