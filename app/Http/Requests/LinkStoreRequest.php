@@ -25,8 +25,8 @@ class LinkStoreRequest extends FormRequest
             "access_level_id" => "required|exists:access_levels,id",
             "link_position_id" => "required|exists:link_positions,id",
             "text" => "required|string|max:20",
-            "to" => "required|string|max:25",
-            "icon" => "nullable|string|max:25",
+            "to" => "required|string|max:50",
+            "icon" => "nullable|string|max:50",
             "weight" => "required|integer|min:0|max:100",
         ];
     }
