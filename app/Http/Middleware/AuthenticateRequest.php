@@ -53,7 +53,7 @@ class AuthenticateRequest
         }
 
         if($routeAccessLevelRequired > $userAccessLevel){
-            if($routeAccessLevelRequired === 1){
+            if($userAccessLevel < 1){
                 return response()->json(['error' => "You must be logged in to do this"], 401);
             }
             return response()->json(['error' => "You're not allowed this action"], 403);
