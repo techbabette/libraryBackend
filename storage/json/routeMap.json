@@ -104,6 +104,13 @@
         "access_level": 2,
         "text": "Created a new message type"
     },
+    "MessageTypeEdit": {
+        "access_level": 2
+    },
+    "MessageTypeUpdate": {
+        "access_level": 2,
+        "text": "Updated message type"
+    },
     "MessageTypeDelete": {
         "access_level": 2,
         "text": "Deleted a message type"
