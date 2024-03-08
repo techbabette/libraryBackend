@@ -157,7 +157,7 @@ class BookController extends Controller
 
         $book->delete();
 
-        return response()->json(['message' => 'Successfully deleted book'], 200);
+        return response()->json(['message' => 'Successfully deactivated book'], 200);
     }
 
     public function restore(BookRestoreRequest $request){

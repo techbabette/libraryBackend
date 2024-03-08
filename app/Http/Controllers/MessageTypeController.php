@@ -57,7 +57,7 @@ class MessageTypeController extends Controller
         $messageTypeToUpdate->fill($data);
         $messageTypeToUpdate->save();
 
-        return response()->json(['message' => 'Successfully updated messageType', 'body' => $messageTypeToUpdate], 201);
+        return response()->json(['message' => 'Successfully updated message type', 'body' => $messageTypeToUpdate], 201);
     }
 
     public function store(MessageTypeStoreRequest $request){
