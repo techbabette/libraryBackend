@@ -1,4 +1,11 @@
 services:
+  application:
+    build: ./application
+    ports:
+     - "80:80"
+     - "443:443"
+    volumes:
+     - books-database:/var/lib/mysql
   mysql:
     image: mysql:8.3.0
     environment:
@@ -13,3 +20,5 @@ services:
     depends_on:
       mysql :
         condition: service_healthy
+volumes:
+  books-database:
