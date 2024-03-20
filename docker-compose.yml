@@ -4,8 +4,8 @@ services:
     ports:
      - "80:80"
      - "443:443"
-    volumes:
-     - books-database:/var/lib/mysql
+    environment:
+      DB_HOST: mysql
   mysql:
     image: mysql:8.3.0
     environment:
@@ -15,6 +15,8 @@ services:
       test: "mysql -uroot -p books -e 'select 1'"
       interval: 1s
       retries: 120
+    volumes:
+     - books-database:/var/lib/mysql
   database-loader:
     build: ./database-loader
     depends_on:
