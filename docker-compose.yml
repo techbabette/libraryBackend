@@ -1,0 +1,15 @@
+services:
+  mysql:
+    image: mysql:8.3.0
+    environment:
+      MYSQL_DATABASE: books
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    healthcheck:
+      test: "mysql -uroot -p books -e 'select 1'"
+      interval: 1s
+      retries: 120
+  database-loader:
+    build: ./database-loader
+    depends_on:
+      mysql :
+        condition: service_healthy
