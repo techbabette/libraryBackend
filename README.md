@@ -10,6 +10,8 @@ A full description of application features can be found here [here](https://dszk
 
 The database refreshes every fifteen minutes, making any changes temporary and allowing for anyone to play around with the website.
 
+The database restoration code can be found [here](https://github.com/techbabette/LibraryDatabaseRestorer)
+
 ### JWT Authentication
 
 User authentication is accomplished using JWT tokens, allowing the application to scale horizontally (Adding more servers).
