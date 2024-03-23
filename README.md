@@ -12,7 +12,7 @@ The database refreshes every fifteen minutes, making any changes temporary and a
 
 ### JWT Authentication
 
-User authentication is accomplished using JWT tokens, allowing for scaling the application horizontally (Adding more servers).
+User authentication is accomplished using JWT tokens, allowing the application to scale horizontally (Adding more servers).
 
 ### Activity tracking
 
