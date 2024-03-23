@@ -10,7 +10,7 @@ A full description of application features can be found here [here](https://dszk
 
 The database refreshes every fifteen minutes, making any changes temporary and allowing for anyone to play around with the website.
 
-The database restoration code can be found [here](https://github.com/techbabette/LibraryDatabaseRestorer)
+The database restoration code can be found [here](https://github.com/techbabette/libraryBackend/blob/dev/database-loader/main.py)
 
 ### JWT Authentication
 
