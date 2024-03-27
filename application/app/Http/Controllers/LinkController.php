@@ -52,9 +52,10 @@ class LinkController extends Controller
             $userAccessLevel = auth()->user()->access_level->access_level;
         }
 
-        $links = Link::getLinksForAccessLevel($userAccessLevel);
+        $data['links'] = Link::getLinksForAccessLevel($userAccessLevel);
+        $data['access_level'] = $userAccessLevel;
 
-        return response($links);
+        return response($data);
     }
 
     public function edit(LinkEditRequest $request){
