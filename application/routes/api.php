@@ -121,6 +121,7 @@ Route::group([
    Route::get('/edit/{id}', [LinkController::class, 'edit'])->name("LinkEdit");
    Route::patch('/update/{id}', [LinkController::class, 'update'])->name('LinkUpdate');
    Route::get('/me', [LinkController::class, 'me']);
+   Route::get('/everyone', [LinkController::class, 'everyone']);
    Route::post('/', [LinkController::class, "store"])->name('LinkStore');
    Route::delete('/{id}', [LinkController::class, "delete"])->name('LinkDelete');
 });
