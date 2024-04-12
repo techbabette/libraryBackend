@@ -1,6 +1,7 @@
 services:
   application:
     build: ./application
+    restart: unless-stopped
     ports:
      - "80:80"
      - "443:443"
@@ -8,6 +9,7 @@ services:
       APP_ENV: production
   mysql:
     image: mysql:8.3.0
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: books
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
@@ -19,6 +21,7 @@ services:
      - books-database:/var/lib/mysql
   database-loader:
     build: ./database-loader
+    restart: unless-stopped
     depends_on:
       mysql :
         condition: service_healthy
