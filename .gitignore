@@ -18,3 +18,6 @@ application/yarn-error.log
 application//.fleet
 application//.idea
 application//.vscode
+main.tf
+.terraform
+.terraform.lock.hcl
