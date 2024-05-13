@@ -4,6 +4,12 @@ Allows for full control over all dynamic content in the [City Library](https://d
 
 A full description of application features can be found here [here](https://dszkzv3o6c2jj.cloudfront.net/documentation.pdf).
 
+## Original deployment
+
+Originally deployed on AWS with the architecture displayed below.
+
+![Original three layer deployment](https://i.imgur.com/UPA5tK6.png "Original deployment")
+
 ## Notable features
 
 ### Self-restoring database
