@@ -26,7 +26,7 @@ jobs:
         
     - name: Fetch changes on host and rebuild
       run: |
-          ssh ${SSH_USER}@${SSH_HOST} 'cd /libraryBackend && git fetch && docker compose up --build'
+          ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'cd /libraryBackend && git fetch && docker compose up --build'
       env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
