@@ -11,22 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Copy private SSH key
-      run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/library
-          chmod 600 ~/.ssh/library
       env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
+      run: |
+          mkdir -p ~/.ssh/
+          echo "${SSH_KEY}" > ~/.ssh/library
+          chmod 600 ~/.ssh/library
 
     - name: Scan public keys of host
-      run: |
-          ssh-keyscan ${SSH_HOST}
       env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
+      run: |
+          ssh-keyscan ${SSH_HOST}
         
     - name: Fetch changes on host and rebuild
-      run: |
-          ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'cd /libraryBackend && git fetch && docker compose up --build'
       env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
+      run: |
+          ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'cd /libraryBackend && git fetch && docker compose up --build'
