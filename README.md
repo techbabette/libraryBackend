@@ -24,6 +24,10 @@ The application and the database it uses can easily be deployed using the terraf
 
 Replace <production_env_source> with the source of the production environment you want to use
 
+### CI/CD
+
+Every push is followed by a deployment to an existing server
+
 ### JWT Authentication
 
 User authentication is accomplished using JWT tokens, allowing the application to scale horizontally (By adding more servers).
