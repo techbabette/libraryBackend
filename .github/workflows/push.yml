@@ -17,12 +17,20 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${SSH_KEY}" > ~/.ssh/library
           chmod 600 ~/.ssh/library
-          eval `ssh-agent -s`
-          ssh-add ~/.ssh/library
-        
-    - name: Fetch changes on host and rebuild
+
+    - name: Configure client SSH
       env:
-          SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
       run: |
-          ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'cd /libraryBackend && git fetch && docker compose up --build'
+          cat >>~/.ssh/config <<END
+          Host production
+              HostName $SSH_HOST
+              User $SSH_USER
+              IdentityFile ~/.ssh/library
+              StrictHostKeyChecking no
+          END
+
+    - name: Fetch changes on host and rebuild
+      run: |
+          ssh production 'cd /libraryBackend && git fetch && docker compose up --build'
