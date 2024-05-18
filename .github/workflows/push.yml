@@ -16,8 +16,8 @@ jobs:
       run: |
           mkdir -p ~/.ssh/
           echo "${SSH_KEY}" > ~/.ssh/library
-          ls ~/.ssh
           chmod 600 ~/.ssh/library
+          ssh-add ~/.ssh/library
         
     - name: Fetch changes on host and rebuild
       env:
