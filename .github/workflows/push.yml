@@ -17,6 +17,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${SSH_KEY}" > ~/.ssh/library
           chmod 600 ~/.ssh/library
+          eval `ssh-agent -s`
           ssh-add ~/.ssh/library
         
     - name: Fetch changes on host and rebuild
