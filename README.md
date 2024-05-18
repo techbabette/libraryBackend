@@ -4,6 +4,12 @@ Allows for full control over all dynamic content in the [City Library](https://d
 
 A full description of application features can be found here [here](https://dszkzv3o6c2jj.cloudfront.net/documentation.pdf).
 
+## Original deployment
+
+Originally deployed on AWS with the architecture displayed below.
+
+![Original three layer deployment](https://i.imgur.com/UPA5tK6.png "Original deployment")
+
 ## Notable features
 
 ### Self-restoring database
@@ -12,9 +18,15 @@ The database refreshes every fifteen minutes, making any changes temporary and a
 
 The database restoration code can be found [here](https://github.com/techbabette/libraryBackend/blob/dev/database-loader/main.py)
 
+### Terraform
+
+The application and the database it uses can easily be deployed using the terraform definitions found [here](https://github.com/techbabette/libraryBackend/blob/dev/.tf.example)
+
+Replace <production_env_source> with the source of the production environment you want to use
+
 ### JWT Authentication
 
-User authentication is accomplished using JWT tokens, allowing the application to scale horizontally (Adding more servers).
+User authentication is accomplished using JWT tokens, allowing the application to scale horizontally (By adding more servers).
 
 ### Activity tracking
 
