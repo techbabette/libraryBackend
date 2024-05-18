@@ -33,4 +33,4 @@ jobs:
 
     - name: Fetch changes on host and rebuild
       run: |
-          ssh production 'cd /libraryBackend && git fetch && docker compose up --build -d'
+          ssh production 'cd /libraryBackend && git fetch && git pull && docker compose up --build -d'
