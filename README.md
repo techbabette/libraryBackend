@@ -24,6 +24,12 @@ The application and the database it uses can easily be deployed using the terraf
 
 Replace <production_env_source> with the source of the production environment you want to use
 
+## Monitoring
+
+[This playbook](https://github.com/techbabette/libraryBackend/blob/dev/playbooks/install_prometheus_exporter.yml) installs a prometheus node exporter and a [systemd service](https://github.com/techbabette/libraryBackend/blob/dev/playbooks/templates/nodeexporter.service) to control it.
+
+The node exporter service starts as soon as it is installed and whenever the server it's on restarts.
+
 ### CI/CD
 
 Every release is followed by a redeployment to production
