@@ -1,0 +1,9 @@
+[Unit]
+Description=Runs the prometheus node exporter
+
+[Service]
+Type=simple
+ExecStart=/sbin/node_exporter/node_exporter
+
+[Install]
+WantedBy=multi-user.target

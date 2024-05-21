@@ -26,5 +26,11 @@
       shell: mv /sbin/node_exporter-1.8.0.linux-arm64 /sbin/node_exporter
       when: ansible_architecture == "aarch64"
 
-    - name: Run node exporter
-      shell: /sbin/node_exporter/node_exporter &
+    - name: Transfer node exporter service daemon file
+      template: src=nodeexporter.service dest=/etc/systemd/system/nodeexporter.service
+
+    - name: Start and enable node exporter service daemon
+      systemd:
+        name: nodeexporter.service
+        state: started
+        enabled: true
