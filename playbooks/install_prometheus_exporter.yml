@@ -1,0 +1,30 @@
+#Used to install prometehus node exporter
+- hosts: "*"
+  become: yes
+  tasks:
+    - name: Install tar package
+      apt:
+        name: tar
+        state: present
+
+    - name: Download node exporter for amd64 
+      shell: wget -O /tmp/node.tar.gz https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-amd64.tar.gz
+      when: ansible_architecture == "x86_64"
+
+    - name: Download node exporter for arm64 
+      shell: wget -O /tmp/node.tar.gz https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-arm64.tar.gz
+      when: ansible_architecture == "aarch64"
+
+    - name: Extract node exporter
+      shell: tar xvfz /tmp/node.tar.gz -C /sbin
+
+    - name: Rename folder to universal name from amd64
+      shell: mv /sbin/node_exporter-1.8.0.linux-amd64 /sbin/node_exporter
+      when: ansible_architecture == "x86_64"
+
+    - name: Rename folder to universal name from arm64
+      shell: mv /sbin/node_exporter-1.8.0.linux-arm64 /sbin/node_exporter
+      when: ansible_architecture == "aarch64"
+
+    - name: Run node exporter
+      shell: /sbin/node_exporter/node_exporter &
