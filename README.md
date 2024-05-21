@@ -26,7 +26,7 @@ Replace <production_env_source> with the source of the production environment yo
 
 ### CI/CD
 
-Every push is followed by a deployment to an existing server
+Every release is followed by a redeployment to production
 
 ### JWT Authentication
 
