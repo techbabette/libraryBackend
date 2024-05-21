@@ -3,8 +3,8 @@
 name: Deploy changes
 
 on:
-  push:
-    branches: [ "dev" ]
+  registry_package:
+    types: [published]
 
 jobs:
   deploy:
