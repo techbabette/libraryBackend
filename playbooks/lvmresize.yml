@@ -1,0 +1,11 @@
+#Used on machines with LVM to allow them to use all free space available
+- hosts: "*"
+  become: yes
+  tasks:
+    - name: Resize logical volume and underlying fs
+      lvol:
+        vg: ubuntu-vg
+        lv: ubuntu-lv
+        size: +100%FREE
+    - name: Resize underlying fs
+      shell: resize2fs /dev/ubuntu-vg/ubuntu-lv

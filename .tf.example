@@ -17,7 +17,7 @@ provider "hcloud" {
 
 resource "hcloud_server" "backend1" {
   name        = "backend1"
-  server_type = "cx11"
+  server_type = "cax11"
   image       = "ubuntu-22.04"
   location    = "nbg1"
 
