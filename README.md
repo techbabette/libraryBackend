@@ -30,6 +30,8 @@ Replace <production_env_source> with the source of the production environment yo
 
 The node exporter service starts as soon as it is installed and whenever the server it's on restarts.
 
+The exported data is consumed by my [prometheus stack](https://github.com/techbabette/MonitoringStack), the resulting graph can be seen [here](http://91.107.230.206:3000/d/rYdddlPWk/node-exporter-full?orgId=1&refresh=1m&from=now-5m&to=now).
+
 ### CI/CD
 
 Every release is followed by a redeployment to production
