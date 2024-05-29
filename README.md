@@ -1,6 +1,6 @@
 # [City Library](https://dszkzv3o6c2jj.cloudfront.net) backend
 
-Allows for full control over all dynamic content in the [City Library](https://dszkzv3o6c2jj.cloudfront.net).
+Allows for full control over all dynamic content in the [City Library](https://library.techbabette.com).
 
 A full description of application features can be found here [here](https://dszkzv3o6c2jj.cloudfront.net/documentation.pdf).
 
