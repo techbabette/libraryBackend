@@ -10,6 +10,8 @@ Originally deployed on AWS with the architecture displayed below.
 
 ![Original three layer deployment](https://i.imgur.com/UPA5tK6.png "Original deployment")
 
+The terraform for this deployment can be found [here](https://github.com/techbabette/LibraryAWSDeployment)
+
 ## Notable features
 
 ### Self-restoring database
