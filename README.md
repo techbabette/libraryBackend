@@ -36,7 +36,7 @@ The exported data is consumed by my [prometheus stack](https://github.com/techba
 
 ### CI/CD
 
-Every release is followed by a redeployment to production
+Every release is followed by a redeployment to a production hetzner server
 
 ### JWT Authentication
 
