@@ -10,7 +10,7 @@ Originally deployed on AWS with the architecture displayed below.
 
 The terraform for this deployment can be found [here](https://github.com/techbabette/LibraryAWSDeployment)
 
-![Original three layer deployment](https://i.imgur.com/UPA5tK6.png "Original deployment")
+![Original three layer deployment](https://i.imgur.com/mUYyGsw.png "Original deployment")
 
 ## Notable features
 
